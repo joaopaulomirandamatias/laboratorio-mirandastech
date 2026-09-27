@@ -1,23 +1,33 @@
 # Laboratório MirandasTech
 
-Hub imersivo dos **16 manuais MirandasTech de pesquisa científica**: uma torre de quatro andares navegável no navegador, com protótipo WebXR para headset.
+Campus digital dos **16 manuais MirandasTech de pesquisa científica**: uma página de entrada com as quatro trilhas e, atrás dela, a torre 3D navegável com protótipo WebXR para headset.
 
-**No ar:** https://lab.mirandastech.com.br/ · espelho em https://manual.mirandastech.com.br/lab/
+**No ar:** https://lab.mirandastech.com.br/ · torre 3D em https://lab.mirandastech.com.br/3d/ · espelho em https://manual.mirandastech.com.br/lab/
 
-## O que é
+## Duas camadas
+
+| Caminho | O que é |
+|---|---|
+| `site/index.html` | **O campus.** Página de entrada: as 4 trilhas com os 16 manuais ligados um a um, a camada do plugin, a seção de ciência aberta e um filtro de manuais. Sem framework: HTML, CSS e ~25 linhas de JavaScript. |
+| `site/3d/index.html` | **A torre.** O hub tridimensional original, em React + Three.js, com a sessão WebXR. Continua sendo a visita guiada do campus. |
+| `site/assets/` | Vídeo do átrio (em laço, 1,8 MB) e as imagens das quatro trilhas, em WebP. |
+
+O vídeo do topo é o átrio do campus em movimento; o título que vinha gravado no render foi removido por corte, e o clipe é concatenado com ele mesmo invertido para o laço não saltar. Todo texto da página é HTML sobre as imagens — nada de texto dentro do render, que é onde a geração por IA erra.
+
+## A torre 3D
 
 Cada andar é uma trilha da pesquisa (Fundamentos, Busca e revisão, Dados e ferramentas, Escrita e entrega) e cada um dos quatro nós do andar é um manual, representado pelo **instrumento da etapa**: a balança do método, o chip do uso de IA, a bússola da orientação, a lupa da busca, o prisma da revisão sistemática, a rede de cocitação da bibliometria, o fichário do Zotero, o gráfico da análise de dados, a árvore de commits do Git, o cadeado aberto da ciência aberta, o envelope da submissão, o capelo da defesa. Todos são montados por primitivas em Three.js, sem modelo externo.
 
 O eixo central é uma coluna de palavras do método subindo em laço. A borda de cada andar traz o nome da trilha. Clicar num nó, ou numa linha do índice, leva a câmera até o módulo e abre a ficha com manual e repositório.
 
-## Como foi feito
+## Como a torre foi feita
 
 | Camada | O que |
 |---|---|
 | Interface | React 18 (UMD, sem etapa de build) — estado de baixa frequência: módulo selecionado, filtro, sessão XR |
 | Cena | Three.js r128 — cena imperativa com API própria (`mount`, `select`, `setFilter`, `setExpansion`, `setMode`, `enterXR`) |
 | Imersão | WebXR real: `renderer.xr`, referência `local-floor`, dois controles com laser e seleção pelo gatilho, painel holográfico em canvas |
-| Deploy | Caddy estático (`site/index.html`), imagem única |
+| Deploy | Caddy estático (serve `site/` inteiro), imagem única |
 
 Coordenadas de câmera e etiqueta de nó são escritas direto no DOM por refs, fora do estado do React, para não gerar re-renderização a cada quadro. Não há pós-processamento: o brilho é feito com sprites aditivos, porque `EffectComposer` não funciona dentro de uma sessão XR.
 
@@ -33,4 +43,4 @@ Metodologia · Uso de IA · Orientador · Professor · Busca em bases · PRISMA 
 MATIAS, J. P. M. *Laboratório MirandasTech: hub dos manuais de pesquisa científica.* MirandasTech, v1.0, set. 2026. CC BY 4.0.
 
 ## Declaração de uso de IA
-Concebido e construído com assistência de IA (Claude, Anthropic). O autor responde integralmente pelo conteúdo. Three.js, React, IBM Plex e os serviços citados nos manuais são de terceiros; este projeto não tem vínculo com eles.
+Concebido e construído com assistência de IA (Claude, Anthropic). O vídeo do átrio e as imagens das trilhas são renders gerados por IA, sem correspondência com lugares ou pessoas reais — são ilustração, não registro. O autor responde integralmente pelo conteúdo. Three.js, React, IBM Plex e os serviços citados nos manuais são de terceiros; este projeto não tem vínculo com eles.
