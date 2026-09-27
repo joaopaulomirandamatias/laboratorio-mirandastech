@@ -5,15 +5,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Página íntegra
+      - name: Páginas íntegras
         run: |
           python3 - <<'PY'
-          import re
-          h=open('site/index.html',encoding='utf-8').read()
-          for t in ['div','section','span','main','nav','footer','script','style','head','html','body']:
-              o=len(re.findall(r'<%s[\s>]'%t,h)); c=len(re.findall(r'</%s>'%t,h)); assert o==c,(t,o,c)
-          assert 'railway.app' not in h, 'link de railway.app na página'
-          for u in ['three.js','react','react-dom']: assert u in h, u
-          assert h.count('mirandastech.com.br')>=16
-          print('ok: pagina integra,',len(h)//1024,'KB')
+          import re, os, html
+
+          TAGS = ['div','section','span','main','nav','footer','script','style','head','html','body']
+
+          def integra(caminho):
+              h = open(caminho, encoding='utf-8').read()
+              for t in TAGS:
+                  o = len(re.findall(r'<%s[\s>]' % t, h)); c = len(re.findall(r'</%s>' % t, h))
+                  assert o == c, (caminho, t, o, c)
+              assert 'railway.app' not in h, 'link de railway.app em ' + caminho
+              return h
+
+          # 1. página de entrada: o campus, com o vídeo do átrio e uma imagem por trilha
+          campus = integra('site/index.html')
+          for esperado in ['assets/hero.mp4', 'assets/hero-poster.jpg', 'href="3d/"']:
+              assert esperado in campus, 'faltou ' + esperado
+          # todo arquivo local citado precisa existir de fato
+          locais = set(re.findall(r'(?:src|href)="(assets/[^"]+)"', campus))
+          assert len(locais) >= 8, locais
+          for a in sorted(locais):
+              p = os.path.join('site', a)
+              assert os.path.isfile(p), 'asset ausente: ' + p
+              assert os.path.getsize(p) > 0, 'asset vazio: ' + p
+          # os 16 manuais continuam ligados, um subdomínio cada
+          subs = set(re.findall(r'https://([a-z]+)\.mirandastech\.com\.br/', campus))
+          assert len(subs) >= 16, sorted(subs)
+
+          # 2. torre 3D preservada em /3d/
+          torre = integra('site/3d/index.html')
+          for u in ['three.js', 'react', 'react-dom']:
+              assert u in torre, u
+          # a torre monta as URLs em JS (sub + dominio), entao conta-se o dado, nao o literal
+          assert len(re.findall(r"sub:'[a-z]+'", torre)) == 16, 'a torre perdeu modulos'
+
+          print('ok: campus', len(campus)//1024, 'KB +', len(locais), 'assets · torre 3D', len(torre)//1024, 'KB')
           PY
