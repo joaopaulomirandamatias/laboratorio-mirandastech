@@ -42,5 +42,18 @@ jobs:
           # a torre monta as URLs em JS (sub + dominio), entao conta-se o dado, nao o literal
           assert len(re.findall(r"sub:'[a-z]+'", torre)) == 16, 'a torre perdeu modulos'
 
-          print('ok: campus', len(campus)//1024, 'KB +', len(locais), 'assets · torre 3D', len(torre)//1024, 'KB')
+          # 3. sitemap: toda URL listada precisa existir como página de verdade
+          import xml.etree.ElementTree as ET
+          ns = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
+          SITE = 'https://lab.mirandastech.com.br/'
+          locs = [u.find(ns + 'loc').text for u in ET.parse('site/sitemap.xml').getroot().findall(ns + 'url')]
+          assert locs, 'sitemap vazio'
+          for loc in locs:
+              assert loc.startswith(SITE), 'sitemap so aceita URL deste host: ' + loc
+              resto = loc[len(SITE):]
+              alvo = os.path.join('site', resto, 'index.html') if resto in ('',) or resto.endswith('/') else os.path.join('site', resto)
+              assert os.path.isfile(alvo), 'sitemap aponta para pagina inexistente: ' + loc
+          assert 'sitemap.xml' in open('site/robots.txt', encoding='utf-8').read(), 'robots.txt nao aponta o sitemap'
+
+          print('ok: campus', len(campus)//1024, 'KB +', len(locais), 'assets · torre 3D', len(torre)//1024, 'KB ·', len(locs), 'URLs no sitemap')
           PY

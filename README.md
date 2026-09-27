@@ -10,7 +10,8 @@ Campus digital dos **16 manuais MirandasTech de pesquisa científica**: uma pág
 |---|---|
 | `site/index.html` | **O campus.** Página de entrada: as 4 trilhas com os 16 manuais ligados um a um, a camada do plugin, a seção de ciência aberta e um filtro de manuais. Sem framework: HTML, CSS e ~25 linhas de JavaScript. |
 | `site/3d/index.html` | **A torre.** O hub tridimensional original, em React + Three.js, com a sessão WebXR. Continua sendo a visita guiada do campus. |
-| `site/assets/` | Vídeo do átrio (em laço, 1,8 MB) e as imagens das quatro trilhas, em WebP. |
+| `site/assets/` | Vídeo do átrio (em laço, 1,8 MB), as imagens das quatro trilhas e uma por manual, em WebP. |
+| `site/sitemap.xml` | Só as duas páginas deste host — cada manual vive no próprio subdomínio e precisa do seu próprio sitemap. Regere com `./scripts/sitemap.sh` depois de mexer nas páginas: o `lastmod` sai do git. |
 
 O vídeo do topo é o átrio do campus em movimento; o título que vinha gravado no render foi removido por corte, e o clipe é concatenado com ele mesmo invertido para o laço não saltar. Todo texto da página é HTML sobre as imagens — nada de texto dentro do render, que é onde a geração por IA erra.
 
