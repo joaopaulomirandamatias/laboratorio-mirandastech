@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Laboratório MirandasTech</title>
 <meta name="description" content="O campus digital da pesquisa científica: 16 manuais abertos em 4 trilhas, do método à defesa.">
-<meta name="theme-color" content="#05080D">
+<meta name="theme-color" content="#080c14">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Laboratório MirandasTech">
 <meta property="og:description" content="O campus digital da pesquisa científica: 16 manuais abertos em 4 trilhas, do método à defesa.">
@@ -15,7 +15,8 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,400;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&amp;text=%E2%86%92%E2%86%97&amp;display=swap">
 <style>
 :root{
   --void:#05080D; --deep:#0A1321; --panel:rgba(12,20,33,.86); --raise:rgba(255,255,255,.035);
@@ -249,29 +250,158 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
   .hero video{display:none}
   .hero .hero-fallback{display:block}
 }
+
+/* mt-padrao-2026 — padrão visual MirandasTech (site www + blog). Tokens e componentes iguais aos manuais. */
+:root{
+  --bg:#080c14; --card:#0c1220; --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.18);
+  --ink-body:#c3cbd7; --ink-2:#b7c0cd; --cyan:#65e8ff; --cyan-rgb:101,232,255; --violet:#8b5cf6; --violet-ink:#c4b5fd;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --void:#080c14; --deep:#0e1526; --panel:rgba(12,18,32,.86); --raise:rgba(255,255,255,.03);
+  --ink:#f5f7fa; --muted:#b7c0cd; --dim:#7d8798;
+  --rule:rgba(255,255,255,.12); --rule-soft:rgba(255,255,255,.08);
+  --t1:#65e8ff; --t2:#c4b5fd; --t3:#c4b5fd; --t4:#c4b5fd; --signal:#65e8ff;
+  --sans:"Geist","Noto Sans Math","Noto Sans Symbols 2","Noto Sans Symbols","Noto Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --cond:var(--sans);
+  --mono:"Geist Mono","Noto Sans Mono","Noto Sans Math","Noto Sans Symbols 2","Noto Sans Symbols",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"Instrument Serif","Noto Sans Math","Noto Sans",Georgia,"Times New Roman",serif;
+  color-scheme:dark;
+}
+::selection{background:var(--cyan);color:#05070c}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
+.hero h1{font-size:clamp(40px,5.4vw,68px);line-height:1.04;letter-spacing:-.05em;max-width:16ch}
+.hero h1 em,h2 em,.sec-head h2 span{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--cyan)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;color:var(--cyan)}
+.kicker::before{content:"";width:22px;height:1px;background:var(--cyan);box-shadow:0 0 10px rgba(var(--cyan-rgb),.8)}
+.eyebrow{font-size:12px;letter-spacing:.12em;border-color:var(--line-strong);background:rgba(8,12,20,.6)}
+.eyebrow i{background:var(--violet);box-shadow:0 0 12px var(--violet)}
+.hero-sub,.sec-head .lede,.plugin-grid p,.open-grid p{color:var(--ink-body)}
+.manifesto blockquote,.dia p{font-family:var(--sans);letter-spacing:-.01em}
+
+/* botões em pílula: primário ciano, secundário com borda */
+.btn{min-height:48px;padding:0 22px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(255,255,255,.02);color:var(--ink);font-weight:600;font-size:15px;transition:border-color .25s,background-color .25s}
+.btn:hover{transform:none;border-color:var(--cyan);background:rgba(255,255,255,.04)}
+.btn--primary{background:var(--cyan);color:#05070c;border-color:transparent;box-shadow:none}
+.btn--primary:hover{background:#8df0ff;border-color:transparent}
+.btn--sm{min-height:38px;padding:0 16px;font-size:14px}
+
+/* cabeçalho */
+.topbar{background:rgba(8,12,20,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{height:64px;gap:24px}
+.brand{color:var(--ink)}
+.brand svg{color:var(--cyan);flex:none}
+.brand-txt small{color:var(--violet-ink);letter-spacing:.14em}
+.brand-txt b{font-family:var(--sans);font-weight:700;letter-spacing:-.02em}
+.brand-txt b span{color:var(--cyan)}
+.navlinks{gap:22px;color:var(--ink-2)}
+.navlinks a:hover,.navext a:hover{color:var(--cyan)}
+.navext{display:flex;gap:18px;font-size:14px;color:var(--ink-2)}
+.navext a::after{content:" ↗";color:var(--cyan)}
+.icon-btn{border-radius:999px;border-color:var(--line-strong);color:var(--ink-2)}
+.icon-btn:hover{color:var(--cyan);border-color:var(--cyan);background:transparent}
+.mt-skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;background:var(--cyan);color:#05070c;font-weight:600;border-radius:999px;transition:top .16s}
+.mt-skip:focus{top:12px}
+
+/* trilhas: violeta é a cor da trilha */
+.track,.man{--c:var(--violet-ink)!important}
+.hero-tracks li{--tc:var(--violet)!important}
+.hero-tracks b{font-family:var(--mono);color:var(--violet-ink)}
+.track{background:var(--card);border:1px solid var(--line);border-radius:18px;transition:transform .3s var(--ease),border-color .3s}
+.track:hover{transform:translateY(-4px);border-color:rgba(196,181,253,.5)}
+.track figure::after{background:linear-gradient(180deg,transparent 34%,var(--card))}
+.track-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em}
+.track h3{font-size:24px}
+.track .count{font-family:var(--mono);color:var(--dim);letter-spacing:.12em}
+.track li a{color:var(--ink-2);border-top-color:var(--line)}
+.track li a:hover{color:var(--ink)}
+.filterbox{background:var(--card);border-color:var(--line);border-radius:999px}
+
+/* os 16 manuais: cartões com etapa em mono, título e uma linha do que resolve */
+.man{background:var(--card);border:1px solid var(--line);border-radius:18px;transition:transform .3s var(--ease),border-color .3s}
+.man:hover{transform:translateY(-4px);border-color:rgba(196,181,253,.5)}
+.man .cap::after{background:linear-gradient(180deg,transparent 46%,var(--card))}
+.man .txt b{font-family:var(--mono);font-size:11px;letter-spacing:.12em}
+.man .txt span{font-family:var(--sans);font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.man .txt small{display:block;margin-top:6px;font-size:13px;line-height:1.45;color:var(--dim)}
+
+/* método do dia: callout do blog, barra lateral com gradiente que corre */
+.dia-in{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px}
+.dia-in::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,transparent,var(--cyan),transparent);background-size:100% 200%;animation:mt-flow 2.4s linear infinite}
+@keyframes mt-flow{from{background-position:0 -100%}to{background-position:0 100%}}
+.dia .tag,.dia .fonte{color:var(--cyan)}
+.dia .fonte:hover{border-color:var(--cyan)}
+.dia p{color:var(--ink-body)}
+
+/* demais blocos */
+.guia,.modo,.stage,.open-grid,.lab3d{background:var(--card);border-color:var(--line)}
+.guia,.modo{border-radius:18px}
+.lab3d{border-left-color:var(--violet)}
+.modo .sel,.saida .rot{color:var(--violet-ink);border-color:rgba(196,181,253,.4)}
+.modo .ir{color:var(--cyan)}
+.opt{background:transparent;border-color:var(--line-strong);color:var(--ink-2)}
+.opt:hover{border-color:var(--cyan);color:var(--ink)}
+.opt[aria-pressed="true"]{background:rgba(101,232,255,.12);border-color:var(--cyan);color:var(--ink)}
+.chip{background:var(--card);border-color:var(--line)}
+.chip i{background:var(--violet)}
+.stage{border-color:var(--line)}
+.stage b{color:var(--cyan)}
+.stage:not(:last-child)::after{border-color:var(--violet-ink)}
+.instr span{background:var(--card);border-color:var(--line)}
+
+/* rodapé igual ao do blog (classes mt-* compartilhadas com os manuais) */
+.mt-foot{max-width:var(--maxw);margin:96px auto 0;padding:0 var(--gut) 40px;color:var(--dim);font-size:14px}
+.mt-foot a{color:inherit}
+.mt-foot-big{margin:0 0 56px;display:flex;flex-wrap:wrap;align-items:center;gap:0 clamp(14px,2vw,28px);font-size:clamp(40px,6.6vw,112px);font-weight:600;line-height:1.05;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22)}
+.mt-foot-big i{width:clamp(8px,1vw,14px);height:clamp(8px,1vw,14px);border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+.mt-foot-big em{-webkit-text-stroke:0;font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan);letter-spacing:-.01em}
+.mt-foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:32px;padding-top:40px;border-top:1px solid var(--line)}
+.mt-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--ink)}
+.mt-brand svg{color:var(--cyan)}
+.mt-brand b{color:var(--cyan);font-weight:700}
+.mt-foot-about p{margin:14px 0 18px;max-width:42ch;line-height:1.6;color:var(--ink-2)}
+.mt-foot-col{display:flex;flex-direction:column;gap:10px}
+.mt-foot-col a{color:var(--ink-2);transition:color .2s;width:fit-content}
+.mt-foot-col a:hover{color:var(--cyan)}
+.mt-foot-col a b{font-family:var(--mono);font-weight:500;color:var(--violet-ink);margin-right:6px}
+.mt-foot-h{margin:0 0 4px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.mt-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:13px}
+
+@media(max-width:1100px){.mt-foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mt-foot-about{grid-column:1/-1}}
+@media(max-width:1080px){.navext{margin-left:auto}}
+@media(max-width:720px){
+  .topbar-in{height:60px;gap:14px}
+  .hero video{display:none}
+  .hero .hero-fallback{display:block}
+  .hero-cta .btn--primary{order:-1}   /* no celular o primário vem primeiro */
+  .mt-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:420px){
+  .brand-txt small{display:none}
+  .navext{gap:12px;font-size:13.5px}
+  .mt-foot-base{flex-direction:column}
+}
 </style>
 </head>
 <body>
+<a class="mt-skip" href="#topo">Pular para o conteúdo</a>
 
 <header class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="#topo">
-      <span class="brand-mark"><img src="assets/marca.webp" alt="" width="112" height="112" decoding="async"></span>
-      <span class="brand-txt"><small>Laboratório</small><b>MirandasTech</b></span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
+      <span class="brand-txt"><small>Laboratório</small><b>Mirandas<span>Tech</span></b></span>
     </a>
-    <nav class="navlinks">
+    <nav class="navlinks" aria-label="Nesta página">
       <a href="#trilhas">Trilhas</a>
       <a href="#manuais">Manuais</a>
       <a href="#plugin">Plugin</a>
       <a href="#aberto">Código aberto</a>
-      <a href="https://blog.mirandastech.com.br/">Blog</a>
-      <a href="https://www.mirandastech.com.br/">MirandasTech</a>
     </nav>
+    <nav class="navext" aria-label="MirandasTech"><a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav>
     <div class="nav-actions">
       <button class="icon-btn" id="btBusca" aria-label="Buscar um manual">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       </button>
-      <a class="btn btn--gold btn--sm" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
+      <a class="btn btn--primary btn--sm" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
     </div>
   </div>
 </header>
@@ -280,9 +410,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-hidden="true">
-      <source src="assets/hero.mp4" type="video/mp4">
-    </video>
+    <video muted loop playsinline preload="none" poster="assets/hero-poster.jpg" aria-hidden="true" data-src="assets/hero.mp4"></video>
     <div class="hero-fallback" aria-hidden="true"></div>
 
     <p class="rail rail--l">
@@ -297,10 +425,10 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
       <h1>O campus digital da <em>pesquisa científica</em></h1>
       <p class="hero-sub">Quatro trilhas, do primeiro recorte do problema até a defesa. Cada manual é um instrumento — e cada instrumento tem um lugar no método.</p>
       <div class="hero-cta">
-        <a class="btn btn--primary" href="#trilhas">Explorar trilhas
+        <a class="btn" href="#trilhas">Explorar trilhas
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn" href="#manuais">Ver os 16 manuais</a>
-        <a class="btn btn--gold" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
+        <a class="btn btn--primary" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
       </div>
     </div>
 
@@ -344,7 +472,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
 
       <div class="tracks" id="manuais">
 
-        <article class="track" style="--c:var(--t1)">
+        <article class="track" id="trilha-01" style="--c:var(--t1)">
           <figure>
             <span class="track-tag"><s></s>Trilha 01</span>
             <img src="assets/trilha-01.webp" alt="Busto clássico em holograma azul sobre um pedestal, cercado de diagramas de método" loading="lazy" width="560" height="700">
@@ -361,7 +489,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
           </div>
         </article>
 
-        <article class="track" style="--c:var(--t2)">
+        <article class="track" id="trilha-02" style="--c:var(--t2)">
           <figure>
             <span class="track-tag"><s></s>Trilha 02</span>
             <img src="assets/trilha-02.webp" alt="Lupa luminosa sobre documentos flutuantes numa biblioteca violeta" loading="lazy" width="560" height="700">
@@ -378,7 +506,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
           </div>
         </article>
 
-        <article class="track" style="--c:var(--t3)">
+        <article class="track" id="trilha-03" style="--c:var(--t3)">
           <figure>
             <span class="track-tag"><s></s>Trilha 03</span>
             <img src="assets/trilha-03.webp" alt="Painéis de dados em ciano sobre uma bancada com notebook e caderno aberto" loading="lazy" width="560" height="700">
@@ -395,7 +523,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
           </div>
         </article>
 
-        <article class="track" style="--c:var(--t4)">
+        <article class="track" id="trilha-04" style="--c:var(--t4)">
           <figure>
             <span class="track-tag"><s></s>Trilha 04</span>
             <img src="assets/trilha-04.webp" alt="Artigo impresso, caneta e globo em luz dourada sobre um pedestal" loading="lazy" width="560" height="700">
@@ -477,74 +605,75 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
       <div class="sec-head">
         <div>
           <span class="kicker">O ciclo</span>
-          <h2>Manual a manual,<br>na ordem das decisões</h2>
+          <h2>Manual a manual,<br>na ordem das <em>decisões</em></h2>
         </div>
         <p class="lede">A mesma sequência das quatro trilhas, agora com a cara de cada etapa — os dezesseis, do primeiro recorte do problema até a arguição.</p>
       </div>
       <div class="ciclo">
+        <!-- linhas «o que resolve»: recortes do .lede da capa de cada manual, conferidos em 13/10/2026 -->
         <a class="man" style="--c:var(--t1)" href="https://metodologia.mirandastech.com.br/">
           <span class="cap"><img src="assets/m1-1.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>1.1</b><span>Metodologia da pesquisa científica</span></span>
+          <span class="txt"><b>1.1</b><span>Metodologia da pesquisa científica</span><small>Do tema ao método, cada decisão defensável diante da banca.</small></span>
         </a>
         <a class="man" style="--c:var(--t1)" href="https://manual.mirandastech.com.br/">
           <span class="cap"><img src="assets/m1-2.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>1.2</b><span>Uso de IA na pesquisa científica</span></span>
+          <span class="txt"><b>1.2</b><span>Uso de IA na pesquisa científica</span><small>O que delegar à IA, o que manter com você e como provar qual foi qual.</small></span>
         </a>
         <a class="man" style="--c:var(--t1)" href="https://orientador.mirandastech.com.br/">
           <span class="cap"><img src="assets/m1-3.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>1.3</b><span>Manual do orientador</span></span>
+          <span class="txt"><b>1.3</b><span>Manual do orientador</span><small>Acompanhar orientandos do primeiro encontro à defesa, com evidência.</small></span>
         </a>
         <a class="man" style="--c:var(--t1)" href="https://professor.mirandastech.com.br/">
           <span class="cap"><img src="assets/m1-4.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>1.4</b><span>Manual do professor</span></span>
+          <span class="txt"><b>1.4</b><span>Manual do professor</span><small>Uma disciplina em que a aula produz a entrega e a nota confere o arquivo.</small></span>
         </a>
         <a class="man" style="--c:var(--t2)" href="https://busca.mirandastech.com.br/">
           <span class="cap"><img src="assets/m2-1.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>2.1</b><span>Busca em bases científicas</span></span>
+          <span class="txt"><b>2.1</b><span>Busca em bases científicas</span><small>Da pergunta aos termos, com a mesma busca reprodutível em cada base.</small></span>
         </a>
         <a class="man" style="--c:var(--t2)" href="https://prisma.mirandastech.com.br/">
           <span class="cap"><img src="assets/m2-2.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>2.2</b><span>Revisão sistemática com PRISMA 2020</span></span>
+          <span class="txt"><b>2.2</b><span>Revisão sistemática com PRISMA 2020</span><small>Do protocolo à síntese, com triagem por aprendizado ativo e PRISMA 2020.</small></span>
         </a>
         <a class="man" style="--c:var(--t2)" href="https://bibliometria.mirandastech.com.br/">
           <span class="cap"><img src="assets/m2-3.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>2.3</b><span>Bibliometria com VOSviewer</span></span>
+          <span class="txt"><b>2.3</b><span>Bibliometria com VOSviewer</span><small>Mapear o campo: indicadores, redes e o mapa aberto no VOSviewer.</small></span>
         </a>
         <a class="man" style="--c:var(--t2)" href="https://zotero.mirandastech.com.br/">
           <span class="cap"><img src="assets/m2-4.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>2.4</b><span>Zotero para pesquisa científica</span></span>
+          <span class="txt"><b>2.4</b><span>Zotero para pesquisa científica</span><small>Capturar, organizar e citar com texto e referências sempre sincronizados.</small></span>
         </a>
         <a class="man" style="--c:var(--t3)" href="https://dados.mirandastech.com.br/">
           <span class="cap"><img src="assets/m3-1.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>3.1</b><span>Análise de dados na pesquisa</span></span>
+          <span class="txt"><b>3.1</b><span>Análise de dados na pesquisa</span><small>Do dado bruto ao resultado relatado, com tamanho de efeito e script.</small></span>
         </a>
         <a class="man" style="--c:var(--t3)" href="https://notebook.mirandastech.com.br/">
           <span class="cap"><img src="assets/m3-2.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>3.2</b><span>Gemini Notebook para pesquisa</span></span>
+          <span class="txt"><b>3.2</b><span>Gemini Notebook para pesquisa</span><small>Ler e sintetizar com citação, só a partir das fontes que você entregou.</small></span>
         </a>
         <a class="man" style="--c:var(--t3)" href="https://git.mirandastech.com.br/">
           <span class="cap"><img src="assets/m3-3.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>3.3</b><span>Git e GitHub para pesquisadores</span></span>
+          <span class="txt"><b>3.3</b><span>Git e GitHub para pesquisadores</span><small>Versionar texto, dados e scripts do primeiro commit ao DOI.</small></span>
         </a>
         <a class="man" style="--c:var(--t3)" href="https://plugin.mirandastech.com.br/">
           <span class="cap"><img src="assets/m3-4.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>3.4</b><span>Plugin Pesquisa para Claude e Codex</span></span>
+          <span class="txt"><b>3.4</b><span>Plugin Pesquisa para Claude e Codex</span><small>As onze fases da pesquisa com quatro agentes, registradas e declaradas.</small></span>
         </a>
         <a class="man" style="--c:var(--t4)" href="https://latex.mirandastech.com.br/">
           <span class="cap"><img src="assets/m4-1.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>4.1</b><span>LaTeX com Overleaf e abnTeX2</span></span>
+          <span class="txt"><b>4.1</b><span>LaTeX com Overleaf e abnTeX2</span><small>Escrever nas normas da ABNT com Overleaf e abnTeX2.</small></span>
         </a>
         <a class="man" style="--c:var(--t4)" href="https://cienciaaberta.mirandastech.com.br/">
           <span class="cap"><img src="assets/m4-2.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>4.2</b><span>Pré-registro e ciência aberta</span></span>
+          <span class="txt"><b>4.2</b><span>Pré-registro e ciência aberta</span><small>Registrar o plano antes de coletar e depositar dados e código com DOI.</small></span>
         </a>
         <a class="man" style="--c:var(--t4)" href="https://submissao.mirandastech.com.br/">
           <span class="cap"><img src="assets/m4-3.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>4.3</b><span>Submissão, ORCID e Lattes</span></span>
+          <span class="txt"><b>4.3</b><span>Submissão, ORCID e Lattes</span><small>Do manuscrito pronto ao artigo publicado, com ORCID e Lattes em dia.</small></span>
         </a>
         <a class="man" style="--c:var(--t4)" href="https://defesa.mirandastech.com.br/">
           <span class="cap"><img src="assets/m4-4.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
-          <span class="txt"><b>4.4</b><span>Defesa e qualificação</span></span>
+          <span class="txt"><b>4.4</b><span>Defesa e qualificação</span><small>Do regimento à versão final, com ensaio cronometrado e banca simulada.</small></span>
         </a>
       </div>
     </div>
@@ -577,7 +706,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
         <div class="plugin-grid">
           <div>
             <span class="kicker">Camada operacional</span>
-            <h2>O plugin que coloca a pesquisa em movimento</h2>
+            <h2>O plugin que coloca a pesquisa em <em>movimento</em></h2>
             <p>Os manuais viram skills executáveis dentro do assistente onde você já escreve. O método sai do PDF e entra no fluxo — com registro de cada busca, cada triagem e cada uso de IA.</p>
             <div class="hero-cta" style="justify-content:flex-start;margin-top:22px">
               <a class="btn btn--primary" href="https://plugin.mirandastech.com.br/">Instalar o plugin
@@ -612,7 +741,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
       <div class="sec-head">
         <div>
           <span class="kicker">Na sua bancada</span>
-          <h2>Três formas de usar</h2>
+          <h2>Três formas de <em>usar</em></h2>
         </div>
         <p class="lede">O mesmo método em três lugares: para ler, para executar dentro do assistente e para trabalhar enquanto você lê o artigo no navegador.</p>
       </div>
@@ -645,7 +774,7 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
       <div class="open-grid">
         <div>
           <span class="kicker">Ecossistema aberto</span>
-          <h2>Ciência aberta, maior impacto</h2>
+          <h2>Ciência aberta, maior <em>impacto</em></h2>
           <p>Todo o conteúdo está em repositório público, com licença que permite usar, adaptar e ensinar — desde que a autoria seja citada. Um erro encontrado por você vira correção para todo mundo.</p>
           <div class="hero-cta" style="justify-content:flex-start;margin-top:22px">
             <a class="btn" href="https://github.com/joaopaulomirandamatias">Ver no GitHub
@@ -678,18 +807,20 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
 
 </main>
 
-<footer>
-  <div class="wrap foot">
-    <div><a href="https://www.mirandastech.com.br/"><img class="foot-logo" src="assets/logo.webp" alt="MirandasTech" width="481" height="111" loading="lazy"></a><br>Laboratório de Pesquisa Científica<br>
-      <span class="mono" style="color:var(--dim)">Conteúdo CC BY 4.0 · MATIAS, J. P. M., 2026</span></div>
-    <div class="foot-links">
-      <a href="https://manual.mirandastech.com.br/">Manuais</a>
-      <a href="https://blog.mirandastech.com.br/">Blog</a>
-      <a href="https://plugin.mirandastech.com.br/">Plugin</a>
-      <a href="https://github.com/joaopaulomirandamatias">GitHub</a>
-      <a href="https://www.mirandastech.com.br/">MirandasTech</a>
+<footer class="mt-foot">
+  <p class="mt-foot-big" aria-hidden="true"><span>Estudar</span><i></i><span>construir</span><i></i><em>publicar.</em></p>
+  <div class="mt-foot-grid">
+    <div class="mt-foot-about">
+      <a class="mt-brand" href="https://www.mirandastech.com.br/"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg><span>Mirandas<b>Tech</b></span></a>
+      <p>Tecnologia e inteligência artificial com fundamento. O blog guarda as notas; o site mostra o ciclo, a trilha e o radar.</p>
+      <a class="btn btn--sm" href="https://www.mirandastech.com.br/">Ir para o site <span aria-hidden="true">↗</span></a>
     </div>
+    <nav class="mt-foot-col" aria-label="No site"><p class="mt-foot-h">No site</p><a href="https://www.mirandastech.com.br/#ciclo">O ciclo</a><a href="https://www.mirandastech.com.br/#trilha">A trilha</a><a href="https://www.mirandastech.com.br/#radar">Radar da semana</a><a href="https://www.mirandastech.com.br/agora">Agora</a></nav>
+    <nav class="mt-foot-col" aria-label="No blog"><p class="mt-foot-h">No blog</p><a href="https://blog.mirandastech.com.br/tag/radar/">Radar</a><a href="https://blog.mirandastech.com.br/tag/pesquisa-na-pratica/">Pesquisa na prática</a><a href="https://blog.mirandastech.com.br/#/portal/signup">Newsletter</a></nav>
+    <nav class="mt-foot-col" aria-label="Manuais"><p class="mt-foot-h">Manuais</p><a href="#trilha-01"><b>01</b>Fundamentos</a><a href="#trilha-02"><b>02</b>Busca e revisão</a><a href="#trilha-03"><b>03</b>Dados e ferramentas</a><a href="#trilha-04"><b>04</b>Escrita e entrega</a></nav>
+    <nav class="mt-foot-col" aria-label="Redes"><p class="mt-foot-h">Redes</p><a href="https://github.com/joaopaulomirandamatias" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/joaopaulomirandamatias/" target="_blank" rel="noopener">LinkedIn</a></nav>
   </div>
+  <div class="mt-foot-base"><span>© 2026 MirandasTech · conteúdo CC BY 4.0 · MATIAS, J. P. M.</span><span>Ciência, código e IA, explicados por dentro</span></div>
 </footer>
 
 <script>
@@ -799,6 +930,24 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
       decidir();
     });
   });
+})();
+</script>
+<script>
+/* vídeo do hero: só toca em tela larga e sem prefers-reduced-motion; no celular fica o pôster (nada é baixado) */
+(function(){
+  var v=document.querySelector('.hero video'); if(!v)return;
+  var mq=window.matchMedia('(min-width:721px) and (prefers-reduced-motion:no-preference)');
+  function aplicar(){
+    if(mq.matches){
+      v.autoplay=true; v.preload='auto';
+      if(!v.getAttribute('src')){ v.src=v.dataset.src; }            /* 1ª carga: o autoplay toca sozinho; play() aqui abortaria */
+      else { var p=v.play(); if(p&&p.catch)p.catch(function(){}); } /* retomada depois de pausar */
+    }
+    else { v.autoplay=false; v.pause(); }
+  }
+  if(mq.addEventListener)mq.addEventListener('change',aplicar);
+  window.addEventListener('resize',aplicar);
+  aplicar();
 })();
 </script>
 </body>
