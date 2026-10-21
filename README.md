@@ -46,4 +46,4 @@ Metodologia · Uso de IA · Orientador · Professor · Busca em bases · PRISMA 
 MATIAS, J. P. M. *Laboratório MirandasTech: hub dos manuais de pesquisa científica.* MirandasTech, v1.0, set. 2026. CC BY 4.0.
 
 ## Declaração de uso de IA
-Concebido e construído com assistência de IA (Claude, Anthropic). O vídeo do átrio e as imagens das trilhas são renders gerados por IA, sem correspondência com lugares ou pessoas reais — são ilustração, não registro. O autor responde integralmente pelo conteúdo. Three.js, React, IBM Plex e os serviços citados nos manuais são de terceiros; este projeto não tem vínculo com eles.
+Concebido e construído com assistência de IA (Claude, Anthropic; Codex, OpenAI). O vídeo do átrio e as imagens das trilhas são renders gerados por IA, sem correspondência com lugares ou pessoas reais — são ilustração, não registro. Os 16 fundos minimalistas de O Ciclo foram gerados com imagegen, da OpenAI, e otimizados em WebP; seus temas e prompts estão em `docs/ciclo-imagens.md`. O autor responde integralmente pelo conteúdo. Three.js, React, IBM Plex e os serviços citados nos manuais são de terceiros; este projeto não tem vínculo com eles.
