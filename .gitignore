@@ -1,0 +1,3 @@
+# saídas das checagens das máquinas
+maquinas/*/checks/*.json
+maquinas/*/checks/*.log

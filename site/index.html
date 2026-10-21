@@ -212,6 +212,12 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
 .man .txt b{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--c)}
 .man .txt span{display:block;font-family:var(--cond);font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.16;margin-top:6px;color:#EDF2F8}
 
+/* ---------- a bancada: o método como máquina ---------- */
+/* um card largo por máquina; a grade cresce quando vierem as outras */
+.bancada{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:14px}
+.bancada .man .txt{padding:16px 18px 19px}
+.bancada .man .txt span{font-size:21px}
+
 /* ---------- três formas de usar ---------- */
 .modos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .modo{border:1px solid var(--rule);border-radius:18px;padding:22px;background:rgba(8,16,28,.86);display:flex;flex-direction:column;gap:9px}
@@ -676,6 +682,25 @@ h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
         <a class="man" style="--c:var(--t4)" href="https://defesa.mirandastech.com.br/">
           <span class="cap"><img src="assets/m4-4.webp" alt="" loading="lazy" width="400" height="250" decoding="async"></span>
           <span class="txt"><b>4.4</b><span>Defesa e qualificação</span><small>Do regimento à versão final, com ensaio cronometrado e banca simulada.</small></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ A BANCADA: O MÉTODO COMO MÁQUINA ============ -->
+  <section id="bancada">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker">A bancada</span>
+          <h2>Aperte os botões<br>e veja o <em>método</em> rodar</h2>
+        </div>
+        <p class="lede">Uma etapa do ciclo montada como aparelho, para operar passo a passo. Os números vêm de uma revisão publicada, e o que é ilustrativo está marcado na própria figura.</p>
+      </div>
+      <div class="bancada">
+        <a class="man" style="--c:var(--t2)" href="maquinas/prisma/">
+          <span class="cap"><img src="assets/maq-prisma.webp" alt="Triadora de registros em vista isométrica: cinco bases alimentam uma esteira, a peneira do ASReview separa os registros e 58 estudos chegam ao fim" loading="lazy" width="800" height="500" decoding="async"></span>
+          <span class="txt"><b>2.2 · PRISMA 2020</b><span>Como 9 mil registros viram 58 estudos</span><small>Busque, deduplique e acompanhe o ASReview aprendendo até a regra de parada, com o fluxograma se preenchendo ao lado. Depois mexa na busca para ver o custo em horas de triagem.</small></span>
         </a>
       </div>
     </div>

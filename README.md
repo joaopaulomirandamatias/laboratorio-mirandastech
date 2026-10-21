@@ -4,14 +4,16 @@ Campus digital dos **16 manuais MirandasTech de pesquisa científica**: uma pág
 
 **No ar:** https://lab.mirandastech.com.br/ · torre 3D em https://lab.mirandastech.com.br/3d/ · espelho em https://manual.mirandastech.com.br/lab/
 
-## Duas camadas
+## Camadas
 
 | Caminho | O que é |
 |---|---|
 | `site/index.html` | **O campus.** Página de entrada: as 4 trilhas com os 16 manuais ligados um a um, a camada do plugin, a seção de ciência aberta e um filtro de manuais. Sem framework: HTML, CSS e ~25 linhas de JavaScript. |
 | `site/3d/index.html` | **A torre.** O hub tridimensional original, em React + Three.js, com a sessão WebXR. Continua sendo a visita guiada do campus. |
-| `site/assets/` | Vídeo do átrio (em laço, 1,8 MB), as imagens das quatro trilhas e uma por manual, em WebP. |
-| `site/sitemap.xml` | Só as duas páginas deste host — cada manual vive no próprio subdomínio e precisa do seu próprio sitemap. Regere com `./scripts/sitemap.sh` depois de mexer nas páginas: o `lastmod` sai do git. |
+| `site/maquinas/<nome>/index.html` | **A bancada.** Uma etapa do método montada como máquina interativa, ligada pela seção "A bancada" do campus. Página única e gerada: não edite à mão. A primeira é a do PRISMA 2020 (manual 2.2). |
+| `maquinas/<nome>/` | Fonte de cada máquina, fora de `site/` (não é servido). `model.mjs` é o modelo puro de onde sai todo número da tela, com testes em `node --test`; `node build.mjs` regera a página em `site/maquinas/<nome>/`. O build usa o kit da skill [anatomy](https://github.com/wheresryan22/anatomy) em `~/.claude/skills/anatomy` (ou `ANATOMY_SKILL`). `checks/` tem as checagens com Chrome headless (cliques reais e saltos de quadro). |
+| `site/assets/` | Vídeo do átrio (em laço, 1,8 MB), as imagens das quatro trilhas, uma por manual e uma por máquina, em WebP. |
+| `site/sitemap.xml` | Só as páginas deste host — cada manual vive no próprio subdomínio e precisa do seu próprio sitemap. Regere com `./scripts/sitemap.sh` depois de mexer nas páginas: o `lastmod` sai do git. |
 
 O vídeo do topo é o átrio do campus em movimento; o título que vinha gravado no render foi removido por corte, e o clipe é concatenado com ele mesmo invertido para o laço não saltar. Todo texto da página é HTML sobre as imagens — nada de texto dentro do render, que é onde a geração por IA erra.
 

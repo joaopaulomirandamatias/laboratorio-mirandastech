@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Regera site/sitemap.xml com o lastmod de cada página tirado do git.
-# Rode depois de mexer em site/index.html ou site/3d/index.html.
+# Rode depois de mexer em site/index.html, site/3d/index.html ou numa máquina de site/maquinas/.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 data(){ git log -1 --format=%cs -- "$1"; }
@@ -18,6 +18,12 @@ cat > site/sitemap.xml <<XML
   <url>
     <loc>https://lab.mirandastech.com.br/3d/</loc>
     <lastmod>$(data site/3d/index.html)</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lab.mirandastech.com.br/maquinas/prisma/</loc>
+    <lastmod>$(data site/maquinas/prisma/index.html)</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

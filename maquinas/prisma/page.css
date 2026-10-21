@@ -1,0 +1,85 @@
+.iso{--anatomy-page:#050b18;--anatomy-card:#08142a;--anatomy-paper:#0b1b36;--anatomy-face:#12294d;--anatomy-top:#23497a;--anatomy-shade-0:#0a1630;--anatomy-shade-1:#0f2040;--anatomy-shade-2:#15305a;--anatomy-shade-3:#1b3b6b;--anatomy-lit-top:#2a82a8;--anatomy-lit-shade:#17607f;--anatomy-hi:#b7e8fa;--anatomy-mid:#5b97bd;--anatomy-lo:#335b82;--anatomy-faint:#21426a;--anatomy-lit:#6af3ff;--anatomy-halo:#02060f;--anatomy-dot:#b7e8fa;--anatomy-text:#a9bdd3;--anatomy-strong:#e8f5ff;--anatomy-muted:#6b86a6}
+:root{--bg:#050b18;--panel:#08142a;--line:#17304f;--line2:#24476f;--cy:#38e1f5;--cy2:#8fd8f0;--tx:#a9bdd3;--st:#e8f5ff;--mu:#6b86a6}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body.iso{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#0b1d3b 0,#050b18 60%);color:var(--tx);font:15px/1.55 "Geist",system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.pg{max-width:1560px;margin:0 auto;padding:28px 24px 40px}
+.top{max-width:980px}
+.eyebrow{margin:0 0 8px;font:500 11.5px/1.2 "Geist Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--cy)}
+.eyebrow a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}.eyebrow a:hover{border-bottom-color:currentColor}
+h1{margin:0;font:600 clamp(26px,3.1vw,42px)/1.1 "Geist",sans-serif;letter-spacing:-.02em;color:var(--st);text-wrap:balance}
+h1 em,.idea em{font:italic 400 1.14em "Instrument Serif",serif;color:var(--cy);letter-spacing:0}
+.dica{margin:14px 0 0;min-height:3.2em;max-width:900px;padding:10px 14px;border-left:2px solid var(--cy);background:linear-gradient(90deg,#0a2038,#0a1a30 70%,transparent);color:var(--st);font-size:15.5px}
+.stage{display:grid;grid-template-columns:208px minmax(0,1fr) 350px;gap:18px;align-items:start;margin-top:14px}
+.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:12px}
+.mode{display:grid;grid-template-columns:1fr 1fr;padding:3px;border:1px solid var(--line2);border-radius:999px;background:var(--panel)}
+.mode button{border:0;background:transparent;color:var(--mu);font:500 13px "Geist",sans-serif;padding:7px 0;border-radius:999px;cursor:pointer}
+.mode button[aria-pressed="true"]{background:var(--cy);color:#04202a;font-weight:600}
+.mode button:focus-visible,.step:focus-visible,#sens:focus-visible,.restart:focus-visible{outline:2px solid var(--cy2);outline-offset:2px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.step{width:100%;display:flex;align-items:center;gap:11px;padding:7px 14px 7px 7px;border-radius:999px;border:1px solid var(--line2);background:var(--panel);color:var(--tx);font:500 14px/1.2 "Geist",sans-serif;text-align:left;cursor:pointer;transition:opacity .4s,box-shadow .4s,border-color .4s,background .4s}
+.step .num{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);font:500 13px "Geist Mono",monospace;color:var(--cy2)}
+.step[data-status="todo"]{opacity:.5;cursor:default}
+.step[data-status="done"]{opacity:.42;cursor:default}
+.step[data-status="done"] .num{background:#0c2a3a;border-color:#1f6d82}
+.step[data-status="next"],.step[data-status="active"]{border-color:var(--cy);background:#0a2a42;color:var(--st);box-shadow:0 0 0 1px #38e1f544,0 0 22px -4px #38e1f588}
+.step[data-status="next"] .num,.step[data-status="active"] .num{background:var(--cy);border-color:var(--cy);color:#04202a;font-weight:600}
+.step[data-status="active"]{animation:glow 1.4s ease-in-out infinite}
+.step:disabled{cursor:default}
+@keyframes glow{50%{box-shadow:0 0 0 1px #38e1f566,0 0 30px -2px #38e1f5aa}}
+.restart{align-self:flex-start;color:var(--cy2);font-size:13.5px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#38e1f566}
+.restart:hover{color:var(--cy)}
+.sens{margin-top:6px;padding:14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#09172c,#07111f)}
+.sens label{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.sens-t{font:italic 400 21px/1 "Instrument Serif",serif;color:var(--cy)}
+.sens-s{font-size:12.5px;color:var(--tx)}
+#sens{width:100%;accent-color:var(--cy);margin:0}
+.sens-row{display:flex;align-items:baseline;gap:10px;margin-top:8px}
+#sensOut{font:500 17px "Geist Mono",monospace;color:var(--st)}
+#sensHint{font-size:12px;color:var(--mu);line-height:1.3}
+.sens-n{margin:10px 0 0;font-size:11.5px;color:var(--mu);line-height:1.4}
+.fig{margin:0;min-width:0}
+.plate{position:relative;padding:44px 8px 10px;border:1px solid var(--line2);border-radius:6px;background:linear-gradient(180deg,#07142a,#060e1f)}
+.corners{position:absolute;inset:14px 16px;pointer-events:none;font:500 10.5px/1 "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.corners>span{position:absolute;white-space:nowrap}
+.c-fig{top:0;left:0;color:var(--tx)}
+.c-title{top:0;right:0}
+.c-hint{display:none}
+.c-read{top:0;left:50%;transform:translateX(-50%);color:var(--cy2)}
+.plate .iso-svg{margin:0 auto}
+.foot{margin:6px 10px 2px;font-size:11.5px;line-height:1.45;color:var(--mu)}
+.flowcol{border:1px solid var(--line2);border-radius:6px;background:linear-gradient(180deg,#07142a,#060e1f);padding:14px 10px 10px;position:sticky;top:12px}
+.flowhead{display:flex;flex-direction:column;gap:2px;padding:0 6px 8px}
+.flowhead span{font:500 10.5px "Geist Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--cy)}
+.flowhead b{font:600 15px "Geist",sans-serif;color:var(--st)}
+.flow{width:100%;height:auto;display:block}
+.idea{margin:20px 0 0;font:500 clamp(17px,1.6vw,22px)/1.3 "Geist",sans-serif;color:var(--st);text-align:center}
+/* placas em pé */
+.pm .plate{fill:#08162d;stroke:#2c5f86;stroke-width:1;vector-effect:non-scaling-stroke}
+.pm .stalk{stroke:#3a6c94;stroke-width:.8;stroke-dasharray:2 2}
+.pm .stalk-dot{fill:#38e1f5}
+.pm .h-name{font:600 8.2px "Geist",sans-serif;letter-spacing:.07em;fill:#8fd8f0}
+.pm .h-val{font:500 19px "Geist Mono",monospace;fill:#eaf7ff;font-variant-numeric:tabular-nums}
+.pm .h-val.sm{font-size:12.5px}
+.pm .h-sub{font:400 8px "Geist",sans-serif;fill:#8aa4c0}
+.pm .h-name.tg{font-size:7.4px;font-weight:500;letter-spacing:.02em;text-transform:none;fill:#a9c4de}
+.pm .h-row{font:400 8.2px 'Geist',sans-serif;fill:#a9c4de}.pm .h-row.n{font-family:'Geist Mono',monospace;fill:#eaf7ff}
+/* lâmpadas da torre: a lente apagada fica embaixo; a acesa sobe por opacidade */
+.lamp-off .iso-top{fill:#16283f}.lamp-off .iso-shade,.lamp-off .iso-fill{fill:#0f1c2e}
+.lamp-on{opacity:0}
+.lamp-on[data-c="green"] .iso-top{fill:#7dffb0}.lamp-on[data-c="green"] .iso-shade,.lamp-on[data-c="green"] .iso-fill{fill:#1fbf6d}
+.lamp-on[data-c="amber"] .iso-top{fill:#ffd27a}.lamp-on[data-c="amber"] .iso-shade,.lamp-on[data-c="amber"] .iso-fill{fill:#e0932a}
+.lamp-on[data-c="green"]{filter:drop-shadow(0 0 4px #3dff9a)}.lamp-on[data-c="amber"]{filter:drop-shadow(0 0 4px #ffb84d)}
+#chip{fill:var(--anatomy-top);stroke:var(--anatomy-shade-0);stroke-width:.3}
+/* fluxograma */
+.f-rect{fill:#0a1a33;stroke:#2c5176;stroke-width:1;stroke-dasharray:3 3}
+.f-solid{fill:#0b2342;stroke:#3f8fb8;stroke-width:1;opacity:0}
+.f-box[data-id="inc"] .f-solid{stroke:#38e1f5;fill:#0b3550}
+.f-title{font:600 9.6px "Geist",sans-serif;letter-spacing:.08em;text-transform:uppercase;fill:#8fd8f0}
+.f-line{font:400 10.6px "Geist",sans-serif;fill:#b9cde0;white-space:pre}
+.f-num{font:500 11px "Geist Mono",monospace;fill:#eaf7ff;font-variant-numeric:tabular-nums}
+.f-arrow{fill:none;stroke:#4c86aa;stroke-width:1.2}
+@media (max-width:1180px){.stage{grid-template-columns:1fr}.side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:12px}.side .mode,.side .steps,.side .restart{grid-column:1}.side .sens{grid-column:2;grid-row:1/4}.flowcol{position:static;max-width:520px;margin:0 auto;width:100%}}
+@media (max-width:640px){.side{grid-template-columns:1fr}.side .sens{grid-column:1;grid-row:auto}.pg{padding:18px 12px 28px}}
+@media (prefers-reduced-motion:reduce){.step[data-status="active"]{animation:none}}
+@media (max-width:700px){.c-title{display:none}.c-read{left:auto;right:0;transform:none}.plate{overflow-x:auto}.plate .iso-svg{min-width:640px}.foot{min-width:0;position:sticky;left:10px}}
