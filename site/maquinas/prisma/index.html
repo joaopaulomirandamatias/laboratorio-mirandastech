@@ -194,8 +194,90 @@ h1 em,.idea em{font:italic 400 1.14em "Instrument Serif",serif;color:var(--cy);l
 @media (max-width:640px){.side{grid-template-columns:1fr}.side .sens{grid-column:1;grid-row:auto}.pg{padding:18px 12px 28px}}
 @media (prefers-reduced-motion:reduce){.step[data-status="active"]{animation:none}}
 @media (max-width:700px){.c-title{display:none}.c-read{left:auto;right:0;transform:none}.plate{overflow-x:auto}.plate .iso-svg{min-width:640px}.foot{min-width:0;position:sticky;left:10px}}
-</style></head><body class="iso" data-theme="dark" data-mode="manual">
-<div class="pg">
+</style><style id="campus-shell-style">/* Tokens e classes restritos ao menu/rodapé para preservar os controles da máquina. */
+.campus-shell{--shell-ink:#f5f7fa;--shell-muted:#b7c0cd;--shell-dim:#7d8798;--shell-line:rgba(255,255,255,.1);--shell-cyan:#65e8ff;--shell-violet:#c4b5fd;font-family:"Geist",system-ui,sans-serif;color:var(--shell-ink)}
+.campus-shell a{color:inherit;text-decoration:none}
+.campus-shell a:focus-visible,.campus-shell summary:focus-visible{outline:2px solid var(--shell-cyan);outline-offset:4px;border-radius:4px}
+.campus-header{position:sticky;top:0;z-index:60}
+.campus-shell .topbar{background:rgba(8,12,20,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--shell-line)}
+.campus-shell .wrap{width:min(1512px,100% - 48px);margin-inline:auto}
+.campus-shell .topbar-in{position:relative;min-height:64px;display:flex;align-items:center;gap:24px}
+.campus-shell .brand{display:flex;align-items:center;gap:11px;flex:none}
+.campus-shell .brand svg,.campus-shell .mt-brand svg{color:var(--shell-cyan);flex:none}
+.campus-shell .brand-txt{line-height:1.1}
+.campus-shell .brand-txt small{display:block;font:9.5px "Geist Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--shell-violet)}
+.campus-shell .brand-txt b{font-size:18px;letter-spacing:-.02em}
+.campus-shell .brand-txt b span{color:var(--shell-cyan)}
+.campus-shell .navlinks{display:flex;gap:22px;margin-left:auto;color:var(--shell-muted);font-size:14px}
+.campus-shell .navext{display:flex;gap:18px;color:var(--shell-muted);font-size:14px}
+.campus-shell .navext a::after{content:" ↗";color:var(--shell-cyan)}
+.campus-shell .nav-actions{display:flex;align-items:center;gap:10px}
+.campus-shell .icon-btn{display:grid;place-items:center;flex:none;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--shell-muted)}
+.campus-shell .icon-btn svg{width:17px;height:17px}
+.campus-shell .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid rgba(255,255,255,.18);border-radius:999px;font-size:14px;font-weight:600}
+.campus-shell .btn--primary{background:var(--shell-cyan);border-color:transparent;color:#05070c}
+.campus-shell .navlinks a:hover,.campus-shell .navext a:hover,.campus-shell .mt-foot-col a:hover{color:var(--shell-cyan)}
+.campus-shell .icon-btn:hover,.campus-shell .btn:hover{border-color:var(--shell-cyan)}
+.campus-mobile{display:none}
+.campus-mobile summary{list-style:none;cursor:pointer;padding:9px 14px;border:1px solid rgba(255,255,255,.18);border-radius:999px;font-size:13px}
+.campus-mobile summary::-webkit-details-marker{display:none}
+.campus-mobile[open] summary{border-color:var(--shell-cyan);color:var(--shell-cyan)}
+.campus-mobile nav{position:absolute;top:calc(100% + 8px);right:0;display:grid;gap:3px;width:min(320px,calc(100vw - 40px));padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:16px;background:#0c1220;box-shadow:0 16px 40px #0008}
+.campus-mobile nav a{display:block;min-height:44px;padding:10px 14px;border-radius:8px;color:var(--shell-muted)}
+.campus-mobile nav a:hover{background:rgba(101,232,255,.08);color:var(--shell-cyan)}
+.campus-skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;border-radius:999px;background:#65e8ff;color:#05070c;font-weight:600;text-decoration:none}
+.campus-skip:focus{top:12px}
+.mt-foot.campus-shell{max-width:1560px;margin:80px auto 0;padding:0 24px 40px;color:var(--shell-dim);font-size:14px}
+.campus-shell .mt-foot-big{margin:0 0 56px;display:flex;flex-wrap:wrap;align-items:center;gap:0 clamp(14px,2vw,28px);font-size:clamp(40px,6.6vw,112px);font-weight:600;line-height:1.05;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22)}
+.campus-shell .mt-foot-big i{width:clamp(8px,1vw,14px);height:clamp(8px,1vw,14px);border-radius:50%;background:var(--shell-cyan);box-shadow:0 0 18px var(--shell-cyan)}
+.campus-shell .mt-foot-big em{-webkit-text-stroke:0;font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;color:var(--shell-cyan);letter-spacing:-.01em}
+.campus-shell .mt-foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:32px;padding-top:40px;border-top:1px solid var(--shell-line)}
+.campus-shell .mt-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--shell-ink)}
+.campus-shell .mt-brand b{color:var(--shell-cyan)}
+.campus-shell .mt-foot-about p{margin:14px 0 18px;max-width:42ch;line-height:1.6;color:var(--shell-muted)}
+.campus-shell .mt-foot-col{display:flex;flex-direction:column;gap:10px}
+.campus-shell .mt-foot-col a{color:var(--shell-muted);width:fit-content}
+.campus-shell .mt-foot-col a b{font:500 12px "Geist Mono",monospace;color:var(--shell-violet);margin-right:6px}
+.campus-shell .mt-foot-h{margin:0 0 4px;font:12px "Geist Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--shell-dim)}
+.campus-shell .mt-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--shell-line);font-size:13px}
+@media(min-width:1181px){.side,.flowcol{top:80px}}
+@media(max-width:1100px){.campus-shell .mt-foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.campus-shell .mt-foot-about{grid-column:1/-1}}
+@media(max-width:1080px){.campus-shell .navlinks{display:none}.campus-shell .navext{margin-left:auto}.campus-mobile{display:block}}
+@media(max-width:720px){
+  .campus-shell .wrap{width:calc(100% - 32px)}
+  .campus-shell .topbar-in{min-height:60px;gap:14px}
+  .campus-shell .navext{display:none}
+  .campus-shell .nav-actions{margin-left:auto}
+  .campus-shell .nav-actions .btn{display:none}
+  .campus-shell .mt-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mt-foot.campus-shell{padding:0 16px 32px}
+}
+@media(max-width:420px){.campus-shell .brand-txt small{display:none}.campus-shell .icon-btn{display:none}.campus-shell .mt-foot-base{flex-direction:column}}
+</style></head><body class="iso" data-theme="dark" data-mode="manual"><!-- campus-header:start --><a class="campus-skip" href="#conteudo">Pular para a máquina</a><div class="campus-shell campus-header"><header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="/#topo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
+      <span class="brand-txt"><small>Laboratório</small><b>Mirandas<span>Tech</span></b></span>
+    </a>
+    <nav class="navlinks" aria-label="Navegar pelo laboratório">
+      <a href="/#trilhas">Trilhas</a>
+      <a href="/#manuais">Manuais</a>
+      <a href="/#plugin">Plugin</a>
+      <a href="/#aberto">Código aberto</a>
+    </nav>
+    <nav class="navext" aria-label="MirandasTech"><a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="/#manuais" aria-label="Buscar um manual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+      <a class="btn btn--primary btn--sm" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
+    </div><details class="campus-mobile"><summary>Menu</summary><nav aria-label="Menu do laboratório">
+      <a href="/#trilhas">Trilhas</a>
+      <a href="/#manuais">Manuais</a>
+      <a href="/#plugin">Plugin</a>
+      <a href="/#aberto">Código aberto</a>
+    <a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav></details></div></header></div><!-- campus-header:end -->
+<main class="pg" id="conteudo">
   <header class="top">
     <p class="eyebrow"><a href="/">Laboratório MirandasTech</a> · <a href="https://prisma.mirandastech.com.br/">Manual 2.2 · Revisão sistemática com PRISMA 2020</a></p>
     <h1>Como <em>9 mil</em> registros viram <em>58</em> estudos numa revisão sistemática?</h1>
@@ -233,7 +315,21 @@ h1 em,.idea em{font:italic 400 1.14em "Instrument Serif",serif;color:var(--cy);l
     </aside>
   </div>
   <p class="idea">A grande ideia: <em>cada registro que sai do funil tem um motivo anotado.</em></p>
-</div><script type="module">const AZIMUTH = 45;
+</main><!-- campus-footer:start --><footer class="mt-foot campus-shell">
+  <p class="mt-foot-big" aria-hidden="true"><span>Estudar</span><i></i><span>construir</span><i></i><em>publicar.</em></p>
+  <div class="mt-foot-grid">
+    <div class="mt-foot-about">
+      <a class="mt-brand" href="https://www.mirandastech.com.br/"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg><span>Mirandas<b>Tech</b></span></a>
+      <p>Tecnologia e inteligência artificial com fundamento. O blog guarda as notas; o site mostra o ciclo, a trilha e o radar.</p>
+      <a class="btn btn--sm" href="https://www.mirandastech.com.br/">Ir para o site <span aria-hidden="true">↗</span></a>
+    </div>
+    <nav class="mt-foot-col" aria-label="No site"><p class="mt-foot-h">No site</p><a href="https://www.mirandastech.com.br/#ciclo">O ciclo</a><a href="https://www.mirandastech.com.br/#trilha">A trilha</a><a href="https://www.mirandastech.com.br/#radar">Radar da semana</a><a href="https://www.mirandastech.com.br/agora">Agora</a></nav>
+    <nav class="mt-foot-col" aria-label="No blog"><p class="mt-foot-h">No blog</p><a href="https://blog.mirandastech.com.br/tag/radar/">Radar</a><a href="https://blog.mirandastech.com.br/tag/pesquisa-na-pratica/">Pesquisa na prática</a><a href="https://blog.mirandastech.com.br/#/portal/signup">Newsletter</a></nav>
+    <nav class="mt-foot-col" aria-label="Manuais"><p class="mt-foot-h">Manuais</p><a href="/#trilha-01"><b>01</b>Fundamentos</a><a href="/#trilha-02"><b>02</b>Busca e revisão</a><a href="/#trilha-03"><b>03</b>Dados e ferramentas</a><a href="/#trilha-04"><b>04</b>Escrita e entrega</a></nav>
+    <nav class="mt-foot-col" aria-label="Redes"><p class="mt-foot-h">Redes</p><a href="https://github.com/joaopaulomirandamatias" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/joaopaulomirandamatias/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  </div>
+  <div class="mt-foot-base"><span>© 2026 MirandasTech · conteúdo CC BY 4.0 · MATIAS, J. P. M.</span><span>Ciência, código e IA, explicados por dentro</span></div>
+</footer><!-- campus-footer:end --><script type="module">const AZIMUTH = 45;
 const ELEVATION = 30;
 const SHADES = 4;
 const RADIANS = Math.PI / 180;

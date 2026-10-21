@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as S0 from "./scene.mjs";
 import * as X from "./parts2.mjs";
 import { BASES, FONTE } from "./model.mjs";
+import { withCampusShell } from "./shell.mjs";
 const { k, P, W, H, at, key, base, belt, plinth, deckStatic, bin, drum, lanes, hopper, gantry, housing, BINS, DRUM, HOP1, QT, ETR, BELT_A, BELT_B, BELT_C, BELT_D, BELT_E, GANTRY_B, GANTRY_D, S, L, D, slab, cyl, WORLD } = S0;
 const SKILL = process.env.ANATOMY_SKILL || join(homedir(), ".claude/skills/anatomy");
 const { kitScript } = await import(join(SKILL, "scripts/inline-kit.mjs"));
@@ -157,5 +158,6 @@ const modelSrc = rd("model.mjs").replace(/^export /gm, "");
 
 const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Máquina PRISMA · Laboratório MirandasTech</title><style>${fontCss}${k.ISO_CSS}${css}</style></head><body class="iso" data-theme="dark" data-mode="manual">${body}<script type="module">${(kitScript() + "\n" + modelSrc + "\n" + live).replace(/<\/(script)/gi, "<\\/$1")}</script></body></html>`;
 // A saída vai direto para a pasta servida pelo Caddy.
-writeFileSync(join(HERE, "../../site/maquinas/prisma/index.html"), html);
+const campus = readFileSync(join(HERE, "../../site/index.html"), "utf8");
+writeFileSync(join(HERE, "../../site/maquinas/prisma/index.html"), withCampusShell(html, campus));
 console.log("index.html", (html.length / 1024).toFixed(0) + " KB", "· montagens", items.length, "· escala", P.scale.toFixed(3));
