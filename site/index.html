@@ -380,6 +380,8 @@ h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
   .mt-foot-base{flex-direction:column}
 }
 </style>
+<link rel="stylesheet" href="ciclo.css">
+<script src="ciclo.js" defer></script>
 </head>
 <body>
 <a class="mt-skip" href="#topo">Pular para o conteúdo</a>
@@ -600,12 +602,12 @@ h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
   </section>
 
   <!-- ============ O CICLO, MANUAL A MANUAL ============ -->
-  <section id="ciclo">
+  <section id="ciclo" aria-labelledby="ciclo-titulo">
     <div class="wrap">
       <div class="sec-head">
         <div>
           <span class="kicker">O ciclo</span>
-          <h2>Manual a manual,<br>na ordem das <em>decisões</em></h2>
+          <h2 id="ciclo-titulo">Manual a manual,<br>na ordem das <em>decisões</em></h2>
         </div>
         <p class="lede">A mesma sequência das quatro trilhas, agora com a cara de cada etapa — os dezesseis, do primeiro recorte do problema até a arguição.</p>
       </div>
