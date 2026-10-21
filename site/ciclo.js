@@ -14,6 +14,7 @@
       title: link.querySelector('.txt span').textContent,
       description: link.querySelector('.txt small').textContent,
       image: link.querySelector('img').getAttribute('src'),
+      background: 'assets/ciclo/m' + link.querySelector('.txt b').textContent.trim().replace('.', '-') + '.webp',
       href: link.getAttribute('href')
     };
   });
@@ -76,11 +77,11 @@
     trackNav.appendChild(button);
   });
 
-  function picture(slide) {
+  function picture(slide, thumbnail) {
     var img = document.createElement('img');
     img.className = 'cycle-image';
     img.alt = '';
-    img.src = slide.image;
+    img.src = thumbnail ? slide.image : slide.background;
     img.decoding = 'async';
     return img;
   }
@@ -107,7 +108,7 @@
       card.className = 'cycle-card';
       card.dataset.index = index;
       card.setAttribute('aria-label', 'Ver etapa ' + (index + 1) + ' de 16: ' + next.title);
-      var img = picture(next);
+      var img = picture(next, true);
       img.className = '';
       card.appendChild(img);
       var text = document.createElement('span');
