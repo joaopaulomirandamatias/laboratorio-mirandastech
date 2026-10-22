@@ -5,7 +5,7 @@ const $ = id => document.getElementById(id);
 const experience = document.querySelector('.experience');
 const stage = document.querySelector('.stage');
 const media = matchMedia('(prefers-reduced-motion: reduce)');
-let currentStep = -1, progress = 0, sceneApi = null, isFlat = false, paused = media.matches;
+let currentStep = -1, progress = 0, sceneApi = null, isFlat = true, paused = media.matches;
 let state = { context: true, action: 'read', allowSend: false };
 let result = simulate(state);
 
@@ -36,11 +36,15 @@ function renderSimulation() {
     const li = make('li'); li.dataset.status = entry.status;
     li.append(make('strong', entry.stage), make('span', entry.detail)); return li;
   }));
+  $('poster-status').textContent = result.status === 'blocked' ? '×' : '✓';
+  $('poster-status').dataset.status = result.status;
   sceneApi?.update(currentStep, progress, result);
 }
 function renderStep(index) {
   currentStep = index;
   stage.classList.toggle('is-step', index >= 0);
+  $('scene-toolbar').hidden = index < 0;
+  $('machine-plate').dataset.active = String(index);
   $('hero-copy').hidden = index >= 0; $('step-copy').hidden = index < 0;
   if (index >= 0) {
     const step = STAGES[index];
@@ -63,8 +67,7 @@ function renderStep(index) {
 }
 function metrics() {
   const top = experience.getBoundingClientRect().top + window.scrollY;
-  const header = document.querySelector('.campus-header')?.getBoundingClientRect().height || 65;
-  return { start: top - header, range: Math.max(1, experience.offsetHeight - stage.offsetHeight) };
+  return { start: top, range: Math.max(1, experience.offsetHeight - stage.offsetHeight) };
 }
 function goTo(index, smooth = true) {
   const { start, range } = metrics();
@@ -78,6 +81,7 @@ function onScroll() {
   const index = Math.min(5, Math.floor(progress * 7 + .001) - 1);
   if (index !== currentStep) renderStep(index);
   $('story-progress').style.width = `${progress * 100}%`;
+  $('machine-plate').style.setProperty('--lift', `${media.matches ? 0 : -progress * 14}px`);
   sceneApi?.update(currentStep, progress, result);
 }
 let scrollFrame = 0;
@@ -85,18 +89,30 @@ const scheduleScroll = () => {
   if (scrollFrame) return;
   scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; onScroll(); });
 };
-function flatView(value, failed = false) {
+function flatView(value) {
   isFlat = value;
   $('canvas-host').hidden = value; $('scene-labels').hidden = value;
   $('scene-fallback').hidden = !value;
   $('flat-view').setAttribute('aria-pressed', String(value));
-  $('flat-view').textContent = value ? 'Visão 3D' : 'Visão 2D';
-  $('renderer-label').textContent = value ? 'Visão das seis camadas' : 'Arraste na horizontal para girar';
-  if (failed) {
-    $('flat-view').hidden = true; $('pause-motion').hidden = true;
-    $('renderer-label').textContent = 'Visão 2D · aula completa disponível';
-  }
+  $('flat-view').textContent = value ? 'Explorar em 3D' : 'Visão ilustrada';
+  $('pause-motion').hidden = value;
+  $('renderer-label').textContent = value ? 'Visualização ilustrada · selecione uma camada' : 'Arraste na horizontal para girar';
   sceneApi?.setFlat(value);
+}
+function open3D() {
+  if (!isFlat) { flatView(true); return; }
+  if (!sceneApi) {
+    try { sceneApi = createScene($('canvas-host'), $('scene-labels'), { onSelect: goTo, reducedMotion: media.matches, onFailure: unavailable3D }); }
+    catch { sceneApi = null; }
+  }
+  if (!sceneApi) { unavailable3D(); return; }
+  flatView(false);
+  sceneApi.update(currentStep, progress, result);
+}
+function unavailable3D() {
+  flatView(true);
+  $('flat-view').hidden = true;
+  $('renderer-label').textContent = 'Visualização ilustrada · aula completa disponível';
 }
 
 // Input handlers only update simulation state; they never submit or call a service.
@@ -127,18 +143,13 @@ $('pause-motion').addEventListener('click', () => {
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
-$('flat-view').addEventListener('click', () => flatView(!isFlat));
+$('flat-view').addEventListener('click', open3D);
 media.addEventListener('change', () => {
   paused = media.matches; sceneApi?.setReduced(media.matches);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
-try {
-  sceneApi = createScene($('canvas-host'), $('scene-labels'), { onSelect: goTo, reducedMotion: media.matches, onFailure: () => flatView(true, true) });
-} catch (error) {
-  console.warn('Visão 3D indisponível; a aula continua em 2D.', error.message);
-}
-flatView(!sceneApi, !sceneApi);
+flatView(true);
 $('scene-toolbar').hidden = false; $('simulation-ui').hidden = false;
 document.body.classList.add('lesson-ready');
 $('pause-motion').setAttribute('aria-pressed', String(paused));

@@ -14,7 +14,9 @@
 <meta property="og:image" content="https://lab.mirandastech.com.br/assets/maq-agentes.webp">
 <link rel="canonical" href="https://lab.mirandastech.com.br/maquinas/agentes/">
 <link rel="icon" href="../../assets/favicon.png">
-<link rel="preload" href="../../assets/fonts/Geist_normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/Spectral-Regular.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="../../assets/agentes-terrain.webp" as="image">
+<link rel="preload" href="../../assets/agentes-machine.webp" as="image">
 <style>@font-face{font-family:Geist;src:url('../../assets/fonts/Geist_normal.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:'Geist Mono';src:url('../../assets/fonts/GeistMono_normal.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:'Instrument Serif';src:url('../../assets/fonts/InstrumentSerif_italic.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap}
@@ -79,6 +81,118 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
 /* Leave the hero controls above the model on narrow screens. */
 @media(max-width:520px){.scene-wrap{top:380px}.stage.is-step .scene-wrap{top:350px}}
 @media(max-height:740px) and (max-width:900px){.stage{min-height:0}.lesson-copy h1{font-size:46px}.hero-sub{font-size:14px}.hero-desc{display:none}.hero-actions{margin-top:18px}.back-link{margin-bottom:13px}.scene-wrap{top:270px;bottom:65px}.stage.is-step .scene-wrap{top:340px}#step-copy h2{font-size:25px}.step-body{font-size:10px}.step-control{margin-top:9px;padding:7px 0}.scene-toolbar{bottom:68px}.scene-label{font-size:8px}.step-result{font-size:10px}}
+
+/* Visual direction: the approved cinematic cutaway, with editable interface text. */
+@font-face{font-family:'Instrument Serif';src:url('../../assets/fonts/InstrumentSerif-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+:root{--header:80px}
+.campus-header{position:fixed!important;inset:0 0 auto;z-index:60}
+.campus-shell .lesson-header{background:transparent;border:0;backdrop-filter:none}
+.lesson-header-inner{padding:0 4vw;min-height:80px!important;gap:64px!important}
+.lesson-header .brand-txt small{display:none}.lesson-header .brand-txt b{font-size:21px}
+.lesson-links{display:flex;align-items:center;gap:52px;font-size:15px;color:#c0ccdc}
+.lesson-links a:hover,.lesson-links a[aria-current=page]{color:#fff}
+.lesson-edition{margin-left:auto;font:9px var(--mono);letter-spacing:.16em;color:#87a4c6;white-space:nowrap;border-left:1px solid #6fa3dc55;padding-left:27px}
+.lesson-menu{display:none}
+.experience{height:100svh;min-height:650px}.lesson-ready .experience{height:700svh}
+.stage{top:0;height:100svh;min-height:650px;border-bottom:0}
+.stage-glow{background:url('../../assets/agentes-terrain.webp') center/cover no-repeat;opacity:1}
+.stage-glow:after{display:none}
+.lesson-copy{top:18.4vh;left:4vw;width:39%;max-width:620px}
+.stage:not(.is-step) .back-link{display:none}
+.eyebrow{font-size:10px;letter-spacing:.31em;margin-bottom:24px}
+.lesson-copy h1{font-family:var(--serif);font-size:clamp(78px,7vw,120px);font-weight:400;line-height:.91;letter-spacing:-.02em}
+.lesson-copy h1 em{letter-spacing:-.02em;color:#75a5df}
+.hero-sub{font-size:clamp(20px,1.7vw,28px);color:#b8c8df;margin-top:27px;line-height:1.6}
+.hero-actions{margin-top:37px;gap:26px;flex-wrap:nowrap}
+.hero-actions .primary{height:66px;min-width:clamp(220px,17.7vw,282px);justify-content:space-between;padding:0 27px;font-size:14px;border-radius:6px;background:#b96446;border-color:#d98a6a66;box-shadow:inset 0 1px #ffc9ae22,inset 0 -15px 30px #6b2c1618}
+.hero-actions .primary:hover{background:#cb7856}
+.hero-actions .secondary{height:66px;min-width:clamp(160px,11.7vw,186px);display:inline-flex;align-items:center;justify-content:space-between;padding:0 24px;text-decoration:none;font-size:14px;color:#d5dfed;border:1px solid #8299b54d;border-radius:6px;background:#080f1777}
+.hero-actions img{flex:none;opacity:.85}.hero-actions .secondary:hover{border-color:#92b5e3;background:#14233a99}
+.lesson-meta{display:none}
+.scene-wrap{left:26%;right:0;width:74%;top:-15px;height:calc(100% - 65px)}
+.scene-caption{display:none}
+.scene-label{font-size:13px;letter-spacing:.01em;padding:9px 10px 9px 31px;background:none;color:#b9c9df}
+.scene-label:before{width:23px;border-color:#87acd488}.scene-label:after{width:5px;height:5px;top:calc(50% - 2px)}
+.scene-label.side-left{transform:translate(-100%,-50%);padding:9px 32px 9px 10px}
+.scene-label.side-left:before{right:0;left:auto}.scene-label.side-left:after{right:0;left:auto}
+.scene-toolbar{top:98px;right:4vw}.scene-toolbar button{background:#07101ac4}
+.story-bottom{bottom:50px;left:6.6vw;right:6.6vw;gap:60px}
+.step-nav a{font-size:14px;gap:4px;padding-top:16px;min-height:60px}
+.step-nav b{font-size:12px;color:#8ba4c5}
+.step-nav a>span:last-child{font:18px/1.2 var(--serif);letter-spacing:.015em}
+.step-dot{width:10px;height:10px;top:-5px}
+.stage:not(.is-step) .step-nav li:first-child b{color:#d88361}
+.stage:not(.is-step) .step-nav li:first-child a>span:last-child{color:#f2e6e1}
+.stage:not(.is-step) .step-nav li:first-child .step-dot{background:var(--copper);border-color:var(--copper)}
+.scroll-hint{gap:10px;font-size:10px;min-width:110px}
+.progress-rail{display:none}
+.stage.is-step .lesson-copy{top:14vh;width:35%;max-width:510px}
+.stage.is-step .back-link{margin-bottom:35px}
+#step-copy h2{font-family:var(--serif);font-size:clamp(38px,3.7vw,61px);font-weight:400;line-height:1.05;letter-spacing:-.01em}
+@media(max-width:1180px) and (min-width:901px){.lesson-header-inner{gap:42px!important}.lesson-links{gap:30px}.lesson-edition{font-size:7px;padding-left:18px}.lesson-copy{width:43%}.hero-actions{gap:15px}.hero-actions .primary{min-width:210px;padding:0 18px}.hero-actions .secondary{min-width:150px;padding:0 18px}.scene-label{font-size:11px}}
+@media(max-width:900px){
+ .lesson-header-inner{padding:0 24px;min-height:70px!important;gap:30px!important}.lesson-links{gap:25px;font-size:13px}.lesson-edition{display:none}
+ .stage{min-height:700px}.lesson-copy{top:15vh;left:5vw;width:70%;max-width:none}.lesson-copy h1{font-size:83px;width:auto}.hero-sub{font-size:20px;margin-top:20px}.eyebrow{font-size:9px;margin-bottom:20px}.hero-actions{margin-top:25px;gap:15px}.hero-actions .primary,.hero-actions .secondary{height:52px;min-width:0;font-size:12px;padding:0 20px;gap:20px}.hero-actions .primary{min-width:220px}.hero-actions .secondary{min-width:160px}
+ .scene-wrap{top:365px;bottom:85px;left:11%;width:89%;height:auto}.scene-label{font-size:10px;padding-left:25px}.scene-label.side-left{padding-right:25px}
+ .story-bottom{bottom:25px;left:5vw;right:5vw;gap:0}.step-nav a{min-height:48px}.step-nav b{font-size:10px}.step-nav a>span:last-child{font-size:14px}.step-dot{width:8px;height:8px;top:-4px}
+ .scene-toolbar{top:auto;bottom:90px;right:20px}.stage.is-step .lesson-copy{top:90px;left:5vw;width:90%;max-width:none}.stage.is-step .back-link{margin-bottom:20px}.stage.is-step .scene-wrap{top:365px}.step-arrows{top:0}#step-copy h2{font-size:35px;max-width:25ch}.stage.is-step .step-body{max-width:60ch}
+}
+@media(max-width:600px){
+ .lesson-header-inner{padding:0 20px;min-height:65px!important;gap:0!important}.lesson-header .brand-txt b{font-size:19px}.lesson-links{display:none}.lesson-menu{display:block;margin-left:auto;position:relative}.lesson-menu summary{font-size:11px;border:1px solid #6fa3dc55;padding:8px 14px;border-radius:4px;list-style:none;cursor:pointer}.lesson-menu summary::-webkit-details-marker{display:none}.lesson-menu nav{position:absolute;right:0;top:calc(100% + 10px);display:grid;gap:8px;min-width:180px;background:#0b1422;padding:15px;border:1px solid var(--line);border-radius:6px}.lesson-menu nav a{padding:6px;font-size:12px}
+ .stage{min-height:700px}.lesson-copy{top:98px;left:22px;right:22px;width:auto}.lesson-copy h1{font-size:68px}.eyebrow{font-size:8px;margin-bottom:21px}.hero-sub{font-size:16px;white-space:nowrap;margin-top:18px}.hero-actions{margin-top:24px;gap:11px}.hero-actions .primary{min-width:0;width:calc(60% - 6px);padding:0 14px;font-size:10px;gap:12px}.hero-actions .secondary{min-width:0;width:calc(40% - 5px);padding:0 14px;font-size:10px;gap:10px}.hero-actions img{width:17px;height:17px}
+ .scene-wrap{top:355px;bottom:65px;left:-8%;width:116%}.scene-label{font-size:9px}.story-bottom{bottom:16px;left:22px;right:16px}.step-nav a{min-height:39px;padding-top:12px}.step-nav a>span:last-child{font:10px/1.4 Geist,sans-serif;letter-spacing:-.02em}.step-nav b{font-size:8px}.step-dot{width:6px;height:6px;top:-3px}
+ .stage.is-step .lesson-copy{top:85px;left:22px;right:22px;width:auto}.stage.is-step .back-link{margin-bottom:17px}.stage.is-step .scene-wrap{top:385px}#step-copy h2{font-size:30px}.scene-toolbar{bottom:69px;right:12px}.scene-toolbar button{font-size:7px}.stage.is-step .step-body{font-size:11px}
+}
+@media(max-height:740px) and (max-width:900px){.stage{min-height:0}.lesson-copy{top:83px}.lesson-copy h1{font-size:57px}.eyebrow{margin-bottom:15px}.hero-sub{font-size:14px;margin-top:16px}.hero-actions{margin-top:18px}.hero-actions .primary,.hero-actions .secondary{height:43px}.scene-wrap{top:300px;bottom:60px}.stage.is-step .lesson-copy{top:80px}.stage.is-step .scene-wrap{top:355px}.stage.is-step #step-copy h2{font-size:26px}.stage.is-step .step-body{font-size:10px}.stage.is-step .back-link{margin-bottom:12px}}
+.campus-shell.campus-header .lesson-header{background:transparent;border:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+.campus-shell .lesson-header .brand-txt small{display:none}
+.campus-shell .lesson-header .brand-txt b{font-size:21px}
+@font-face{font-family:Spectral;src:url('../../assets/fonts/Spectral-Regular.woff') format('woff');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:Spectral;src:url('../../assets/fonts/Spectral-Italic.woff') format('woff');font-style:italic;font-weight:400;font-display:swap}
+.lesson-copy h1,.lesson-copy h1 em{font-family:Spectral,Georgia,serif;font-size:clamp(78px,6.55vw,112px);letter-spacing:-.045em;line-height:.93}
+@media(max-width:900px){.lesson-copy h1,.lesson-copy h1 em{font-size:72px}}
+@media(max-width:600px){.lesson-copy h1,.lesson-copy h1 em{font-size:58px}}
+@media(max-height:740px) and (max-width:900px){.lesson-copy h1,.lesson-copy h1 em{font-size:49px}}
+
+/* Rendered opening artwork and live chapter controls share the same composition. */
+.scene-fallback{position:absolute;inset:0;padding:0;display:block}
+.machine-plate{position:absolute;left:16.5%;top:4%;width:58%;height:89%;transform:translateY(var(--lift,0px));transition:transform .65s ease}
+.machine-art,.machine-energy{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.machine-art{object-fit:fill;filter:drop-shadow(0 16px 27px #0006)}
+.machine-energy{overflow:visible;opacity:.85}.machine-energy path{fill:none;stroke:#80d5ff;stroke-width:3}.energy-halo{filter:url(#energy-glow);stroke-width:13!important;opacity:.8}.energy-thread{stroke-dasharray:2 13;stroke-linecap:round}
+.poster-status{position:absolute;left:54.1%;top:27.3%;font:24px/1 Geist,sans-serif;color:white;text-shadow:0 0 10px #c8fff0;transform:skewY(9deg)}
+.poster-status[data-status=blocked]{color:#ffe3d4}
+.poster-label{position:absolute;z-index:2;color:#bfd0e6;font-size:14px;letter-spacing:.01em;text-decoration:none;white-space:nowrap;padding:12px 0 12px 26px;transform:translateY(-50%);text-shadow:0 2px 8px #000}
+.poster-label:before{content:'';position:absolute;left:-53px;top:50%;width:70px;border-top:1px solid #a4bedc88}
+.poster-label:after{content:'';position:absolute;left:13px;top:calc(50% - 3px);width:6px;height:6px;background:#96bcea;border-radius:50%;box-shadow:0 0 9px #93bbec22}
+.poster-label:hover,.poster-label[aria-current=step]{color:#fff}.poster-label[aria-current=step]:after{background:#da8d6b;box-shadow:0 0 15px #da8d6baa}
+.poster-label-0,.poster-label-2,.poster-label-3,.poster-label-4{padding:12px 30px 12px 0;transform:translate(-100%,-50%)}
+.poster-label-0:before,.poster-label-2:before,.poster-label-3:before,.poster-label-4:before{left:auto;right:-50px}
+.poster-label-0:after,.poster-label-2:after,.poster-label-3:after,.poster-label-4:after{left:auto;right:13px}
+.poster-label-0{left:5%;top:84%}.poster-label-1{left:66%;top:72%}.poster-label-2{left:28%;top:56%}.poster-label-3{left:40%;top:40%}.poster-label-4{left:50%;top:23%}.poster-label-5{left:98%;top:9%}
+.scene-caption{display:flex;bottom:12px;right:5%;font-size:8px;opacity:.7}
+.scene-wrap:has(#scene-fallback:not([hidden])){pointer-events:none}.scene-fallback .poster-label{pointer-events:auto}
+.stage.is-step .machine-plate{transform:translateY(var(--lift,0px)) scale(1.025)}
+@media(max-width:1180px) and (min-width:901px){.poster-label{font-size:11px}.poster-label-5{left:92%}}
+@media(max-width:900px){.machine-plate{left:24%;width:52%;top:0;height:93%}.poster-label{font-size:10px}.poster-label:before{width:37px;left:-20px}.poster-label-0:before,.poster-label-2:before,.poster-label-3:before,.poster-label-4:before{left:auto;right:-17px}.poster-status{font-size:15px}.scene-caption{display:none}}
+@media(max-width:600px){.machine-plate{left:20%;width:56%;top:0;height:94%}.poster-label{font-size:9px;padding-left:17px}.poster-label:after{left:7px;width:4px;height:4px;top:calc(50% - 2px)}.poster-label-0,.poster-label-2,.poster-label-3,.poster-label-4{padding:10px 19px 10px 0}.poster-label-0:after,.poster-label-2:after,.poster-label-3:after,.poster-label-4:after{left:auto;right:7px}.poster-label-0:before,.poster-label-2:before,.poster-label-3:before,.poster-label-4:before{right:-20px}.poster-status{font-size:11px}.machine-energy path{stroke-width:4}.stage.is-step .machine-plate{height:88%}}
+
+.stage:not(.is-step) .scene-caption{display:none}
+.stage.is-step .scene-caption{right:4%;bottom:35px}
+
+
+.scene-caption{display:none!important}
+@media(max-width:600px){.step-nav a>span:last-child{font-size:8.5px;letter-spacing:-.025em;padding-right:3px}.step-nav ol{column-gap:2px}}
+@media(min-width:901px){
+ .eyebrow{font-size:12px}
+ .hero-actions .primary{font-size:17px}.hero-actions .secondary{font-size:16px}
+ .poster-label{font-size:16px}
+ .step-nav b{font-size:14px}
+ .step-nav a>span:last-child{font:14px/1.4 Geist,sans-serif;letter-spacing:0}
+ .stage:not(.is-step) .step-nav li:first-child a>span:last-child{font:21px/1.15 Spectral,Georgia,serif}
+ .scroll-hint{font-size:11px}
+}
+@media(min-width:901px) and (max-width:1180px){.hero-actions .primary,.hero-actions .secondary{font-size:13px}.poster-label{font-size:12px}.step-nav a>span:last-child{font-size:12px}}
 </style>
 <style id="campus-shell-style">/* Tokens e classes restritos ao menu/rodapé para preservar os controles da máquina. */
 .campus-shell{--shell-ink:#f5f7fa;--shell-muted:#b7c0cd;--shell-dim:#7d8798;--shell-line:rgba(255,255,255,.1);--shell-cyan:#65e8ff;--shell-violet:#c4b5fd;font-family:"Geist",system-ui,sans-serif;color:var(--shell-ink)}
@@ -140,43 +254,26 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
 }
 @media(max-width:420px){.campus-shell .brand-txt small{display:none}.campus-shell .icon-btn{display:none}.campus-shell .mt-foot-base{flex-direction:column}}
 </style></head>
-<body data-lesson="agentes-v1"><!-- campus-header:start --><a class="campus-skip" href="#conteudo">Pular para a máquina</a><div class="campus-shell campus-header"><header class="topbar">
-  <div class="wrap topbar-in">
-    <a class="brand" href="/#topo">
+<body data-lesson="agentes-v1"><!-- campus-header:start --><a class="campus-skip" href="#conteudo">Pular para a máquina</a><div class="campus-shell campus-header"><header class="topbar lesson-header"><div class="topbar-in lesson-header-inner"><a class="brand" href="/#topo">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
       <span class="brand-txt"><small>Laboratório</small><b>Mirandas<span>Tech</span></b></span>
-    </a>
-    <nav class="navlinks" aria-label="Navegar pelo laboratório">
-      <a href="/#trilhas">Trilhas</a>
-      <a href="/maquinas/agentes/">Aula 3D</a>
-      <a href="/#manuais">Manuais</a>
-      <a href="/#plugin">Plugin</a>
-      <a href="/#aberto">Código aberto</a>
-    </nav>
-    <nav class="navext" aria-label="MirandasTech"><a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav>
-    <div class="nav-actions">
-      <a class="icon-btn" href="/#manuais" aria-label="Buscar um manual">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      </a>
-      <a class="btn btn--primary btn--sm" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
-    </div><details class="campus-mobile"><summary>Menu</summary><nav aria-label="Menu do laboratório">
-      <a href="/#trilhas">Trilhas</a>
-      <a href="/maquinas/agentes/">Aula 3D</a>
-      <a href="/#manuais">Manuais</a>
-      <a href="/#plugin">Plugin</a>
-      <a href="/#aberto">Código aberto</a>
-    <a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav></details></div></header></div><!-- campus-header:end -->
+    </a><nav class="lesson-links" aria-label="MirandasTech"><a href="https://blog.mirandastech.com.br/">Blog</a><a href="/">Laboratório</a><a href="/#bancada" aria-current="page">Aulas interativas</a></nav><span class="lesson-edition">EXPLORAR · ENTENDER · EXPERIMENTAR</span><details class="lesson-menu"><summary>Menu</summary><nav aria-label="Navegação da aula"><a href="https://blog.mirandastech.com.br/">Blog</a><a href="/">Laboratório</a><a href="#leitura">Ler a aula</a></nav></details></div></header></div><!-- campus-header:end -->
 <main class="pg" id="conteudo">
   <section class="experience" aria-label="Aula por dentro de um agente de IA">
     <div class="stage">
       <div class="stage-glow" aria-hidden="true"></div>
       <div class="scene-wrap" id="scene-wrap" aria-label="Máquina com seis camadas: pergunta, contexto, modelo, ferramentas, governança e resposta">
         <div class="scene-fallback" id="scene-fallback">
-          <ol><li><a href="#etapa-resposta" data-step="5"><b>06</b>Resposta<span>↗</span></a></li><li><a href="#etapa-governanca" data-step="4"><b>05</b>Governança<span>↗</span></a></li><li><a href="#etapa-ferramentas" data-step="3"><b>04</b>Ferramentas<span>↗</span></a></li><li><a href="#etapa-modelo" data-step="2"><b>03</b>Modelo<span>↗</span></a></li><li><a href="#etapa-contexto" data-step="1"><b>02</b>Contexto<span>↗</span></a></li><li><a href="#etapa-pergunta" data-step="0"><b>01</b>Pergunta<span>↗</span></a></li></ol>
+          <div class="machine-plate" id="machine-plate">
+            <svg class="machine-energy" viewBox="0 0 1024 1536" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="energy-glow"><feGaussianBlur stdDeviation="7"/></filter></defs><path class="energy-halo" d="M330 1330 C700 1190 170 1120 490 990 S400 780 570 680 S690 530 670 425 S740 300 740 180"/><path class="energy-thread" d="M330 1330 C700 1190 170 1120 490 990 S400 780 570 680 S690 530 670 425 S740 300 740 180"/></svg>
+            <img class="machine-art" src="../../assets/agentes-machine.webp" alt="Máquina em seis plataformas de metal: uma pergunta em vidro, documentos azuis, um núcleo luminoso, ferramentas, um portão de cobre e a resposta." width="1024" height="1536" fetchpriority="high">
+            <span class="poster-status" id="poster-status" aria-hidden="true">✓</span>
+            <div class="poster-labels"><a class="poster-label poster-label-0" href="#etapa-pergunta" data-step="0">Pergunta</a><a class="poster-label poster-label-1" href="#etapa-contexto" data-step="1">Documentos</a><a class="poster-label poster-label-2" href="#etapa-modelo" data-step="2">Modelo</a><a class="poster-label poster-label-3" href="#etapa-ferramentas" data-step="3">Ferramentas</a><a class="poster-label poster-label-4" href="#etapa-governanca" data-step="4">Governança</a><a class="poster-label poster-label-5" href="#etapa-resposta" data-step="5">Resposta</a></div>
+          </div>
         </div>
         <div id="canvas-host" aria-hidden="true"></div>
         <div class="scene-labels" id="scene-labels" hidden><button type="button" class="scene-label" data-layer="0">Pergunta</button><button type="button" class="scene-label" data-layer="1">Documentos</button><button type="button" class="scene-label" data-layer="2">Modelo</button><button type="button" class="scene-label" data-layer="3">Ferramentas</button><button type="button" class="scene-label" data-layer="4">Governança</button><button type="button" class="scene-label" data-layer="5">Resposta</button></div>
-        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Visão das seis camadas</span></span>
+        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Visualização ilustrada · selecione uma camada</span></span>
       </div>
 
       <div class="lesson-copy">
@@ -184,9 +281,8 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
         <div id="hero-copy">
           <p class="eyebrow">AULA INTERATIVA · 01</p>
           <h1>A pergunta<br>vira <em>ação.</em></h1>
-          <p class="hero-sub">Por dentro de um agente de IA.</p>
-          <p class="hero-desc">Siga uma pergunta. Explore as ferramentas.<br>Descubra quem autoriza a próxima ação.</p>
-          <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <span>↗</span></a><a class="secondary" href="#leitura">Ler a aula</a></div>
+          <p class="hero-sub">Explore o caminho de um agente de IA.</p>
+          <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <img src="../../assets/icons/arrow-right.svg" width="22" height="22" alt=""></a><a class="secondary" href="#leitura">Ver etapas <img src="../../assets/icons/list.svg" width="21" height="21" alt=""></a></div>
           <div class="lesson-meta"><span>6 camadas</span><span>5 min de exploração</span><span>Sem cadastro</span></div>
         </div>
         <div id="step-copy" hidden>
@@ -214,11 +310,11 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
       <div class="scene-toolbar" id="scene-toolbar" hidden>
         <button type="button" id="overview">Vista geral</button>
         <button type="button" id="pause-motion" aria-pressed="false">Pausar movimento</button>
-        <button type="button" id="flat-view" aria-pressed="false">Visão 2D</button>
+        <button type="button" id="flat-view" aria-pressed="true">Explorar em 3D</button>
       </div>
       <div class="story-bottom">
         <nav class="step-nav" aria-label="Etapas da aula"><ol><li><a href="#etapa-pergunta" data-step="0"><span class="step-dot"></span><b>01</b><span>Pergunta</span></a></li><li><a href="#etapa-contexto" data-step="1"><span class="step-dot"></span><b>02</b><span>Contexto</span></a></li><li><a href="#etapa-modelo" data-step="2"><span class="step-dot"></span><b>03</b><span>Modelo</span></a></li><li><a href="#etapa-ferramentas" data-step="3"><span class="step-dot"></span><b>04</b><span>Ferramentas</span></a></li><li><a href="#etapa-governanca" data-step="4"><span class="step-dot"></span><b>05</b><span>Governança</span></a></li><li><a href="#etapa-resposta" data-step="5"><span class="step-dot"></span><b>06</b><span>Resposta</span></a></li></ol></nav>
-        <a class="scroll-hint" href="#etapa-pergunta" data-start><span>Role para explorar</span><span>↓</span></a>
+        <a class="scroll-hint" href="#etapa-pergunta" data-start><img src="../../assets/icons/mouse.svg" width="23" height="31" alt=""><span>Role para explorar</span><span>↓</span></a>
       </div>
       <div class="progress-rail" aria-hidden="true"><i id="story-progress"></i></div>
     </div>
@@ -251,6 +347,7 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
   </section>
 </main>
 <script src="../../assets/vendor/three-r128.min.js"></script>
+<script src="../../assets/vendor/three-r128-postprocessing.js"></script>
 <!-- campus-footer:start --><footer class="mt-foot campus-shell">
   <p class="mt-foot-big" aria-hidden="true"><span>Estudar</span><i></i><span>construir</span><i></i><em>publicar.</em></p>
   <div class="mt-foot-grid">
@@ -308,153 +405,204 @@ function simulate({ context = true, action = 'read', allowSend = false } = {}) {
   };
 }
 
-// Cena procedural, sem modelos externos, pós-processamento ou mapas de sombra.
+// Functional scene objects: real beveled meshes with editable texture labels.
+// The surrounding terrain is a generated image; all selectable layers remain 3D.
+function createMachine(T, root) {
+  const mat = (color, extra = {}) => {
+    const m = new T.MeshPhysicalMaterial({ color, metalness: .7, roughness: .26, clearcoat: .8, clearcoatRoughness: .2, envMapIntensity: 1.1, ...extra });
+    m.color.convertSRGBToLinear(); return m;
+  };
+  const metal = mat(0x5a6c88, {roughness:.25,envMapIntensity:1.2}), dark = mat(0x35475e, { roughness: .22, envMapIntensity:1.5 });
+  const copper = mat(0xe0a473, { metalness: .68, roughness: .26, envMapIntensity: 1.8 });
+  const glass = mat(0x97c5f0, { metalness: .18, transparent: true, opacity: .21, roughness: .1, clearcoat: 1, side: T.DoubleSide, depthWrite: false });
+  const lightBlue = new T.MeshBasicMaterial({ color: new T.Color(.4, .9, 2), toneMapped: false });
+  const lightCopper = new T.MeshBasicMaterial({ color: new T.Color(1.1, .5, .2), toneMapped: false });
+  const lightTeal = new T.MeshBasicMaterial({ color: new T.Color(.2, 1.3, 1.1), toneMapped: false });
+  const layers = [], edges = [], glowMaterials = [], sourceObjects = [], textures = [];
+  const loader = new T.TextureLoader();
+  const icons = {};
+  for (const name of ['search', 'code-xml', 'database', 'check', 'x', 'send']) {
+    icons[name] = loader.load(`../../assets/icons/${name}.svg`);
+    icons[name].encoding = T.sRGBEncoding; textures.push(icons[name]);
+  }
+  function roundedShape(w, h, r) {
+    const s = new T.Shape();
+    s.moveTo(-w/2+r,-h/2); s.lineTo(w/2-r,-h/2);
+    s.quadraticCurveTo(w/2,-h/2,w/2,-h/2+r); s.lineTo(w/2,h/2-r);
+    s.quadraticCurveTo(w/2,h/2,w/2-r,h/2); s.lineTo(-w/2+r,h/2);
+    s.quadraticCurveTo(-w/2,h/2,-w/2,h/2-r); s.lineTo(-w/2,-h/2+r);
+    s.quadraticCurveTo(-w/2,-h/2,-w/2+r,-h/2); return s;
+  }
+  function roundedBox(w,h,d,r=.07) {
+    const b = Math.min(.035, d*.22, h*.15, w*.15);
+    const g = new T.ExtrudeGeometry(roundedShape(w-b*2,h-b*2,Math.min(r,w*.2,h*.2)), { depth:Math.max(.005,d-b*2), bevelEnabled:true, bevelSize:b, bevelThickness:b, bevelSegments:3, curveSegments:8, steps:1 });
+    g.translate(0,0,-(d-b*2)/2); return g;
+  }
+  function box(group,w,h,d,x,y,z,material=dark) {
+    const m = new T.Mesh(roundedBox(w,h,d), material);
+    m.position.set(x,y,z); m.castShadow = !material.transparent; m.receiveShadow = !material.transparent; group.add(m); return m;
+  }
+  function line(group, points, material=lightBlue, radius=.007) {
+    const curve = new T.CatmullRomCurve3(points.map(p => new T.Vector3(...p)));
+    const tube = new T.Mesh(new T.TubeGeometry(curve,Math.max(12,points.length*3),radius,4,false),material);
+    group.add(tube); return tube;
+  }
+  function frame(group,w,h,r,x,y,z,material=lightBlue,horizontal=false) {
+    const points = roundedShape(w,h,r).getPoints(56).map(p => horizontal ? [p.x+x,y,p.y+z] : [p.x+x,p.y+y,z]);
+    return line(group,points,material,.006);
+  }
+  function icon(group,name,x,y,z,size=.28) {
+    const m = new T.Mesh(new T.PlaneGeometry(size,size),new T.MeshBasicMaterial({map:icons[name],transparent:true,depthWrite:false,toneMapped:false,color:0xffffff}));
+    m.position.set(x,y,z); group.add(m); return m;
+  }
+  function faceTexture(type) {
+    const c=document.createElement('canvas'); c.width=512; c.height=384;
+    const ctx=c.getContext('2d');
+    ctx.fillStyle=type==='reply'?'rgba(210,231,255,.86)':'rgba(44,84,130,.26)';
+    ctx.fillRect(0,0,512,384);
+    ctx.fillStyle=type==='reply'?'#7898c4':'rgba(169,208,255,.66)';
+    if(type==='question') {
+      ctx.fillStyle='#dceaff';ctx.font='24px sans-serif';
+      ctx.fillText('Explique como agentes',34,128);ctx.fillText('usam ferramentas.',34,165);
+      ctx.fillStyle='#d47e55';ctx.fillRect(397,205,64,64);
+    } else {
+      ctx.fillRect(40,48,24,11);
+      for(let i=0;i<4;i++)ctx.fillRect(40,100+i*46, 350-(i%2)*75,9);
+      ctx.fillStyle='#4fc1b0';ctx.fillRect(40,308,155,10);
+    }
+    const t=new T.CanvasTexture(c);t.encoding=T.sRGBEncoding; textures.push(t);return t;
+  }
+  function card(group,x,y,z,w,h,type='doc',rotation=0) {
+    const g=new T.Group();g.position.set(x,y,z);g.rotation.y=rotation;group.add(g);
+    box(g,w,h,.065,0,0,0,glass);
+    const faceGeometry=new T.ShapeGeometry(roundedShape(w-.045,h-.045,.06));
+    const positions=faceGeometry.attributes.position,uv=faceGeometry.attributes.uv;
+    for(let i=0;i<uv.count;i++)uv.setXY(i,(positions.getX(i)+w/2)/w,(positions.getY(i)+h/2)/h);
+    const face=new T.Mesh(faceGeometry,new T.MeshBasicMaterial({map:faceTexture(type),transparent:true,opacity:type==='reply'?.98:.88,depthWrite:false}));
+    face.position.z=.04;g.add(face);
+    frame(g,w,h,.075,0,0,.048,type==='reply'?lightBlue:lightBlue);
+    frame(g,w+.02,h+.02,.08,0,0,-.04,new T.MeshBasicMaterial({color:0x83aee0,transparent:true,opacity:.24}),false);
+    return g;
+  }
+  for(let i=0;i<6;i++){
+    const g=new T.Group();g.userData.layer=i;g.userData.width=3.35-i*.1;
+    const w=g.userData.width,d=1.91-i*.04;
+    const slab=box(g,w,.17,d,0,0,0,metal); slab.receiveShadow=true;
+    const lower=box(g,w-.09,.035,d-.08,0,-.1,0,dark);
+    const rimMat=new T.MeshBasicMaterial({color:i===4?new T.Color(1.1,.55,.25):new T.Color(.29,.5,.82),toneMapped:false,transparent:true,opacity:.65});
+    frame(g,w-.04,d-.04,.1,0,.083,0,rimMat,true);edges.push(rimMat);
+    frame(g,w-.02,d-.02,.1,0,-.065,0,new T.MeshBasicMaterial({color:0xd0a37d,transparent:true,opacity:.3}),true);
+    const glowMat=new T.MeshBasicMaterial({color:i===4?0xd2694a:0x65b7fa,transparent:true,opacity:.03,depthWrite:false});
+    const under=new T.Mesh(new T.PlaneGeometry(w-.1,d-.1),glowMat);under.rotation.x=-Math.PI/2;under.position.y=.094;g.add(under);glowMaterials.push(glowMat);
+    g.position.set((i-2.5)*.57,(i-2.5)*1.58,0); root.add(g);layers.push(g);
+  }
+  // The question is a screen in a substantial glass housing.
+  card(layers[0],0,.54,.24,2.56,.83,'question',-.04);
+  icon(layers[0],'send',.94,.42,.31,.23);
+  // Documents are staggered in depth and can be removed by the context control.
+  for(const p of [[-.86,.61,-.2,.68,.91,-.11],[-.15,.72,-.28,.79,1.12,.02],[.62,.58,-.15,.73,.88,.12],[-.5,.51,.42,.77,.78,-.05],[.36,.54,.46,.83,.84,.05]]) {
+    sourceObjects.push(card(layers[1],...p.slice(0,5),'doc',p[5]));
+  }
+  // A beveled compute core with etched traces on its three visible faces.
+  const chip=box(layers[2],1.27,1.02,1.14,0,.64,0,dark);
+  const etchMat = new T.MeshStandardMaterial({color:0xc29b74,metalness:.8,roughness:.28,envMapIntensity:1.2});
+  const circuitPaths=[[-.58,.21,-.12,.37,.08,.26,.53,.51],[-.58,.52,-.29,.62,-.1,.53,.18,.8,.58,.66],[-.58,.93,-.18,.85,.1,1.1,.58,1.03]];
+  for(const coords of circuitPaths){
+    const ps=[];for(let i=0;i<coords.length;i+=2)ps.push([coords[i],coords[i+1],.58]);line(layers[2],ps,etchMat,.006);
+  }
+  for(let i=0;i<4;i++){
+    line(layers[2],[[.64,.22+i*.23,-.52],[.64,.4+i*.2,-.1],[.64,.32+i*.22,.48]],etchMat,.005);
+    line(layers[2],[[-.58+i*.33,1.16,-.53],[-.37+i*.28,1.16,-.12],[-.48+i*.34,1.16,.52]],etchMat,.005);
+  }
+  const core=new T.Mesh(new T.IcosahedronGeometry(.105,1),new T.MeshBasicMaterial({color:new T.Color(3,1.35,.45),toneMapped:false}));
+  core.position.set(-.12,.63,.61);layers[2].add(core);
+  const coreLight=new T.PointLight(0xffbb76,.8,2.7);coreLight.position.copy(core.position);layers[2].add(coreLight);
+  // Rounded tool sockets with library icons instead of placeholder marks.
+  [-.86,0,.86].forEach((x,i)=>{
+    const g=new T.Group();g.position.set(x,.47,.05);g.rotation.y=i===0?-.05:i===2?.05:0;layers[3].add(g);
+    box(g,.63,.78,.54,0,0,0,dark);
+    frame(g,.54,.68,.06,0,0,.28,new T.MeshBasicMaterial({color:0x6a8db6,transparent:true,opacity:.45}));
+    icon(g,['search','code-xml','database'][i],0,.02,.293,.34);
+  });
+  // One-piece copper portal: bevels catch the white studio highlights.
+  const gateShape=new T.Shape();
+  gateShape.moveTo(-.72,0);gateShape.lineTo(-.72,1.12);gateShape.quadraticCurveTo(-.72,1.23,-.6,1.23);gateShape.lineTo(.6,1.23);gateShape.quadraticCurveTo(.72,1.23,.72,1.12);gateShape.lineTo(.72,0);gateShape.lineTo(.43,0);gateShape.lineTo(.43,.94);gateShape.lineTo(-.43,.94);gateShape.lineTo(-.43,0);gateShape.closePath();
+  const gateGeometry=new T.ExtrudeGeometry(gateShape,{depth:.25,bevelEnabled:true,bevelSize:.045,bevelThickness:.045,bevelSegments:4,curveSegments:10,steps:1});
+  const gate=new T.Mesh(gateGeometry,copper);gate.position.set(-.24,.1,-.04);gate.castShadow=true;gate.receiveShadow=true;layers[4].add(gate);
+  frame(layers[4],1.42,1.2,.1,-.24,.73,.267,new T.MeshBasicMaterial({color:new T.Color(1.5,.78,.42),toneMapped:false,transparent:true,opacity:.6}));
+  box(layers[4],.57,.78,.37,.9,.49,.07,dark);icon(layers[4],'x',.9,.49,.269,.3);
+  const gateStatusMat=mat(0x4fc1b0,{metalness:.12,roughness:.14,emissive:0x1f8f80,emissiveIntensity:.8});
+  box(layers[4],.42,.5,.08,-.25,.64,.34,gateStatusMat);
+  const check=icon(layers[4],'check',-.25,.64,.388,.27);
+  const blockedCross=icon(layers[4],'x',-.25,.64,.39,.27);blockedCross.visible=false;
+  const gateLight=new T.PointLight(0x4fc1b0,.5,2.4);gateLight.position.set(-.25,.7,.6);layers[4].add(gateLight);
+  card(layers[5],0,.65,.03,1.56,1.1,'reply',-.03);
+
+  // A thin, continuous helical path with traveling points connects the layers.
+  const trajectory=new T.Group();root.add(trajectory);
+  const pathPoints=[];
+  function pathAt(t){const a=t*Math.PI*7;return new T.Vector3((t-.5)*2.85+Math.sin(a)*.19,-3.9+t*8.4,.19+Math.cos(a)*.33);}
+  for(let i=0;i<=160;i++)pathPoints.push(pathAt(i/160));
+  const trail=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pathPoints),200,.009,4,false),new T.MeshBasicMaterial({color:new T.Color(.2,1.3,2.8),toneMapped:false,transparent:true,opacity:.48,depthWrite:false}));trajectory.add(trail);
+  const particles=new T.InstancedMesh(new T.SphereGeometry(.022,6,4),new T.MeshBasicMaterial({color:new T.Color(.6,1.9,3.2),toneMapped:false}),88);trajectory.add(particles);
+  const dummy=new T.Object3D();
+  // The orbit arcs are subtle depth cues, not a background substitute.
+  const arcMat=new T.MeshBasicMaterial({color:0x6591c4,transparent:true,opacity:.13,depthWrite:false});
+  for(let k=0;k<2;k++){
+    const pts=[];for(let i=0;i<90;i++){const a=i/89*Math.PI*1.7+.25;pts.push([Math.cos(a)*(3.9+k*.35),Math.sin(a)*.7+(k?-.8:1.0),Math.sin(a)*2.1]);}
+    line(root,pts,arcMat,.006);
+  }
+  return { layers, edges, glowMaterials, core, gateStatusMat, check, blockedCross, trajectory, particles, dummy, sourceObjects, textures, pathAt };
+}
+
+
+// Cinematic, selectable Three.js cutaway with local assets and progressive fallback.
 function createScene(host, labelRoot, { onSelect, reducedMotion = false, onFailure }) {
   const T = window.THREE;
   if (!T) return null;
   let renderer;
-  try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' }); }
+  try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' }); }
   catch { return null; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, innerWidth < 700 ? 1.25 : 1.6));
   renderer.outputEncoding = T.sRGBEncoding;
   renderer.toneMapping = T.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.15;
   host.appendChild(renderer.domElement);
   const scene = new T.Scene();
-  const camera = new T.PerspectiveCamera(34, 1, .1, 100);
+  const camera = new T.PerspectiveCamera(30, 1, .1, 100);
   const root = new T.Group();
   scene.add(root);
-  // A small studio environment gives metal surfaces a reflection without HDR downloads.
-  const envCanvas = document.createElement('canvas'); envCanvas.width = 512; envCanvas.height = 256;
-  const envContext = envCanvas.getContext('2d');
-  const gradient = envContext.createLinearGradient(0, 0, 0, 256);
-  gradient.addColorStop(0, '#7a98b7'); gradient.addColorStop(.48, '#1e3048'); gradient.addColorStop(.53, '#080e18'); gradient.addColorStop(1, '#142638');
-  envContext.fillStyle = gradient; envContext.fillRect(0, 0, 512, 256);
-  envContext.fillStyle = '#bfdbf4'; envContext.fillRect(80, 35, 25, 75);
-  envContext.fillStyle = '#637c96'; envContext.fillRect(300, 25, 45, 80);
-  const envTexture = new T.CanvasTexture(envCanvas); envTexture.mapping = T.EquirectangularReflectionMapping; envTexture.encoding = T.sRGBEncoding;
-  const pmrem = new T.PMREMGenerator(renderer); const environment = pmrem.fromEquirectangular(envTexture);
-  scene.environment = environment.texture; envTexture.dispose(); pmrem.dispose();
-  scene.add(new T.HemisphereLight(0xadcfff, 0x0a1425, .55));
-  const blueLight = new T.DirectionalLight(0xa3ceff, 1.15);
-  blueLight.position.set(-5, 7, 7); scene.add(blueLight);
-  const warm = new T.PointLight(0xff9870, .85, 22);
-  warm.position.set(4, 3, 3); scene.add(warm);
-  const rim = new T.DirectionalLight(0x4fc1b0, .45);
-  rim.position.set(2, 2, -6); scene.add(rim);
-  const colors = [0x6fa3dc, 0x6fa3dc, 0x91b5ec, 0x6fa3dc, 0xd2694a, 0x4fc1b0];
-  const baseMat = new T.MeshStandardMaterial({ color: 0x101b2b, metalness: .72, roughness: .28, envMapIntensity: .7 });
-  const darkMat = new T.MeshStandardMaterial({ color: 0x0d192b, metalness: .65, roughness: .25, envMapIntensity: .85 });
-  const glassMat = new T.MeshStandardMaterial({ color: 0x4d8abd, transparent: true, opacity: .43, metalness: .32, roughness: .2, side: T.DoubleSide, envMapIntensity: .6 });
-  const copperMat = new T.MeshStandardMaterial({ color: 0xc56f46, metalness: .7, roughness: .26, emissive: 0x3c160a, emissiveIntensity: .3, envMapIntensity: .8 });
-  const tealMat = new T.MeshStandardMaterial({ color: 0x4fc1b0, emissive: 0x246c62, emissiveIntensity: .45, metalness: .2, roughness: .35 });
-  for (const material of [baseMat, darkMat, glassMat, copperMat, tealMat]) material.color.convertSRGBToLinear();
-  const layers = [], edges = [], labels = [...labelRoot.querySelectorAll('[data-layer]')];
-  const glowMaterials = [];
-  function box(group, w, h, d, x, y, z, material = darkMat) {
-    const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), material);
-    mesh.position.set(x, y, z); group.add(mesh); return mesh;
+  // HDR studio lighting: bright strip emitters reflected in the beveled metal.
+  const room = new T.Scene();
+  room.add(new T.Mesh(new T.BoxGeometry(30,24,30),new T.MeshBasicMaterial({color:0x0b101a,side:T.BackSide})));
+  const emitter = (w,h,x,y,z,rx,ry,color) => {
+    const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:new T.Color(...color),side:T.DoubleSide}));
+    m.position.set(x,y,z);m.rotation.set(rx,ry,0);room.add(m);
+  };
+  emitter(3,12,-6,4,5,0,.7,[4,5.5,8]);
+  emitter(1.4,10,7,5,1,0,-1.1,[6,4,2.5]);
+  emitter(7,3,0,8,-3,-.7,0,[3,4,5]);
+  emitter(2,5,-1,3,8,0,0,[1.5,2,3]);
+  const pmrem=new T.PMREMGenerator(renderer);const environment=pmrem.fromScene(room,.02);scene.environment=environment.texture;pmrem.dispose();
+  room.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
+  scene.add(new T.HemisphereLight(0xc2d9fc,0x050a14,.32));
+  const key=new T.DirectionalLight(0xc3ddff,1.65);key.position.set(-5,10,8);key.castShadow=true;
+  key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=9;key.shadow.camera.bottom=-9;key.shadow.camera.far=35;key.shadow.bias=-.0005;key.shadow.normalBias=.025;key.shadow.radius=3;scene.add(key);
+  const warm=new T.DirectionalLight(0xffb785,.65);warm.position.set(6,5,2);scene.add(warm);
+  const rim=new T.DirectionalLight(0x7baffe,.85);rim.position.set(-3,5,-5);scene.add(rim);
+  renderer.shadowMap.enabled=false;renderer.shadowMap.type=T.PCFSoftShadowMap;
+  const {layers,edges,glowMaterials,core,gateStatusMat,blockedCross,check,trajectory,particles,dummy,sourceObjects,textures,pathAt}=createMachine(T,root);
+  const labels=[...labelRoot.querySelectorAll('[data-layer]')];
+  const leftLabels=new Set([0,2,3,4]);labels.forEach((label,i)=>label.classList.toggle('side-left',leftLabels.has(i)));
+  // Bloom preserves the original alpha, so the photographic terrain stays visible.
+  let composer=null,savePass=null,bloomPass=null;
+  if(T.EffectComposer&&T.SavePass&&T.UnrealBloomPass){
+    composer=new T.EffectComposer(renderer);composer.addPass(new T.RenderPass(scene,camera));
+    savePass=new T.SavePass(new T.WebGLRenderTarget(1,1,{format:T.RGBAFormat}));composer.addPass(savePass);
+    bloomPass=new T.UnrealBloomPass(new T.Vector2(1,1),.48,.55,.85);composer.addPass(bloomPass);
+    const composite=new T.ShaderPass({uniforms:{tDiffuse:{value:null},original:{value:savePass.renderTarget.texture}},vertexShader:'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'uniform sampler2D tDiffuse;uniform sampler2D original;varying vec2 vUv;void main(){vec4 c=texture2D(tDiffuse,vUv);float a=texture2D(original,vUv).a;float g=max(c.r,max(c.g,c.b));gl_FragColor=vec4(c.rgb,a+(1.0-a)*min(g*.6,1.0));}'});
+    composer.addPass(composite);
   }
-  function outline(mesh, color, opacity = .6) {
-    const material = new T.LineBasicMaterial({ color, transparent: true, opacity });
-    const line = new T.LineSegments(new T.EdgesGeometry(mesh.geometry), material);
-    mesh.add(line); return material;
-  }
-  function bar(group, x1, y1, z1, x2, y2, z2, color, opacity = .8) {
-    const geo = new T.BufferGeometry().setFromPoints([new T.Vector3(x1, y1, z1), new T.Vector3(x2, y2, z2)]);
-    group.add(new T.Line(geo, new T.LineBasicMaterial({ color, transparent: true, opacity })));
-  }
-  function documentCard(group, x, y, z, width = .78, height = .94, accent = 0x6fa3dc) {
-    const card = box(group, width, height, .035, x, y, z, glassMat);
-    outline(card, accent, .8);
-    for (let i = 0; i < 4; i++) {
-      box(group, width * (.75 - (i % 2) * .2), .025, .014, x - width * .03, y + height * (.24 - i * .15), z + .026,
-        new T.MeshBasicMaterial({ color: i === 3 ? accent : 0xa4c3e7, transparent: true, opacity: i === 3 ? .9 : .5 }));
-    }
-    return card;
-  }
-  for (let i = 0; i < 6; i++) {
-    const group = new T.Group();
-    group.userData.layer = i;
-    const shape = new T.Shape();
-    const w = 3.15, d = 1.85, r = .1;
-    shape.moveTo(-w/2 + r, -d/2); shape.lineTo(w/2-r, -d/2);
-    shape.quadraticCurveTo(w/2, -d/2, w/2, -d/2+r); shape.lineTo(w/2, d/2-r);
-    shape.quadraticCurveTo(w/2, d/2, w/2-r, d/2); shape.lineTo(-w/2+r, d/2);
-    shape.quadraticCurveTo(-w/2, d/2, -w/2, d/2-r); shape.lineTo(-w/2, -d/2+r);
-    shape.quadraticCurveTo(-w/2, -d/2, -w/2+r, -d/2);
-    const slabGeometry = new T.ExtrudeGeometry(shape, { depth: .09, bevelEnabled: true, bevelThickness: .025, bevelSize: .025, bevelSegments: 2, steps: 1, curveSegments: 5 });
-    slabGeometry.rotateX(-Math.PI / 2); slabGeometry.translate(0, -.045, 0);
-    const slab = new T.Mesh(slabGeometry, baseMat); group.add(slab);
-    edges.push(outline(slab, colors[i], .55));
-    const under = box(group, 2.96, .025, 1.66, 0, -.09, 0,
-      new T.MeshBasicMaterial({ color: colors[i], transparent: true, opacity: .09 }));
-    glowMaterials.push(under.material);
-    group.add(new T.PointLight(colors[i], .35, 3));
-    group.position.set((i - 2.5) * .12, (i - 2.5) * 1.43, 0);
-    root.add(group); layers.push(group);
-  }
-  // 01. Une question écrite sur une plaque de verre.
-  documentCard(layers[0], 0, .56, .22, 2.23, .72);
-  box(layers[0], .3, .3, .07, .87, .55, .3, copperMat);
-  bar(layers[0], .79, .49, .35, .95, .64, .35, 0xffdfca);
-  // 02. Fiches qui composent le contexte.
-  documentCard(layers[1], -.78, .64, .08, .7, .94);
-  documentCard(layers[1], -.04, .7, .2, .75, 1.05);
-  documentCard(layers[1], .76, .61, .1, .68, .9);
-  // 03. Circuit et noyau du modèle, pas un cerveau anthropomorphe.
-  const chip = box(layers[2], 1.08, .8, 1.02, 0, .5, 0, darkMat);
-  outline(chip, 0x7fa9d6, .8);
-  const core = new T.Mesh(new T.IcosahedronGeometry(.23, 0), new T.MeshStandardMaterial({ color: 0xf1bb91, emissive: 0xb45d2c, emissiveIntensity: .7, metalness: .5, roughness: .2 }));
-  core.position.set(0, 1.06, 0); layers[2].add(core);
-  for (let i = -3; i <= 3; i++) {
-    box(layers[2], .05, .04, 1.47, i * .21, .13, 0, copperMat);
-    box(layers[2], 1.55, .04, .05, 0, .13, i * .21, copperMat);
-  }
-  // 04. Trois connecteurs: lecture, code et données.
-  [-.85, 0, .85].forEach((x, i) => {
-    const socket = box(layers[3], .61, .68, .5, x, .43, .06, darkMat);
-    outline(socket, 0x83abd7, .6);
-    if (i === 0) {
-      const circle = new T.Mesh(new T.TorusGeometry(.12, .016, 8, 28), new T.MeshBasicMaterial({ color: 0xadd0ff }));
-      circle.position.set(x - .025, .47, .32); layers[3].add(circle);
-      bar(layers[3], x + .06, .37, .33, x + .17, .25, .33, 0xadd0ff);
-    } else if (i === 1) {
-      bar(layers[3], x - .04, .59, .32, x - .17, .45, .32, 0xadd0ff);
-      bar(layers[3], x - .17, .45, .32, x - .04, .31, .32, 0xadd0ff);
-      bar(layers[3], x + .04, .59, .32, x + .17, .45, .32, 0xadd0ff);
-      bar(layers[3], x + .17, .45, .32, x + .04, .31, .32, 0xadd0ff);
-    } else {
-      for (let k = 0; k < 3; k++) {
-        const ring = new T.Mesh(new T.TorusGeometry(.13, .013, 6, 22), new T.MeshBasicMaterial({ color: 0xadd0ff }));
-        ring.scale.y = .45; ring.position.set(x, .57 - k * .1, .32); layers[3].add(ring);
-      }
-    }
-  });
-  // 05. Le portique matérialise la vérification AVANT exécution.
-  box(layers[4], .23, 1.03, .27, -.57, .6, 0, copperMat);
-  box(layers[4], .23, 1.03, .27, .57, .6, 0, copperMat);
-  box(layers[4], 1.35, .22, .27, 0, 1.04, 0, copperMat);
-  const gateStatusMat = tealMat.clone();
-  const gateBadge = box(layers[4], .42, .5, .08, 0, .59, .19, gateStatusMat);
-  const blockedCross = new T.Group();
-  bar(blockedCross, -.11, -.11, 0, .11, .11, 0, 0xffdfd4);
-  bar(blockedCross, -.11, .11, 0, .11, -.11, 0, 0xffdfd4);
-  blockedCross.position.set(0, .59, .24); blockedCross.visible = false; layers[4].add(blockedCross);
-  const check = new T.Group();
-  bar(check, -.12, 0, 0, -.025, -.09, 0, 0xe0fff9);
-  bar(check, -.025, -.09, 0, .14, .12, 0, 0xe0fff9);
-  check.position.set(0, .59, .24); layers[4].add(check);
-  // 06. Réponse accompagnée de sources.
-  documentCard(layers[5], 0, .65, .07, 1.56, 1.05, 0x4fc1b0);
-  box(layers[5], .31, .04, .05, -.39, .22, .12, tealMat);
-  box(layers[5], .31, .04, .05, .04, .22, .12, tealMat);
-
-  const trajectory = new T.Group(); root.add(trajectory);
-  const particleMaterial = new T.MeshBasicMaterial({ color: 0x86c5f7, transparent: true, opacity: .85 });
-  const particles = new T.InstancedMesh(new T.SphereGeometry(.027, 5, 4), particleMaterial, 44);
-  trajectory.add(particles);
-  const dummy = new T.Object3D();
   let stageIndex = -1, progress = 0, motion = !reducedMotion, visible = true, flat = false;
   let dragAngle = -.17, frameId = 0, lastTime = 0, clock = 0, disposed = false, width = 1, height = 1;
   let currentFocus = 0, targetFocus = 0;
@@ -471,42 +619,42 @@ function createScene(host, labelRoot, { onSelect, reducedMotion = false, onFailu
     if (motion) clock += dt;
     currentFocus += (targetFocus - currentFocus) * (reducedMotion ? 1 : .09);
     root.rotation.y = dragAngle;
-    const spread = 1.43 + Math.sin(progress * Math.PI) * .12;
+    const spread = 1.58 + Math.sin(progress * Math.PI) * .1;
     layers.forEach((g, i) => {
       g.position.y = (i - 2.5) * spread;
-      g.position.x = (i - 2.5) * .12 + (i === stageIndex ? -.1 : 0);
-      edges[i].opacity = stageIndex === i ? .95 : .47;
-      glowMaterials[i].opacity = stageIndex === i ? .28 : .07;
+      g.position.x = (i - 2.5) * .57 + (i === stageIndex ? -.08 : 0);
+      edges[i].opacity = stageIndex === i ? .95 : .65;
+      glowMaterials[i].opacity = stageIndex === i ? .17 : .025;
     });
     const aspect = width / height;
-    const distance = (aspect < .9 ? 19.6 : aspect > 1.8 ? 17 : 16.3) * (stageIndex < 0 ? 1 : .88);
-    camera.position.set(distance * .47, 4.3 + currentFocus * .8, distance * .88);
-    target.set(0, currentFocus * .8, 0); camera.lookAt(target);
+    const distance = (aspect < .85 ? 22 : 21.4) * (stageIndex < 0 ? 1 : .9);
+    camera.position.set(distance * .44, distance * .44 + currentFocus * .76, distance * .8);
+    target.set(0, .3 + currentFocus * .76, 0); camera.lookAt(target);
     core.rotation.y = clock * .22;
-    for (let i = 0; i < 44; i++) {
-      const t = ((i / 44) + clock * .025) % 1;
-      const a = t * Math.PI * 7;
-      dummy.position.set(Math.sin(a) * .31 + (t - .5) * .6, -3.65 + t * 8.2, Math.cos(a) * .36 + .14);
-      dummy.updateMatrix(); particles.setMatrixAt(i, dummy.matrix);
+    for (let i=0;i<88;i++){
+      const t=((i/88)+clock*.03)%1;
+      dummy.position.copy(pathAt(t));
+      dummy.position.x+=Math.sin(i*11.1)*.06;dummy.position.z+=Math.cos(i*9.7)*.05;
+      dummy.scale.setScalar(.6+(i%5)*.2);dummy.updateMatrix();particles.setMatrixAt(i,dummy.matrix);
     }
     particles.instanceMatrix.needsUpdate = true;
     scene.updateMatrixWorld(); camera.updateMatrixWorld();
     layers.forEach((g, i) => {
       // Labels follow the actual projected world coordinates on every frame.
-      labelPoint.set(1.67, .18, -.1); g.localToWorld(labelPoint); labelPoint.project(camera);
+      labelPoint.set((leftLabels.has(i)?-1:1)*(g.userData.width/2+.1), .12, .05); g.localToWorld(labelPoint); labelPoint.project(camera);
       const x = (labelPoint.x * .5 + .5) * width, y = (-labelPoint.y * .5 + .5) * height;
-      labels[i].style.left = `${Math.min(x, width - (width < 500 ? 78 : 105))}px`;
+      labels[i].style.left = `${Math.max(leftLabels.has(i)?65:0,Math.min(x,width-(leftLabels.has(i)?0:90)))}px`;
       labels[i].style.top = `${y}px`;
-      labels[i].hidden = y < 40 || y > height - 25;
+      labels[i].hidden = y < 55 || y > height - 20;
     });
-    renderer.render(scene, camera);
+    if(composer)composer.render();else renderer.render(scene,camera);
     if (motion || Math.abs(targetFocus - currentFocus) > .005) invalidate();
   }
   const resize = new ResizeObserver(() => {
     width = host.clientWidth; height = host.clientHeight;
     if (!width || !height) return;
     camera.aspect = width / height; camera.updateProjectionMatrix();
-    renderer.setSize(width, height, false); invalidate();
+    renderer.setSize(width,height,false);if(composer){composer.setSize(width,height);savePass.renderTarget.setSize(width*renderer.getPixelRatio(),height*renderer.getPixelRatio());}invalidate();
   });
   resize.observe(host);
   const intersection = new IntersectionObserver(entries => {
@@ -552,12 +700,12 @@ function createScene(host, labelRoot, { onSelect, reducedMotion = false, onFailu
   invalidate();
   return {
     update(index, amount, result) {
-      stageIndex = index; progress = amount; targetFocus = index < 0 ? 0 : (index - 2.5) * 1.43;
+      stageIndex = index; progress = amount; targetFocus = index < 0 ? 0 : (index - 2.5) * 1.58;
       const blocked = result.status === 'blocked';
       gateStatusMat.color.setHex(blocked ? 0xd2694a : 0x4fc1b0).convertSRGBToLinear();
       gateStatusMat.emissive.setHex(blocked ? 0x5c2714 : 0x246c62);
       blockedCross.visible = blocked; check.visible = !blocked;
-      layers[1].children.forEach((child, i) => { if (i > 2) child.visible = result.sources.length > 0; });
+      sourceObjects.forEach(object=>{object.visible=result.sources.length>0;});
       invalidate();
     },
     setMotion(enabled) { motion = enabled; lastTime = performance.now(); invalidate(); },
@@ -571,7 +719,7 @@ function createScene(host, labelRoot, { onSelect, reducedMotion = false, onFailu
       canvas.removeEventListener('pointerleave', pointerCancel); canvas.removeEventListener('webglcontextlost', contextLost);
       const geometries = new Set(), materials = new Set();
       scene.traverse(o => { if (o.geometry) geometries.add(o.geometry); if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => materials.add(m)); });
-      geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); environment.dispose(); renderer.dispose(); canvas.remove();
+      geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); environment.dispose();textures.forEach(t=>t.dispose());if(composer){bloomPass.dispose();savePass.renderTarget.dispose();composer.renderTarget1.dispose();composer.renderTarget2.dispose();}key.shadow.map?.dispose();renderer.dispose(); canvas.remove();
     },
   };
 }
@@ -582,7 +730,7 @@ const $ = id => document.getElementById(id);
 const experience = document.querySelector('.experience');
 const stage = document.querySelector('.stage');
 const media = matchMedia('(prefers-reduced-motion: reduce)');
-let currentStep = -1, progress = 0, sceneApi = null, isFlat = false, paused = media.matches;
+let currentStep = -1, progress = 0, sceneApi = null, isFlat = true, paused = media.matches;
 let state = { context: true, action: 'read', allowSend: false };
 let result = simulate(state);
 
@@ -613,11 +761,15 @@ function renderSimulation() {
     const li = make('li'); li.dataset.status = entry.status;
     li.append(make('strong', entry.stage), make('span', entry.detail)); return li;
   }));
+  $('poster-status').textContent = result.status === 'blocked' ? '×' : '✓';
+  $('poster-status').dataset.status = result.status;
   sceneApi?.update(currentStep, progress, result);
 }
 function renderStep(index) {
   currentStep = index;
   stage.classList.toggle('is-step', index >= 0);
+  $('scene-toolbar').hidden = index < 0;
+  $('machine-plate').dataset.active = String(index);
   $('hero-copy').hidden = index >= 0; $('step-copy').hidden = index < 0;
   if (index >= 0) {
     const step = STAGES[index];
@@ -640,8 +792,7 @@ function renderStep(index) {
 }
 function metrics() {
   const top = experience.getBoundingClientRect().top + window.scrollY;
-  const header = document.querySelector('.campus-header')?.getBoundingClientRect().height || 65;
-  return { start: top - header, range: Math.max(1, experience.offsetHeight - stage.offsetHeight) };
+  return { start: top, range: Math.max(1, experience.offsetHeight - stage.offsetHeight) };
 }
 function goTo(index, smooth = true) {
   const { start, range } = metrics();
@@ -655,6 +806,7 @@ function onScroll() {
   const index = Math.min(5, Math.floor(progress * 7 + .001) - 1);
   if (index !== currentStep) renderStep(index);
   $('story-progress').style.width = `${progress * 100}%`;
+  $('machine-plate').style.setProperty('--lift', `${media.matches ? 0 : -progress * 14}px`);
   sceneApi?.update(currentStep, progress, result);
 }
 let scrollFrame = 0;
@@ -662,18 +814,30 @@ const scheduleScroll = () => {
   if (scrollFrame) return;
   scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; onScroll(); });
 };
-function flatView(value, failed = false) {
+function flatView(value) {
   isFlat = value;
   $('canvas-host').hidden = value; $('scene-labels').hidden = value;
   $('scene-fallback').hidden = !value;
   $('flat-view').setAttribute('aria-pressed', String(value));
-  $('flat-view').textContent = value ? 'Visão 3D' : 'Visão 2D';
-  $('renderer-label').textContent = value ? 'Visão das seis camadas' : 'Arraste na horizontal para girar';
-  if (failed) {
-    $('flat-view').hidden = true; $('pause-motion').hidden = true;
-    $('renderer-label').textContent = 'Visão 2D · aula completa disponível';
-  }
+  $('flat-view').textContent = value ? 'Explorar em 3D' : 'Visão ilustrada';
+  $('pause-motion').hidden = value;
+  $('renderer-label').textContent = value ? 'Visualização ilustrada · selecione uma camada' : 'Arraste na horizontal para girar';
   sceneApi?.setFlat(value);
+}
+function open3D() {
+  if (!isFlat) { flatView(true); return; }
+  if (!sceneApi) {
+    try { sceneApi = createScene($('canvas-host'), $('scene-labels'), { onSelect: goTo, reducedMotion: media.matches, onFailure: unavailable3D }); }
+    catch { sceneApi = null; }
+  }
+  if (!sceneApi) { unavailable3D(); return; }
+  flatView(false);
+  sceneApi.update(currentStep, progress, result);
+}
+function unavailable3D() {
+  flatView(true);
+  $('flat-view').hidden = true;
+  $('renderer-label').textContent = 'Visualização ilustrada · aula completa disponível';
 }
 
 // Input handlers only update simulation state; they never submit or call a service.
@@ -704,18 +868,13 @@ $('pause-motion').addEventListener('click', () => {
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
-$('flat-view').addEventListener('click', () => flatView(!isFlat));
+$('flat-view').addEventListener('click', open3D);
 media.addEventListener('change', () => {
   paused = media.matches; sceneApi?.setReduced(media.matches);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
-try {
-  sceneApi = createScene($('canvas-host'), $('scene-labels'), { onSelect: goTo, reducedMotion: media.matches, onFailure: () => flatView(true, true) });
-} catch (error) {
-  console.warn('Visão 3D indisponível; a aula continua em 2D.', error.message);
-}
-flatView(!sceneApi, !sceneApi);
+flatView(true);
 $('scene-toolbar').hidden = false; $('simulation-ui').hidden = false;
 document.body.classList.add('lesson-ready');
 $('pause-motion').setAttribute('aria-pressed', String(paused));

@@ -19,11 +19,11 @@ O vídeo do topo é o átrio do campus em movimento; o título que vinha gravado
 
 ## Aula interativa: por dentro de um agente de IA
 
-Em **[/maquinas/agentes/](https://lab.mirandastech.com.br/maquinas/agentes/)**, uma máquina Three.js em seis camadas acompanha pergunta, documentos, modelo, ferramentas, governança e resposta. A rolagem aproxima cada etapa; as camadas também podem ser selecionadas por clique ou teclado. O visitante compara contexto ligado/desligado e consulta/envio com e sem permissão.
+Em **[/maquinas/agentes/](https://lab.mirandastech.com.br/maquinas/agentes/)**, uma ilustração interativa em seis camadas acompanha pergunta, documentos, modelo, ferramentas, governança e resposta. A abertura segue a referência visual com arte renderizada, terreno rochoso e tipografia serifada. O botão **Explorar em 3D** abre a cena Three.js com rotação, metal arredondado, vidro e iluminação de estúdio. A rolagem percorre cada etapa; as camadas também podem ser selecionadas por clique ou teclado. O visitante compara contexto ligado/desligado e consulta/envio com e sem permissão.
 
 É uma simulação local com respostas preparadas e fichas didáticas identificadas. Não chama LLMs nem envia mensagens. O modelo é independente da cena; sem WebGL, há visão 2D, e a aula em texto funciona sem JavaScript. Animação respeita movimento reduzido, pode ser pausada e para fora da tela.
 
-Fontes editáveis: `maquinas/agentes/`. Regerar com `node maquinas/agentes/build.mjs`; testar os modelos com `node --test maquinas/*/model.test.mjs`. Three.js r128 e as fontes são servidos localmente; licença do Three.js em `site/assets/vendor/three-LICENSE.txt`. A moldura reutiliza `maquinas/prisma/shell.mjs`.
+Fontes editáveis: `maquinas/agentes/`. Regerar com `node maquinas/agentes/build.mjs`; testar os modelos com `node --test maquinas/*/model.test.mjs`. A ilustração continua disponível sem WebGL ou JavaScript; o renderizador só inicia por escolha do visitante. Three.js r128, pós-processamento, ícones Lucide e as fontes são servidos localmente; licença do Three.js em `site/assets/vendor/three-LICENSE.txt`. Créditos dos recursos em `site/assets/agentes-ASSETS.md`. A moldura reutiliza `maquinas/prisma/shell.mjs`.
 
 Verificação de navegador com Playwright: `node maquinas/agentes/checks/browser.mjs`. O script inicia um servidor local temporário; aceita `CHROME_PATH`, `PLAYWRIGHT_MODULE`, `CHECK_OUTPUT` e `BASE_URL` para testar um navegador instalado ou a versão publicada. Playwright é apenas uma ferramenta de teste, não uma dependência do site. As capturas vão para `/tmp/mirandastech-agentes-checks` por padrão.
 
