@@ -1,5 +1,6 @@
 import { STAGES, simulate } from './model.mjs';
 import { createScene } from './scene.js';
+import { createIllustratedScene } from './motion.js';
 
 const $ = id => document.getElementById(id);
 const experience = document.querySelector('.experience');
@@ -8,6 +9,7 @@ const media = matchMedia('(prefers-reduced-motion: reduce)');
 let currentStep = -1, progress = 0, sceneApi = null, isFlat = true, paused = media.matches;
 let state = { context: true, action: 'read', allowSend: false };
 let result = simulate(state);
+const illustration = createIllustratedScene($('machine-plate'), $('scene-wrap'), { reducedMotion:media.matches });
 
 function make(tag, text, className) {
   const node = document.createElement(tag);
@@ -38,12 +40,14 @@ function renderSimulation() {
   }));
   $('poster-status').textContent = result.status === 'blocked' ? '×' : '✓';
   $('poster-status').dataset.status = result.status;
+  illustration.update(currentStep, progress, result);
   sceneApi?.update(currentStep, progress, result);
 }
 function renderStep(index) {
   currentStep = index;
   stage.classList.toggle('is-step', index >= 0);
-  $('scene-toolbar').hidden = index < 0;
+  $('scene-toolbar').hidden = false;
+  $('overview').hidden = index < 0;
   $('machine-plate').dataset.active = String(index);
   $('hero-copy').hidden = index >= 0; $('step-copy').hidden = index < 0;
   if (index >= 0) {
@@ -81,7 +85,8 @@ function onScroll() {
   const index = Math.min(5, Math.floor(progress * 7 + .001) - 1);
   if (index !== currentStep) renderStep(index);
   $('story-progress').style.width = `${progress * 100}%`;
-  $('machine-plate').style.setProperty('--lift', `${media.matches ? 0 : -progress * 14}px`);
+
+  illustration.update(currentStep, progress, result);
   sceneApi?.update(currentStep, progress, result);
 }
 let scrollFrame = 0;
@@ -94,9 +99,10 @@ function flatView(value) {
   $('canvas-host').hidden = value; $('scene-labels').hidden = value;
   $('scene-fallback').hidden = !value;
   $('flat-view').setAttribute('aria-pressed', String(value));
-  $('flat-view').textContent = value ? 'Explorar em 3D' : 'Visão ilustrada';
-  $('pause-motion').hidden = value;
-  $('renderer-label').textContent = value ? 'Visualização ilustrada · selecione uma camada' : 'Arraste na horizontal para girar';
+  $('flat-view').textContent = value ? 'Modelo 3D' : 'Cena animada';
+  $('pause-motion').hidden = false;
+  illustration.setVisible(value);
+  $('renderer-label').textContent = value ? 'Cena animada · selecione uma camada' : 'Arraste na horizontal para girar';
   sceneApi?.setFlat(value);
 }
 function open3D() {
@@ -107,12 +113,13 @@ function open3D() {
   }
   if (!sceneApi) { unavailable3D(); return; }
   flatView(false);
+  sceneApi.setMotion(!paused);
   sceneApi.update(currentStep, progress, result);
 }
 function unavailable3D() {
   flatView(true);
   $('flat-view').hidden = true;
-  $('renderer-label').textContent = 'Visualização ilustrada · aula completa disponível';
+  $('renderer-label').textContent = 'Cena animada · aula completa disponível';
 }
 
 // Input handlers only update simulation state; they never submit or call a service.
@@ -139,13 +146,13 @@ $('next-step').addEventListener('click', () => {
 });
 $('overview').addEventListener('click', () => goTo(-1));
 $('pause-motion').addEventListener('click', () => {
-  paused = !paused; sceneApi?.setMotion(!paused);
+  paused = !paused; sceneApi?.setMotion(!paused); illustration.setMotion(!paused);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
 $('flat-view').addEventListener('click', open3D);
 media.addEventListener('change', () => {
-  paused = media.matches; sceneApi?.setReduced(media.matches);
+  paused = media.matches; sceneApi?.setReduced(media.matches); illustration.setReduced(media.matches);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
 });
@@ -157,10 +164,21 @@ $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento
 renderSimulation(); renderStep(-1); onScroll();
 window.addEventListener('scroll', scheduleScroll, { passive: true });
 window.addEventListener('resize', scheduleScroll, { passive: true });
-window.addEventListener('pagehide', e => { if (!e.persisted) sceneApi?.dispose(); });
+window.addEventListener('pagehide', e => { if (!e.persisted) { sceneApi?.dispose(); illustration.dispose(); } });
 window.addEventListener('hashchange', () => {
   const index = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
   if (index >= 0) goTo(index, false);
 });
 const initialIndex = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
 if (initialIndex >= 0) requestAnimationFrame(() => goTo(initialIndex, false));
+
+// The optional film is separate from chapter navigation and never replaces it.
+$('watch-film').addEventListener('click', () => {
+  $('film-dialog').showModal();
+  illustration.setVisible(false); sceneApi?.setFlat(true);
+  $('hero-film').play().catch(() => {});
+});
+$('close-film').addEventListener('click', () => $('film-dialog').close());
+$('film-dialog').addEventListener('close', () => {
+  $('hero-film').pause(); illustration.setVisible(isFlat); sceneApi?.setFlat(isFlat);
+});

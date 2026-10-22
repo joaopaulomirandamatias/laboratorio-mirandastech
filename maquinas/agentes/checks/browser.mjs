@@ -9,7 +9,7 @@ const output = process.env.CHECK_OUTPUT || '/tmp/mirandastech-agentes-checks';
 mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH || undefined, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const root = fileURLToPath(new URL('../../../site/', import.meta.url));
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.woff': 'font/woff', '.woff2': 'font/woff2', '.png': 'image/png', '.webp': 'image/webp', '.css': 'text/css', '.svg':'image/svg+xml', '.ttf':'font/ttf' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.woff': 'font/woff', '.woff2': 'font/woff2', '.png': 'image/png', '.webp': 'image/webp', '.css': 'text/css', '.svg':'image/svg+xml', '.ttf':'font/ttf', '.mp4':'video/mp4' };
 let server;
 let base = process.env.BASE_URL;
 if (!base) {
@@ -41,7 +41,7 @@ try {
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('#canvas-host canvas').count(), 0);
   assert.equal(await page.locator('#scene-fallback').isVisible(), true);
-  assert.equal(await page.locator('.machine-art').evaluate(img => img.complete && img.naturalWidth === 1024), true);
+  assert.equal(await page.locator('.layer-image').first().evaluate(img => img.complete && img.naturalWidth === 1024), true);
   await page.screenshot({ path: `${output}/desktop.png` });
   assert.equal(await page.locator('.step-nav [data-step]').count(), 6);
   assert.equal(await page.locator('#pause-motion').getAttribute('aria-pressed'), 'true');
@@ -54,13 +54,20 @@ try {
   await page.screenshot({ path: `${output}/live-3d.png` });
   await page.locator('#flat-view').click();
   assert.equal(await page.locator('#scene-fallback').isVisible(), true);
-  await step(1); await page.locator('#use-context').uncheck();
+  await step(1);
+  const cameraBefore = await page.locator('#machine-camera').evaluate(el => getComputedStyle(el).transform);
+  await page.locator('#use-context').uncheck();
+  assert.equal(await page.locator('#machine-plate').getAttribute('data-context'), 'false');
   assert.match(await page.locator('#sources').textContent(), /Sem fontes/);
   assert.equal(await page.locator('#result-context').isChecked(), false);
-  await step(3); await page.locator('input[name=action][value=send]').check();
+  await step(3);
+  assert.notEqual(await page.locator('#machine-camera').evaluate(el => getComputedStyle(el).transform), cameraBefore);
+  await page.locator('input[name=action][value=send]').check();
   await step(4);
   assert.match(await page.locator('#live-outcome').textContent(), /bloqueado/i);
+  assert.equal(await page.locator('#machine-plate').getAttribute('data-status'), 'blocked');
   await page.locator('#allow-send').check();
+  assert.equal(await page.locator('#machine-plate').getAttribute('data-status'), 'allowed');
   assert.match(await page.locator('#live-outcome').textContent(), /autorizado/i);
   await page.screenshot({ path: `${output}/permission.png` });
   await step(5); await page.locator('#step-result a').click();
@@ -99,14 +106,39 @@ try {
   animated.on('pageerror', e => errors.push(e.message));
   await animated.goto(path); await animated.locator('#simulation-ui').waitFor({ state: 'visible' });
   assert.equal(await animated.locator('#pause-motion').getAttribute('aria-pressed'), 'false');
+  assert.equal(await animated.locator('.layer-bob').count(), 6);
+  const movingLayer = animated.locator('.layer-bob').first();
+  const initialMatrix = await movingLayer.evaluate(el => getComputedStyle(el).transform);
+  await animated.waitForFunction(matrix => getComputedStyle(document.querySelector('.layer-bob')).transform !== matrix, initialMatrix);
+  const timeBefore = await animated.locator('.machine-effects').evaluate(el => el.getCurrentTime());
+  await animated.waitForFunction(t => document.querySelector('.machine-effects').getCurrentTime() > t+.15,timeBefore);
+  const surfaceRect = await animated.locator('#scene-wrap').boundingBox();
+  await animated.mouse.move(surfaceRect.x+surfaceRect.width*.8,surfaceRect.y+surfaceRect.height*.35);
+  await animated.waitForFunction(() => document.querySelector('.machine-tilt').style.transform.includes('perspective'));
+  await animated.mouse.move(0,0);
+  await animated.locator('#pause-motion').click();
+  assert.equal(await animated.locator('#machine-plate').getAttribute('data-motion'), 'paused');
+  assert.equal(await animated.locator('.machine-effects').evaluate(el => el.animationsPaused()), true);
+  assert.equal(await movingLayer.evaluate(el => el.getAnimations()[0].playState), 'paused');
+  await animated.locator('#pause-motion').click();
+  assert.equal(await animated.locator('#machine-plate').getAttribute('data-motion'), 'running');
   await step(0, animated);
   await animated.locator('#flat-view').click();
+  assert.equal(await animated.locator('#machine-plate').getAttribute('data-motion'), 'paused');
   await animated.locator('#pause-motion').click();
   assert.equal(await animated.locator('#pause-motion').getAttribute('aria-pressed'), 'true');
+  await animated.locator('#flat-view').click();
   await step(3, animated);
   // Native scrolling can select a chapter without clicking the timeline.
   await animated.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); });
   await animated.locator('#hero-copy').waitFor({ state: 'visible' });
+  await animated.locator('#watch-film').click();
+  assert.equal(await animated.locator('#film-dialog').evaluate(el => el.open), true);
+  await animated.locator('#hero-film').evaluate(el => new Promise(ok => el.readyState >= 2 ? ok() : el.addEventListener('loadeddata',ok,{once:true})));
+  assert.equal(await animated.locator('#hero-film').evaluate(el => el.videoWidth > 0), true);
+  await animated.locator('#close-film').click();
+  await animated.waitForFunction(() => document.getElementById('hero-film').paused);
+  assert.equal(await animated.locator('#hero-film').evaluate(el => el.paused), true);
   const noGl = await browser.newPage({ viewport: { width: 1100, height: 850 }, reducedMotion: 'reduce' });
   await noGl.route('**/three-r128.min.js', route => route.abort());
   await noGl.goto(path); await noGl.locator('#simulation-ui').waitFor({ state: 'visible' });
@@ -124,7 +156,23 @@ try {
   assert.equal(await noJs.locator('#scene-fallback').isVisible(), true);
   assert.deepEqual(externalRequests, []);
   assert.deepEqual(errors, []);
-  console.log('ok: desktop, seis etapas, contexto, envio bloqueado/autorizado, registro, teclado, 2D, celular, sem WebGL e sem JS.');
+  if (process.env.RECORD_DEMO === '1') {
+    const demoContext = await browser.newContext({viewport:{width:1280,height:800},recordVideo:{dir:output,size:{width:1280,height:800}}});
+    const demo = await demoContext.newPage();
+    await demo.goto(path); await demo.locator('#simulation-ui').waitFor({state:'visible'});
+    await demo.waitForTimeout(900);
+    for (const index of [0,1,2,3,4,5]) {
+      await step(index,demo);
+      await demo.waitForTimeout(1100);
+      if (index === 4) {
+        await demo.locator('#try-send').click(); await demo.waitForTimeout(500);
+        await demo.locator('#allow-send').check(); await demo.waitForTimeout(500);
+      }
+    }
+    await demoContext.close();
+    await demo.video().saveAs(`${output}/motion-demo.webm`);
+  }
+  console.log('ok: desktop, seis etapas, contexto, envio bloqueado/autorizado, registro, teclado, animação real, foco por etapa, pausa/retomada, vídeo, celular, sem WebGL e sem JS.');
   console.log(`Capturas: ${output}`);
 } catch (error) { await page.screenshot({ path: `${output}/failure.png` }); throw error; }
 finally { await browser.close(); if (server) await new Promise(ok => server.close(ok)); }

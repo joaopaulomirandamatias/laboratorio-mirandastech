@@ -26,15 +26,16 @@
       <div class="scene-wrap" id="scene-wrap" aria-label="Máquina com seis camadas: pergunta, contexto, modelo, ferramentas, governança e resposta">
         <div class="scene-fallback" id="scene-fallback">
           <div class="machine-plate" id="machine-plate">
-            <svg class="machine-energy" viewBox="0 0 1024 1536" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="energy-glow"><feGaussianBlur stdDeviation="7"/></filter></defs><path class="energy-halo" d="M330 1330 C700 1190 170 1120 490 990 S400 780 570 680 S690 530 670 425 S740 300 740 180"/><path class="energy-thread" d="M330 1330 C700 1190 170 1120 490 990 S400 780 570 680 S690 530 670 425 S740 300 740 180"/></svg>
-            <img class="machine-art" src="../../assets/agentes-machine.webp" alt="Máquina em seis plataformas de metal: uma pergunta em vidro, documentos azuis, um núcleo luminoso, ferramentas, um portão de cobre e a resposta." width="1024" height="1536" fetchpriority="high">
-            <span class="poster-status" id="poster-status" aria-hidden="true">✓</span>
-            <div class="poster-labels"><!-- FALLBACK --></div>
+            <div class="machine-camera" id="machine-camera"><div class="machine-tilt">
+              <div class="machine-art" role="img" aria-label="Máquina animada em seis plataformas de metal e vidro azul."><!-- ART_LAYERS --></div>
+              <!-- MOTION_EFFECTS -->
+              <div class="poster-labels"><!-- FALLBACK --></div>
+            </div></div>
           </div>
         </div>
         <div id="canvas-host" aria-hidden="true"></div>
         <div class="scene-labels" id="scene-labels" hidden><!-- SCENE_LABELS --></div>
-        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Visualização ilustrada · selecione uma camada</span></span>
+        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Cena animada · selecione uma camada</span></span>
       </div>
 
       <div class="lesson-copy">
@@ -44,6 +45,7 @@
           <h1>A pergunta<br>vira <em>ação.</em></h1>
           <p class="hero-sub">Explore o caminho de um agente de IA.</p>
           <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <img src="../../assets/icons/arrow-right.svg" width="22" height="22" alt=""></a><a class="secondary" href="#leitura">Ver etapas <img src="../../assets/icons/list.svg" width="21" height="21" alt=""></a></div>
+          <button class="film-link" id="watch-film" type="button"><span aria-hidden="true">▷</span> Ver vídeo de 5 segundos</button>
           <div class="lesson-meta"><span>6 camadas</span><span>5 min de exploração</span><span>Sem cadastro</span></div>
         </div>
         <div id="step-copy" hidden>
@@ -71,7 +73,7 @@
       <div class="scene-toolbar" id="scene-toolbar" hidden>
         <button type="button" id="overview">Vista geral</button>
         <button type="button" id="pause-motion" aria-pressed="false">Pausar movimento</button>
-        <button type="button" id="flat-view" aria-pressed="true">Explorar em 3D</button>
+        <button type="button" id="flat-view" aria-pressed="true">Modelo 3D</button>
       </div>
       <div class="story-bottom">
         <nav class="step-nav" aria-label="Etapas da aula"><ol><!-- STEP_NAV --></ol></nav>
@@ -107,6 +109,11 @@
     <a class="primary" href="https://blog.mirandastech.com.br/">Continuar no blog <span>↗</span></a>
   </section>
 </main>
+<dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title">
+  <div class="film-dialog-head"><h2 id="film-title">A máquina em movimento</h2><button id="close-film" type="button" aria-label="Fechar vídeo">Fechar ×</button></div>
+  <video id="hero-film" controls loop muted playsinline preload="none" poster="../../assets/agentes-machine.webp"><source src="../../assets/agentes-motion.mp4" type="video/mp4"></video>
+  <p>Clipe visual de 5 segundos. Explore as etapas da aula para interagir com a máquina.</p>
+</dialog>
 <script src="../../assets/vendor/three-r128.min.js"></script>
 <script src="../../assets/vendor/three-r128-postprocessing.js"></script>
 <script type="module">/* LESSON_JS */</script>
