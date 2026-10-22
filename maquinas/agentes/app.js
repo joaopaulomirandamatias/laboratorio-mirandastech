@@ -10,6 +10,36 @@ let currentStep = -1, progress = 0, sceneApi = null, isFlat = true, paused = med
 let state = { context: true, action: 'read', allowSend: false };
 let result = simulate(state);
 const illustration = createIllustratedScene($('machine-plate'), $('scene-wrap'), { reducedMotion:media.matches });
+const openingFilm = $('opening-film');
+let openingVisible = true, openingPending = false, openingBlocked = false;
+openingFilm.muted = true;
+
+// The same clip plays in the opening; chapter navigation hands off to the layers.
+function syncOpeningFilm() {
+  const opening = currentStep < 0 && isFlat && !$('film-dialog').open;
+  const shouldPlay = opening && !paused && openingVisible && !document.hidden && !openingBlocked;
+  if (!shouldPlay) {
+    openingFilm.pause();
+    $('machine-plate').dataset.film = opening && openingFilm.readyState >= 2 && !openingBlocked ? 'paused' : 'hidden';
+  } else if (!openingFilm.paused && openingFilm.readyState >= 2) {
+    $('machine-plate').dataset.film = 'playing';
+  } else if (!openingPending) {
+    openingPending = true;
+    openingFilm.play().then(() => { openingPending = false; syncOpeningFilm(); }).catch(error => {
+      openingPending = false;
+      // A quick chapter change aborts loading; autoplay rejection keeps the layers.
+      if (error.name !== 'AbortError') openingBlocked = true;
+      syncOpeningFilm();
+    });
+  }
+  const filmVisible = ['playing','paused'].includes($('machine-plate').dataset.film);
+  illustration.setVisible(isFlat && !$('film-dialog').open && !filmVisible);
+}
+openingFilm.addEventListener('playing', syncOpeningFilm);
+openingFilm.addEventListener('error', () => { openingBlocked = true; syncOpeningFilm(); });
+const openingObserver = new IntersectionObserver(entries => { openingVisible = entries[0].isIntersecting; syncOpeningFilm(); });
+openingObserver.observe($('scene-wrap'));
+document.addEventListener('visibilitychange', syncOpeningFilm);
 
 function make(tag, text, className) {
   const node = document.createElement(tag);
@@ -68,6 +98,7 @@ function renderStep(index) {
     if (value === index) node.setAttribute('aria-current', 'step'); else node.removeAttribute('aria-current');
     node.dataset.complete = String(value < index);
   });
+  syncOpeningFilm();
 }
 function metrics() {
   const top = experience.getBoundingClientRect().top + window.scrollY;
@@ -104,6 +135,7 @@ function flatView(value) {
   illustration.setVisible(value);
   $('renderer-label').textContent = value ? 'Cena animada · selecione uma camada' : 'Arraste na horizontal para girar';
   sceneApi?.setFlat(value);
+  syncOpeningFilm();
 }
 function open3D() {
   if (!isFlat) { flatView(true); return; }
@@ -149,12 +181,15 @@ $('pause-motion').addEventListener('click', () => {
   paused = !paused; sceneApi?.setMotion(!paused); illustration.setMotion(!paused);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+  if (!paused) openingBlocked = false;
+  syncOpeningFilm();
 });
 $('flat-view').addEventListener('click', open3D);
 media.addEventListener('change', () => {
   paused = media.matches; sceneApi?.setReduced(media.matches); illustration.setReduced(media.matches);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+  syncOpeningFilm();
 });
 flatView(true);
 $('scene-toolbar').hidden = false; $('simulation-ui').hidden = false;
@@ -164,7 +199,7 @@ $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento
 renderSimulation(); renderStep(-1); onScroll();
 window.addEventListener('scroll', scheduleScroll, { passive: true });
 window.addEventListener('resize', scheduleScroll, { passive: true });
-window.addEventListener('pagehide', e => { if (!e.persisted) { sceneApi?.dispose(); illustration.dispose(); } });
+window.addEventListener('pagehide', e => { if (!e.persisted) { openingFilm.pause(); openingObserver.disconnect(); document.removeEventListener('visibilitychange',syncOpeningFilm); sceneApi?.dispose(); illustration.dispose(); } });
 window.addEventListener('hashchange', () => {
   const index = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
   if (index >= 0) goTo(index, false);
@@ -172,13 +207,13 @@ window.addEventListener('hashchange', () => {
 const initialIndex = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
 if (initialIndex >= 0) requestAnimationFrame(() => goTo(initialIndex, false));
 
-// The optional film is separate from chapter navigation and never replaces it.
+// The enlarged view reuses the clip while the inline player is paused.
 $('watch-film').addEventListener('click', () => {
   $('film-dialog').showModal();
-  illustration.setVisible(false); sceneApi?.setFlat(true);
+  syncOpeningFilm(); sceneApi?.setFlat(true);
   $('hero-film').play().catch(() => {});
 });
 $('close-film').addEventListener('click', () => $('film-dialog').close());
 $('film-dialog').addEventListener('close', () => {
-  $('hero-film').pause(); illustration.setVisible(isFlat); sceneApi?.setFlat(isFlat);
+  $('hero-film').pause(); sceneApi?.setFlat(isFlat); syncOpeningFilm();
 });

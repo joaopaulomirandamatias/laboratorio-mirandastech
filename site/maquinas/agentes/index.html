@@ -223,6 +223,11 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
 @media(max-width:900px){.scene-toolbar{bottom:84px;right:20px;gap:6px}.scene-toolbar button{font-size:8px;padding:7px 9px;min-height:32px}.film-link{margin-top:5px;font-size:10px;padding:4px 0}.scene-wrap{top:390px}.stage.is-step .scene-wrap{top:365px}}
 @media(max-width:600px){.scene-wrap{top:385px}.stage.is-step .scene-wrap{top:385px}.scene-toolbar{bottom:67px;right:15px}.scene-toolbar button{font-size:8px;padding:6px 8px;min-height:30px}.film-link{font-size:9px;min-height:28px}.film-link span{font-size:18px}.film-dialog{padding:15px}.film-dialog-head h2{font-size:23px}}
 @media(max-height:740px) and (max-width:900px){.scene-wrap{top:330px;bottom:60px}.stage.is-step .scene-wrap{top:365px}.film-link{margin-top:0;min-height:25px}.scene-toolbar{bottom:64px}}
+/* Inline cinematic opening; the interactive layers take over in each chapter. */
+.opening-film{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:fill;opacity:0;pointer-events:none;transition:opacity .4s;mix-blend-mode:lighten;mask-image:url('../../assets/agentes-machine.webp');mask-size:100% 100%;mask-mode:alpha;-webkit-mask-image:url('../../assets/agentes-machine.webp');-webkit-mask-size:100% 100%}
+.machine-art,.machine-effects{transition:opacity .4s}
+.machine-plate[data-film=playing] .opening-film,.machine-plate[data-film=paused] .opening-film{opacity:1}
+.machine-plate[data-film=playing] .machine-art,.machine-plate[data-film=playing] .machine-effects,.machine-plate[data-film=paused] .machine-art,.machine-plate[data-film=paused] .machine-effects{opacity:0}
 </style>
 <style id="campus-shell-style">/* Tokens e classes restritos ao menu/rodapé para preservar os controles da máquina. */
 .campus-shell{--shell-ink:#f5f7fa;--shell-muted:#b7c0cd;--shell-dim:#7d8798;--shell-line:rgba(255,255,255,.1);--shell-cyan:#65e8ff;--shell-violet:#c4b5fd;font-family:"Geist",system-ui,sans-serif;color:var(--shell-ink)}
@@ -295,6 +300,7 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
       <div class="scene-wrap" id="scene-wrap" aria-label="Máquina com seis camadas: pergunta, contexto, modelo, ferramentas, governança e resposta">
         <div class="scene-fallback" id="scene-fallback">
           <div class="machine-plate" id="machine-plate">
+            <video class="opening-film" id="opening-film" loop muted playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../../assets/agentes-motion.mp4" type="video/mp4"></video>
             <div class="machine-camera" id="machine-camera"><div class="machine-tilt">
               <div class="machine-art" role="img" aria-label="Máquina animada em seis plataformas de metal e vidro azul."><div class="machine-layer" data-art-layer="0" style="--layer-clip:polygon(0.000% 83.659%,11.230% 78.776%,45.898% 85.417%,48.047% 88.216%,68.359% 89.193%,100.000% 85.938%,100.000% 100.000%,0.000% 100.000%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" fetchpriority="high"></div></div><div class="machine-layer" data-art-layer="1" style="--layer-clip:polygon(0.000% 67.708%,24.219% 66.667%,36.621% 69.466%,39.551% 70.182%,42.969% 70.638%,48.828% 71.940%,72.852% 65.690%,100.000% 70.964%,100.000% 85.938%,68.359% 89.193%,48.047% 88.216%,45.898% 85.417%,11.230% 78.776%,0.000% 83.659%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" ></div></div><div class="machine-layer" data-art-layer="2" style="--layer-clip:polygon(0.000% 51.107%,34.180% 50.456%,48.340% 49.805%,62.207% 52.865%,69.336% 55.859%,100.000% 48.177%,100.000% 70.964%,72.852% 65.690%,48.828% 71.940%,42.969% 70.638%,39.551% 70.182%,36.621% 69.466%,24.219% 66.667%,0.000% 67.708%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" ></div></div><div class="machine-layer" data-art-layer="3" style="--layer-clip:polygon(0.000% 36.458%,39.844% 35.156%,78.125% 40.690%,100.000% 35.156%,100.000% 48.177%,69.336% 55.859%,62.207% 52.865%,48.340% 49.805%,34.180% 50.456%,0.000% 51.107%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" ></div></div><div class="machine-layer" data-art-layer="4" style="--layer-clip:polygon(0.000% 18.229%,48.828% 16.927%,83.008% 21.159%,100.000% 17.253%,100.000% 35.156%,78.125% 40.690%,39.844% 35.156%,0.000% 36.458%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" ><span class="poster-status" id="poster-status" aria-hidden="true">✓</span></div></div><div class="machine-layer" data-art-layer="5" style="--layer-clip:polygon(0.000% 0.000%,100.000% 0.000%,100.000% 17.253%,83.008% 21.159%,48.828% 16.927%,0.000% 18.229%)"><div class="layer-bob"><img class="layer-image" src="../../assets/agentes-machine.webp" alt="" width="1024" height="1536" ></div></div></div>
               <svg class="machine-effects" viewBox="0 0 1024 1536" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="motion-glow"><feGaussianBlur stdDeviation="4"/></filter><radialGradient id="core-aura"><stop stop-color="#ffbd73" stop-opacity=".9"/><stop offset="1" stop-color="#ffbd73" stop-opacity="0"/></radialGradient><path id="flow-main" d="M430 1370 C610 1300 160 1210 385 1130 S600 1055 450 935 S495 800 590 710 S610 540 550 425"/><path id="flow-allowed" d="M550 425 C640 415 730 365 730 290 S715 195 740 155"/><path id="flow-blocked" d="M550 425 C680 460 780 420 830 480 S990 500 980 550"/></defs>
@@ -322,7 +328,7 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
           <h1>A pergunta<br>vira <em>ação.</em></h1>
           <p class="hero-sub">Explore o caminho de um agente de IA.</p>
           <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <img src="../../assets/icons/arrow-right.svg" width="22" height="22" alt=""></a><a class="secondary" href="#leitura">Ver etapas <img src="../../assets/icons/list.svg" width="21" height="21" alt=""></a></div>
-          <button class="film-link" id="watch-film" type="button"><span aria-hidden="true">▷</span> Ver vídeo de 5 segundos</button>
+          <button class="film-link" id="watch-film" type="button"><span aria-hidden="true">▷</span> Ampliar vídeo</button>
           <div class="lesson-meta"><span>6 camadas</span><span>5 min de exploração</span><span>Sem cadastro</span></div>
         </div>
         <div id="step-copy" hidden>
@@ -858,6 +864,36 @@ let currentStep = -1, progress = 0, sceneApi = null, isFlat = true, paused = med
 let state = { context: true, action: 'read', allowSend: false };
 let result = simulate(state);
 const illustration = createIllustratedScene($('machine-plate'), $('scene-wrap'), { reducedMotion:media.matches });
+const openingFilm = $('opening-film');
+let openingVisible = true, openingPending = false, openingBlocked = false;
+openingFilm.muted = true;
+
+// The same clip plays in the opening; chapter navigation hands off to the layers.
+function syncOpeningFilm() {
+  const opening = currentStep < 0 && isFlat && !$('film-dialog').open;
+  const shouldPlay = opening && !paused && openingVisible && !document.hidden && !openingBlocked;
+  if (!shouldPlay) {
+    openingFilm.pause();
+    $('machine-plate').dataset.film = opening && openingFilm.readyState >= 2 && !openingBlocked ? 'paused' : 'hidden';
+  } else if (!openingFilm.paused && openingFilm.readyState >= 2) {
+    $('machine-plate').dataset.film = 'playing';
+  } else if (!openingPending) {
+    openingPending = true;
+    openingFilm.play().then(() => { openingPending = false; syncOpeningFilm(); }).catch(error => {
+      openingPending = false;
+      // A quick chapter change aborts loading; autoplay rejection keeps the layers.
+      if (error.name !== 'AbortError') openingBlocked = true;
+      syncOpeningFilm();
+    });
+  }
+  const filmVisible = ['playing','paused'].includes($('machine-plate').dataset.film);
+  illustration.setVisible(isFlat && !$('film-dialog').open && !filmVisible);
+}
+openingFilm.addEventListener('playing', syncOpeningFilm);
+openingFilm.addEventListener('error', () => { openingBlocked = true; syncOpeningFilm(); });
+const openingObserver = new IntersectionObserver(entries => { openingVisible = entries[0].isIntersecting; syncOpeningFilm(); });
+openingObserver.observe($('scene-wrap'));
+document.addEventListener('visibilitychange', syncOpeningFilm);
 
 function make(tag, text, className) {
   const node = document.createElement(tag);
@@ -916,6 +952,7 @@ function renderStep(index) {
     if (value === index) node.setAttribute('aria-current', 'step'); else node.removeAttribute('aria-current');
     node.dataset.complete = String(value < index);
   });
+  syncOpeningFilm();
 }
 function metrics() {
   const top = experience.getBoundingClientRect().top + window.scrollY;
@@ -952,6 +989,7 @@ function flatView(value) {
   illustration.setVisible(value);
   $('renderer-label').textContent = value ? 'Cena animada · selecione uma camada' : 'Arraste na horizontal para girar';
   sceneApi?.setFlat(value);
+  syncOpeningFilm();
 }
 function open3D() {
   if (!isFlat) { flatView(true); return; }
@@ -997,12 +1035,15 @@ $('pause-motion').addEventListener('click', () => {
   paused = !paused; sceneApi?.setMotion(!paused); illustration.setMotion(!paused);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+  if (!paused) openingBlocked = false;
+  syncOpeningFilm();
 });
 $('flat-view').addEventListener('click', open3D);
 media.addEventListener('change', () => {
   paused = media.matches; sceneApi?.setReduced(media.matches); illustration.setReduced(media.matches);
   $('pause-motion').setAttribute('aria-pressed', String(paused));
   $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+  syncOpeningFilm();
 });
 flatView(true);
 $('scene-toolbar').hidden = false; $('simulation-ui').hidden = false;
@@ -1012,7 +1053,7 @@ $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento
 renderSimulation(); renderStep(-1); onScroll();
 window.addEventListener('scroll', scheduleScroll, { passive: true });
 window.addEventListener('resize', scheduleScroll, { passive: true });
-window.addEventListener('pagehide', e => { if (!e.persisted) { sceneApi?.dispose(); illustration.dispose(); } });
+window.addEventListener('pagehide', e => { if (!e.persisted) { openingFilm.pause(); openingObserver.disconnect(); document.removeEventListener('visibilitychange',syncOpeningFilm); sceneApi?.dispose(); illustration.dispose(); } });
 window.addEventListener('hashchange', () => {
   const index = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
   if (index >= 0) goTo(index, false);
@@ -1020,15 +1061,15 @@ window.addEventListener('hashchange', () => {
 const initialIndex = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
 if (initialIndex >= 0) requestAnimationFrame(() => goTo(initialIndex, false));
 
-// The optional film is separate from chapter navigation and never replaces it.
+// The enlarged view reuses the clip while the inline player is paused.
 $('watch-film').addEventListener('click', () => {
   $('film-dialog').showModal();
-  illustration.setVisible(false); sceneApi?.setFlat(true);
+  syncOpeningFilm(); sceneApi?.setFlat(true);
   $('hero-film').play().catch(() => {});
 });
 $('close-film').addEventListener('click', () => $('film-dialog').close());
 $('film-dialog').addEventListener('close', () => {
-  $('hero-film').pause(); illustration.setVisible(isFlat); sceneApi?.setFlat(isFlat);
+  $('hero-film').pause(); sceneApi?.setFlat(isFlat); syncOpeningFilm();
 });
 </script>
 </body>

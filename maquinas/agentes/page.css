@@ -204,3 +204,8 @@ fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);ma
 @media(max-width:900px){.scene-toolbar{bottom:84px;right:20px;gap:6px}.scene-toolbar button{font-size:8px;padding:7px 9px;min-height:32px}.film-link{margin-top:5px;font-size:10px;padding:4px 0}.scene-wrap{top:390px}.stage.is-step .scene-wrap{top:365px}}
 @media(max-width:600px){.scene-wrap{top:385px}.stage.is-step .scene-wrap{top:385px}.scene-toolbar{bottom:67px;right:15px}.scene-toolbar button{font-size:8px;padding:6px 8px;min-height:30px}.film-link{font-size:9px;min-height:28px}.film-link span{font-size:18px}.film-dialog{padding:15px}.film-dialog-head h2{font-size:23px}}
 @media(max-height:740px) and (max-width:900px){.scene-wrap{top:330px;bottom:60px}.stage.is-step .scene-wrap{top:365px}.film-link{margin-top:0;min-height:25px}.scene-toolbar{bottom:64px}}
+/* Inline cinematic opening; the interactive layers take over in each chapter. */
+.opening-film{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:fill;opacity:0;pointer-events:none;transition:opacity .4s;mix-blend-mode:lighten;mask-image:url('../../assets/agentes-machine.webp');mask-size:100% 100%;mask-mode:alpha;-webkit-mask-image:url('../../assets/agentes-machine.webp');-webkit-mask-size:100% 100%}
+.machine-art,.machine-effects{transition:opacity .4s}
+.machine-plate[data-film=playing] .opening-film,.machine-plate[data-film=paused] .opening-film{opacity:1}
+.machine-plate[data-film=playing] .machine-art,.machine-plate[data-film=playing] .machine-effects,.machine-plate[data-film=paused] .machine-art,.machine-plate[data-film=paused] .machine-effects{opacity:0}

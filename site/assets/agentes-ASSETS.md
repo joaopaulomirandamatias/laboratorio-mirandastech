@@ -11,4 +11,4 @@
 
 A cena Three.js usa geometria procedural independente da arte ilustrada. O botão **Modelo 3D** inicia o renderizador; sem WebGL a ilustração e toda a simulação continuam disponíveis. Todos os recursos são servidos localmente, sem dependência de CDN ou API na aula.
 
-O movimento principal é executado no navegador, sem cobrança de IA por visita. A animação tem pausa, respeita movimento reduzido inicialmente e para quando a cena está fora da tela, a aba está oculta ou o vídeo está aberto. O vídeo é opcional e só é carregado quando solicitado.
+O clipe toca automaticamente na abertura, em loop e sem som; ao entrar em uma etapa, ele pausa e a animação em camadas assume. O botão Ampliar vídeo abre uma reprodução maior, pausando o vídeo da abertura. Movimento reduzido inicia com a ilustração pausada, sem carregar o clipe; se a reprodução automática for bloqueada, as camadas permanecem visíveis. Vídeo e animações param quando a cena está fora da tela ou a aba está oculta. O movimento é executado no navegador, sem cobrança de IA por visita.

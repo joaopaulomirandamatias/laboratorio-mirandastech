@@ -45,6 +45,7 @@ try {
   await page.screenshot({ path: `${output}/desktop.png` });
   assert.equal(await page.locator('.step-nav [data-step]').count(), 6);
   assert.equal(await page.locator('#pause-motion').getAttribute('aria-pressed'), 'true');
+  assert.equal(await page.locator('#opening-film').evaluate(el => el.paused), true);
   assert.equal(await page.locator('header.topbar').count(), 1);
   assert.equal(await page.locator('footer.mt-foot').count(), 1);
   await step(0);
@@ -106,6 +107,21 @@ try {
   animated.on('pageerror', e => errors.push(e.message));
   await animated.goto(path); await animated.locator('#simulation-ui').waitFor({ state: 'visible' });
   assert.equal(await animated.locator('#pause-motion').getAttribute('aria-pressed'), 'false');
+  await animated.waitForFunction(() => {
+    const film=document.getElementById('opening-film');
+    return !film.paused && film.currentTime > .15 && document.getElementById('machine-plate').dataset.film === 'playing';
+  });
+  assert.equal(await animated.locator('#opening-film').evaluate(el => el.muted && el.playsInline), true);
+  await animated.waitForFunction(() => getComputedStyle(document.getElementById('opening-film')).opacity === '1');
+  await animated.screenshot({path:`${output}/video-opening.png`});
+  await animated.locator('#pause-motion').click();
+  assert.equal(await animated.locator('#opening-film').evaluate(el => el.paused), true);
+  assert.equal(await animated.locator('#machine-plate').getAttribute('data-film'), 'paused');
+  await animated.locator('#pause-motion').click();
+  await animated.waitForFunction(() => !document.getElementById('opening-film').paused);
+  await step(0, animated);
+  assert.equal(await animated.locator('#opening-film').evaluate(el => el.paused), true);
+  assert.equal(await animated.locator('#machine-plate').getAttribute('data-film'), 'hidden');
   assert.equal(await animated.locator('.layer-bob').count(), 6);
   const movingLayer = animated.locator('.layer-bob').first();
   const initialMatrix = await movingLayer.evaluate(el => getComputedStyle(el).transform);
@@ -132,13 +148,32 @@ try {
   // Native scrolling can select a chapter without clicking the timeline.
   await animated.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); });
   await animated.locator('#hero-copy').waitFor({ state: 'visible' });
+  // Returning to the overview resumes the inline film.
+  await animated.locator('#pause-motion').click();
+  await animated.waitForFunction(() => !document.getElementById('opening-film').paused);
   await animated.locator('#watch-film').click();
+  assert.equal(await animated.locator('#opening-film').evaluate(el => el.paused), true);
   assert.equal(await animated.locator('#film-dialog').evaluate(el => el.open), true);
   await animated.locator('#hero-film').evaluate(el => new Promise(ok => el.readyState >= 2 ? ok() : el.addEventListener('loadeddata',ok,{once:true})));
   assert.equal(await animated.locator('#hero-film').evaluate(el => el.videoWidth > 0), true);
   await animated.locator('#close-film').click();
   await animated.waitForFunction(() => document.getElementById('hero-film').paused);
   assert.equal(await animated.locator('#hero-film').evaluate(el => el.paused), true);
+  await animated.waitForFunction(() => !document.getElementById('opening-film').paused);
+  const touchVideo = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  await touchVideo.goto(path);
+  await touchVideo.waitForFunction(() => !document.getElementById('opening-film').paused && document.getElementById('opening-film').currentTime > .1);
+  await step(1,touchVideo);
+  assert.equal(await touchVideo.locator('#opening-film').evaluate(el => el.paused), true);
+  // If autoplay is rejected, the already-working animated layers stay visible.
+  const noAutoplay=await browser.newPage({viewport:{width:1100,height:850}});
+  await noAutoplay.addInitScript(() => {
+    const original=HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play=function(){return this.id === 'opening-film' ? Promise.reject(new DOMException('Autoplay blocked','NotAllowedError')) : original.call(this);};
+  });
+  await noAutoplay.goto(path); await noAutoplay.locator('#simulation-ui').waitFor({state:'visible'});
+  assert.equal(await noAutoplay.locator('#machine-plate').getAttribute('data-film'), 'hidden');
+  assert.equal(await noAutoplay.locator('#machine-plate').getAttribute('data-motion'), 'running');
   const noGl = await browser.newPage({ viewport: { width: 1100, height: 850 }, reducedMotion: 'reduce' });
   await noGl.route('**/three-r128.min.js', route => route.abort());
   await noGl.goto(path); await noGl.locator('#simulation-ui').waitFor({ state: 'visible' });
@@ -172,7 +207,7 @@ try {
     await demoContext.close();
     await demo.video().saveAs(`${output}/motion-demo.webm`);
   }
-  console.log('ok: desktop, seis etapas, contexto, envio bloqueado/autorizado, registro, teclado, animação real, foco por etapa, pausa/retomada, vídeo, celular, sem WebGL e sem JS.');
+  console.log('ok: desktop, seis etapas, contexto, envio bloqueado/autorizado, registro, teclado, animação real, foco por etapa, pausa/retomada, vídeo automático na abertura, transição para etapas, vídeo ampliado, celular, sem WebGL e sem JS.');
   console.log(`Capturas: ${output}`);
 } catch (error) { await page.screenshot({ path: `${output}/failure.png` }); throw error; }
 finally { await browser.close(); if (server) await new Promise(ok => server.close(ok)); }

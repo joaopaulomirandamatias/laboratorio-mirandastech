@@ -42,7 +42,14 @@ Correção solicitada pelo autor: a abertura anterior ficava estática e as etap
 - O teste compara matrizes de transformação em instantes distintos, confirma avanço do relógio SVG, pausa/retomada efetivas, paralaxe ao mover o mouse e alteração da câmera entre capítulos.
 - Pausa, movimento reduzido, ausência de WebGL, celular, abertura/reprodução/fechamento do vídeo e os fluxos pedagógicos passaram no teste de navegador completo.
 - A revisão visual no navegador conectado confirmou a etapa Modelo com câmera em escala 1,18 e camada em movimento. Máscaras e fases de flutuação foram ajustadas para reduzir separações nas bordas dos documentos.
-- O clipe Higgsfield de 5 segundos fica em **Ver vídeo**, carrega sob demanda e não substitui os controles da aula. Grok Video 1.5, job `a98082e3-1141-4c2e-afb0-144ccb95d642`; custo confirmado de 22,5 créditos, saldo de 170 após esta geração. O vídeo tem pequenas variações de luz/geometria próprias da geração; por isso é uma opção separada.
+- Nesta revisão, o clipe Higgsfield de 5 segundos ficou inicialmente em **Ver vídeo**, com carregamento sob demanda. A integração direta foi feita na revisão abaixo. Grok Video 1.5, job `a98082e3-1141-4c2e-afb0-144ccb95d642`; custo confirmado de 22,5 créditos, saldo de 170 após esta geração. O vídeo tem pequenas variações de luz/geometria próprias da geração.
 - A demonstração privada é atualizada no Sites; o site principal continua aguardando a revisão do PR #4.
 
 **Resultado: passou para revisão do autor.** Movimento e transições foram verificados, além das capturas estáticas. Limite mantido: a cena principal é uma composição animada em 2,5D; o modelo volumétrico Three.js permanece uma opção independente.
+
+
+## Vídeo integrado à abertura — 22/10/2026
+
+O clipe existente agora aparece diretamente na máquina do topo, em loop e sem som, com máscara alfa para preservar o cenário e as legendas em HTML. [Captura com reprodução ativa](docs/visual-qa/agentes-inline-video.webp). Ao selecionar uma etapa, o vídeo pausa e as camadas interativas assumem; ao voltar à vista geral, a reprodução retoma. **Ampliar vídeo** mantém a opção de visualização maior.
+
+O teste completo de navegador passou: avanço real do vídeo no desktop e no celular, pausa/retomada, troca para etapas, abertura/fechamento da janela ampliada sem dois vídeos simultâneos e alternativa animada quando a reprodução automática é bloqueada. Movimento reduzido inicia sem reproduzir o clipe. A linha do tempo permanece clicável durante o zoom da máquina. Nenhum novo vídeo foi gerado.
