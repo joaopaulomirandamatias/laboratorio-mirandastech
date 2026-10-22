@@ -1,0 +1,735 @@
+<!-- GERADO: node maquinas/agentes/build.mjs -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Por dentro de um agente de IA · MirandasTech</title>
+<meta name="description" content="Explore uma máquina 3D, acompanhe uma pergunta até a resposta e experimente contexto, ferramentas e permissões em uma aula interativa de IA.">
+<meta name="theme-color" content="#05080D">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A pergunta vira ação · MirandasTech">
+<meta property="og:description" content="Uma aula interativa por dentro de um agente de IA. Explore seis camadas e experimente o que muda com contexto e permissão.">
+<meta property="og:url" content="https://lab.mirandastech.com.br/maquinas/agentes/">
+<meta property="og:image" content="https://lab.mirandastech.com.br/assets/maq-agentes.webp">
+<link rel="canonical" href="https://lab.mirandastech.com.br/maquinas/agentes/">
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="preload" href="../../assets/fonts/Geist_normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>@font-face{font-family:Geist;src:url('../../assets/fonts/Geist_normal.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('../../assets/fonts/GeistMono_normal.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url('../../assets/fonts/InstrumentSerif_italic.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap}
+:root{--bg:#05080d;--ink:#e9eef5;--muted:#9aadc3;--blue:#6fa3dc;--teal:#4fc1b0;--copper:#d2694a;--line:rgba(134,171,213,.17);--mono:'Geist Mono',monospace;--serif:'Instrument Serif',Georgia,serif;--header:65px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:default;opacity:.35}
+:focus-visible{outline:2px solid var(--teal);outline-offset:5px}
+[hidden]{display:none!important}p,h1,h2,h3{margin:0}h1,h2,h3{font-weight:500;line-height:1.08;letter-spacing:-.045em}em{font-family:var(--serif);font-weight:400;color:var(--blue);letter-spacing:-.015em}
+.experience{height:calc(100svh - var(--header));min-height:660px;position:relative;overflow-anchor:none}
+.lesson-ready .experience{height:calc(700svh - 390px)}
+.stage{position:sticky;top:var(--header);height:calc(100svh - var(--header));min-height:610px;overflow:clip;isolation:isolate;border-bottom:1px solid var(--line)}
+.stage-glow{position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 75% 40%,#10263c66 0%,transparent 58%),linear-gradient(115deg,#05080d,transparent 70%)}
+.stage-glow:after{content:'';position:absolute;width:120%;height:50%;left:10%;bottom:-30%;border:1px solid #6fa3dc14;border-radius:50%;transform:rotate(-24deg);box-shadow:0 0 0 120px #6fa3dc04,0 0 0 250px #6fa3dc03}
+.lesson-copy{position:absolute;top:clamp(24px,5vh,60px);left:clamp(24px,5vw,88px);width:36%;max-width:550px;z-index:4}
+.back-link{font:10px var(--mono);letter-spacing:.06em;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:clamp(20px,5vh,66px)}
+.back-link:hover{color:var(--ink)}
+.eyebrow,.panel-label{font:10px/1.5 var(--mono);letter-spacing:.19em;color:var(--blue);display:block}
+.eyebrow{margin-bottom:23px}.lesson-copy h1{font-size:clamp(62px,7vw,112px);letter-spacing:-.065em;line-height:.98}
+.hero-sub{font-size:clamp(18px,1.65vw,26px);color:#b5c6da;margin-top:27px;font-weight:400}
+.hero-desc{font-size:14px;color:var(--muted);margin-top:17px;line-height:1.85}
+.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px}
+.primary{display:inline-flex;align-items:center;justify-content:center;gap:30px;background:var(--copper);color:#fff;text-decoration:none;padding:15px 21px;border:1px solid #ef967366;border-radius:5px;font-size:13px;font-weight:500;min-height:48px;transition:background .2s,transform .2s}
+.primary:hover{background:#e17b58;transform:translateY(-2px)}.primary span{font-size:20px;line-height:1}
+.secondary{font-size:12px;color:var(--muted);text-underline-offset:5px}.secondary:hover{color:#fff}
+.lesson-meta{display:flex;gap:15px;flex-wrap:wrap;margin-top:26px;font:9px var(--mono);color:#8095ad}
+.lesson-meta span+span:before{content:'·';margin-right:15px;color:var(--copper)}
+#step-copy h2{font-size:clamp(34px,3.5vw,55px);max-width:15ch}
+.step-body{font-size:14px;line-height:1.85;color:#b2c2d5;margin-top:24px;max-width:43ch}
+.insight{border-left:1px solid var(--copper);padding-left:15px;margin-top:22px;color:#8fa4be;font-size:12px;line-height:1.75;max-width:43ch}
+.step-control{margin-top:23px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.switch{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink);cursor:pointer;position:relative;min-height:30px}
+.switch input{position:absolute;left:0;opacity:0;width:38px;height:26px;z-index:2;cursor:pointer}.switch-track{display:block;width:34px;height:19px;border-radius:20px;border:1px solid #6fa3dc55;background:#152033;position:relative;flex:none;pointer-events:none}
+.switch-track:before{content:'';position:absolute;top:3px;left:3px;width:11px;height:11px;border-radius:50%;background:#91a6bd;transition:transform .2s}
+.switch input:checked+.switch-track{background:#123c37;border-color:var(--teal)}.switch input:checked+.switch-track:before{transform:translateX(14px);background:var(--teal)}.switch input:focus-visible+.switch-track{outline:2px solid var(--teal);outline-offset:4px}
+.control-note{font-size:10px;color:var(--muted);margin-top:8px}.text-button{border:0;background:none;padding:7px 0;color:var(--blue);font-size:11px;text-align:left;text-decoration:underline;text-underline-offset:4px;min-height:35px}
+fieldset{padding:0;margin:0;border:0}legend{font-size:11px;color:var(--muted);margin-bottom:11px}.action-options{display:flex;gap:10px}.action-options label{cursor:pointer;position:relative}.action-options input{position:absolute;opacity:0;width:100%;height:100%;margin:0;z-index:2;cursor:pointer}.action-options span{display:block;padding:10px 15px;font-size:11px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}.action-options input:checked+span{border-color:var(--blue);background:#6fa3dc12;color:var(--ink)}.action-options input:focus-visible+span{outline:2px solid var(--teal);outline-offset:4px}
+.status-pill{display:block;padding:10px 13px;border:1px solid #4fc1b044;background:#4fc1b00b;border-radius:4px;color:#78d6c5;font-size:11px;line-height:1.6;margin-top:15px}.status-pill[data-status=blocked]{border-color:#d2694a66;background:#d2694a0e;color:#f1a58b}
+.step-result{margin-top:20px;font-size:12px;line-height:1.8;color:#bfd0e4}.step-result a{display:inline-block;color:var(--teal);font-size:11px;margin-top:10px;text-underline-offset:4px}
+.step-arrows{display:flex;align-items:center;gap:20px;margin-top:22px}.step-arrows button{width:36px;height:36px;background:none;border:1px solid var(--line);border-radius:50%;color:var(--ink)}.step-arrows button:hover{border-color:var(--blue)}#step-count{font:10px var(--mono);color:var(--muted)}
+.scene-wrap{position:absolute;right:1%;top:0;width:61%;height:calc(100% - 105px)}
+#canvas-host,#canvas-host canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.scene-caption{position:absolute;bottom:20px;right:30px;display:flex;align-items:center;gap:8px;color:#8ea4bf;font:9px var(--mono);letter-spacing:.08em;pointer-events:none}.live-dot{width:4px;height:4px;background:var(--teal);border-radius:50%;box-shadow:0 0 12px var(--teal)}
+.scene-labels{position:absolute;inset:0;pointer-events:none}.scene-label{position:absolute;pointer-events:auto;transform:translateY(-50%);background:linear-gradient(90deg,#05080dbb,#05080d00);color:#9cafc6;font-size:11px;border:0;padding:9px 10px 9px 24px;text-align:left;white-space:nowrap;border-radius:3px;transition:color .2s}.scene-label:before{content:'';position:absolute;left:0;top:50%;width:15px;border-top:1px solid #6fa3dc66}.scene-label:after{content:'';position:absolute;left:0;top:calc(50% - 2px);width:4px;height:4px;background:var(--blue);border-radius:50%}.scene-label:hover,.scene-label[aria-current=step]{color:var(--ink)}.scene-label[aria-current=step]:before{border-color:var(--copper)}.scene-label[aria-current=step]:after{background:var(--copper)}
+.scene-toolbar{position:absolute;top:22px;right:36px;display:flex;gap:7px;z-index:5}.scene-toolbar button{color:var(--muted);background:#0a1321b0;border:1px solid var(--line);border-radius:3px;padding:7px 10px;font:9px var(--mono);min-height:32px}.scene-toolbar button:hover,.scene-toolbar button[aria-pressed=true]{border-color:#6fa3dc77;color:var(--ink)}
+.scene-fallback{height:100%;display:grid;place-items:center;padding:60px 30px 45px}.scene-fallback ol{padding:0;margin:0;list-style:none;width:70%;display:grid;gap:15px;perspective:800px}.scene-fallback li{transform:rotateY(-10deg) rotateX(8deg);border:1px solid #6fa3dc55;background:linear-gradient(110deg,#152941,#080f1d);box-shadow:0 12px 28px #0005;border-radius:8px;position:relative}.scene-fallback li:after{content:'';position:absolute;height:16px;left:50%;bottom:-17px;border-left:1px solid var(--teal)}.scene-fallback li:last-child:after{display:none}.scene-fallback a{display:flex;align-items:center;gap:20px;text-decoration:none;padding:18px 24px;font-size:13px}.scene-fallback b{font:10px var(--mono);color:var(--blue)}.scene-fallback a span{margin-left:auto;color:var(--copper)}.scene-fallback a[aria-current=step]{outline:1px solid var(--copper);border-radius:8px}
+.story-bottom{position:absolute;bottom:24px;left:clamp(24px,5vw,88px);right:40px;display:flex;gap:45px;align-items:center}.step-nav{flex:1}.step-nav ol{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:0;margin:0}.step-nav a{position:relative;display:grid;gap:3px;text-decoration:none;font-size:10px;color:#849bb5;padding:19px 0 0;border-top:1px solid #6fa3dc44;min-height:55px}.step-nav b{font:10px var(--mono);font-weight:400}.step-dot{position:absolute;top:-4px;left:0;width:7px;height:7px;border:1px solid #7897b9;border-radius:50%;background:var(--bg)}.step-nav a[aria-current=step],.step-nav a:hover{color:#e2ecfa}.step-nav a[aria-current=step] b{color:#e89676}.step-nav a[aria-current=step] .step-dot{background:var(--copper);border-color:var(--copper);box-shadow:0 0 12px #d2694a66}.step-nav a[data-complete=true]{border-color:#d2694a66}.step-nav a[data-complete=true] .step-dot{background:#d2694a77;border-color:var(--copper)}
+.scroll-hint{color:var(--muted);display:grid;gap:7px;justify-items:center;text-decoration:none;font:9px var(--mono);min-width:100px}.scroll-hint span:last-child{font-size:20px;color:var(--blue)}.progress-rail{position:absolute;bottom:0;left:0;width:100%;height:2px;background:#6fa3dc10}#story-progress{display:block;height:100%;width:0;background:var(--copper)}
+.step-anchors{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-rows:repeat(7,1fr)}.step-anchors div{scroll-margin-top:0}.step-anchors div:first-child{grid-row:2}
+.content-wrap{width:min(1300px,100% - 100px);margin:auto}.result-section{padding-top:100px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:50px;margin-bottom:30px}.section-heading h2{font-size:clamp(35px,4vw,60px);max-width:18ch}.section-heading p:not(.eyebrow){max-width:35ch;color:var(--muted);font-size:13px;line-height:1.9}.section-heading .eyebrow{margin-bottom:18px}.simulation-note{font:10px var(--mono);color:var(--muted);margin-bottom:28px;line-height:1.9}
+.experiment-controls{display:flex;gap:22px;align-items:center;flex-wrap:wrap;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;margin-bottom:24px}.experiment-controls label{display:flex;align-items:center;gap:9px;min-height:36px}.experiment-controls input{accent-color:var(--teal);width:16px;height:16px}.experiment-controls select{background:#0c1522;border:1px solid #6fa3dc44;color:var(--ink);font-size:12px;padding:7px;border-radius:4px}.experiment-controls .text-button{margin-left:auto}
+.result-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}.answer-panel,.log-panel{border:1px solid var(--line);border-radius:7px;padding:30px;background:linear-gradient(135deg,#0d1826aa,#080f19aa)}.answer{font-size:clamp(17px,1.6vw,22px);line-height:1.7;margin:25px 0;color:#d4e0ef}.answer-panel .status-pill{margin-bottom:25px}#sources details{border-top:1px solid var(--line);padding:13px 0;font-size:11px;color:var(--muted)}#sources summary{cursor:pointer;color:#b5cce8}#sources details p{padding-top:10px}#sources>p{font-size:11px;color:var(--muted)}
+#audit-log{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:0}#audit-log li{position:relative;padding:0 0 18px 27px;border-left:1px solid #6fa3dc33;margin-left:5px;font-size:11px;color:var(--muted)}#audit-log li:last-child{padding-bottom:0;border-left-color:transparent}#audit-log li:before{content:'✓';position:absolute;left:-8px;top:1px;width:15px;height:15px;border-radius:50%;background:#0b2825;font:9px/15px var(--mono);text-align:center;color:var(--teal)}#audit-log li[data-status=blocked]:before{content:'×';background:#3b211b;color:#f1a58b}#audit-log li[data-status=skipped]:before{content:'–';background:#17202d;color:#9aadc3}#audit-log strong{display:block;color:#d0def0;font-size:12px;font-weight:500;margin-bottom:4px}
+.reading-section{padding:110px 0 60px}.reading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:45px;border-top:1px solid var(--line);border-left:1px solid var(--line)}.reading-grid article{padding:30px 25px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.reading-grid h3{font-size:25px;line-height:1.2;margin:23px 0 18px}.reading-grid p{font-size:12px;line-height:1.9;color:var(--muted)}.reading-grid .reading-insight{margin-top:20px;color:#b9cce3;border-left:1px solid #d2694a66;padding-left:12px;font-size:11px}.sources-note{padding:35px 0;margin-bottom:22px}.sources-note .panel-label{margin-bottom:15px}.sources-note a{display:inline-block;font-size:11px;color:#b9cce3;margin:0 25px 12px 0;text-underline-offset:4px}.sources-note>p:last-child{font-size:11px;color:var(--muted);max-width:80ch;margin-top:12px}
+@media(min-width:1700px){.lesson-copy{width:34%}.scene-wrap{right:4%;width:58%}}
+@media(max-height:760px) and (min-width:901px){.stage{min-height:560px}.lesson-copy{top:20px}.back-link{margin-bottom:25px}.eyebrow{margin-bottom:15px}.lesson-copy h1{font-size:80px}.hero-sub{margin-top:20px}.hero-actions{margin-top:24px}.hero-desc{font-size:12px}.lesson-meta{margin-top:18px}#step-copy h2{font-size:37px}.step-body{margin-top:17px;font-size:12px}.insight{margin-top:15px;font-size:10px}.step-control{margin-top:15px;padding:10px 0}.step-arrows{margin-top:15px}.story-bottom{bottom:18px}.scene-wrap{height:calc(100% - 85px)}}
+@media(max-width:900px){:root{--header:61px}.stage{height:calc(100svh - var(--header));min-height:640px}.lesson-copy{top:20px;left:24px;right:24px;width:auto;max-width:none}.back-link{font-size:9px;margin-bottom:20px}.eyebrow{font-size:9px;margin-bottom:12px}.lesson-copy h1{font-size:clamp(52px,11vw,80px);width:60%}.hero-sub{font-size:17px;margin-top:14px}.hero-desc{font-size:12px;margin-top:10px}.hero-actions{gap:16px;margin-top:21px}.primary{font-size:11px;padding:12px 15px;min-height:44px;gap:20px}.secondary{font-size:11px}.lesson-meta{display:none}.scene-wrap{top:250px;bottom:75px;height:auto;right:0;width:100%}.scene-toolbar{top:auto;bottom:85px;right:16px;gap:4px}.scene-toolbar button{font-size:8px;padding:7px}.scene-caption{right:20px;bottom:20px;font-size:8px}.scene-label{font-size:10px;padding-left:18px}.story-bottom{left:24px;right:24px;bottom:17px;gap:0}.scroll-hint{display:none}.step-nav a{font-size:9px;padding-top:13px;min-height:42px}.step-nav b{font-size:9px}#step-copy{max-width:620px}#step-copy h2{font-size:32px;max-width:22ch}.step-body{font-size:12px;margin-top:12px;line-height:1.7;max-width:60ch}.insight{font-size:10px;margin-top:13px;max-width:60ch}.step-control{margin-top:12px;padding:9px 0}.step-arrows{position:absolute;right:0;top:0;margin-top:0;gap:10px}.step-arrows button{width:30px;height:30px}#step-count{display:none}.step-control .switch{font-size:11px}.status-pill{font-size:10px;padding:7px 10px;margin-top:10px}.step-result{font-size:11px;margin-top:12px}.step-result a{margin-top:5px}.stage.is-step .scene-wrap{top:335px}.stage.is-step .back-link{margin-bottom:17px}.stage.is-step .insight{display:none}.stage.is-step .scene-caption{display:none}.content-wrap{width:calc(100% - 48px)}.section-heading{display:block}.section-heading h2{font-size:36px}.section-heading>p{margin-top:25px}.result-section{padding-top:65px}.reading-section{padding-top:70px}.result-grid{grid-template-columns:1fr}.reading-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.experiment-controls{gap:12px 24px}.experiment-controls .text-button{margin-left:0}}
+@media(max-width:520px){.stage{min-height:660px}.lesson-copy{left:20px;right:20px}.lesson-copy h1{font-size:57px;width:100%}.hero-desc{max-width:32ch}.hero-sub{font-size:16px}.scene-wrap{top:310px;bottom:65px}.scene-caption{display:none}.scene-label{font-size:8px;padding:8px 6px 8px 16px}.scene-toolbar{bottom:73px;right:15px}.scene-toolbar button{font-size:7px;min-height:29px}.story-bottom{left:20px;right:14px}.step-nav a{font-size:8px}.step-nav a span:last-child{letter-spacing:-.03em}.step-nav b{font-size:8px}.stage.is-step .scene-wrap{top:350px}.stage.is-step .lesson-copy{top:17px}#step-copy h2{font-size:29px;max-width:19ch}.step-body{font-size:11px;max-width:44ch}.step-arrows{top:1px}.back-link{max-width:65%;font-size:8px}.scene-fallback{padding:20px 35px 35px}.scene-fallback ol{width:65%;gap:6px}.scene-fallback a{padding:7px 14px;font-size:10px;gap:12px}.scene-fallback li:after{height:7px;bottom:-8px}.scene-fallback b{font-size:8px}.content-wrap{width:calc(100% - 40px)}.section-heading h2{font-size:32px}.reading-grid{grid-template-columns:1fr}.answer-panel,.log-panel{padding:24px 20px}.answer{font-size:18px}.experiment-controls{font-size:11px}.experiment-controls select{max-width:165px}.reading-grid article{padding:25px 20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+/* Leave the hero controls above the model on narrow screens. */
+@media(max-width:520px){.scene-wrap{top:380px}.stage.is-step .scene-wrap{top:350px}}
+@media(max-height:740px) and (max-width:900px){.stage{min-height:0}.lesson-copy h1{font-size:46px}.hero-sub{font-size:14px}.hero-desc{display:none}.hero-actions{margin-top:18px}.back-link{margin-bottom:13px}.scene-wrap{top:270px;bottom:65px}.stage.is-step .scene-wrap{top:340px}#step-copy h2{font-size:25px}.step-body{font-size:10px}.step-control{margin-top:9px;padding:7px 0}.scene-toolbar{bottom:68px}.scene-label{font-size:8px}.step-result{font-size:10px}}
+</style>
+<style id="campus-shell-style">/* Tokens e classes restritos ao menu/rodapé para preservar os controles da máquina. */
+.campus-shell{--shell-ink:#f5f7fa;--shell-muted:#b7c0cd;--shell-dim:#7d8798;--shell-line:rgba(255,255,255,.1);--shell-cyan:#65e8ff;--shell-violet:#c4b5fd;font-family:"Geist",system-ui,sans-serif;color:var(--shell-ink)}
+.campus-shell a{color:inherit;text-decoration:none}
+.campus-shell a:focus-visible,.campus-shell summary:focus-visible{outline:2px solid var(--shell-cyan);outline-offset:4px;border-radius:4px}
+.campus-header{position:sticky;top:0;z-index:60}
+.campus-shell .topbar{background:rgba(8,12,20,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--shell-line)}
+.campus-shell .wrap{width:min(1512px,100% - 48px);margin-inline:auto}
+.campus-shell .topbar-in{position:relative;min-height:64px;display:flex;align-items:center;gap:24px}
+.campus-shell .brand{display:flex;align-items:center;gap:11px;flex:none}
+.campus-shell .brand svg,.campus-shell .mt-brand svg{color:var(--shell-cyan);flex:none}
+.campus-shell .brand-txt{line-height:1.1}
+.campus-shell .brand-txt small{display:block;font:9.5px "Geist Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--shell-violet)}
+.campus-shell .brand-txt b{font-size:18px;letter-spacing:-.02em}
+.campus-shell .brand-txt b span{color:var(--shell-cyan)}
+.campus-shell .navlinks{display:flex;gap:22px;margin-left:auto;color:var(--shell-muted);font-size:14px}
+.campus-shell .navext{display:flex;gap:18px;color:var(--shell-muted);font-size:14px}
+.campus-shell .navext a::after{content:" ↗";color:var(--shell-cyan)}
+.campus-shell .nav-actions{display:flex;align-items:center;gap:10px}
+.campus-shell .icon-btn{display:grid;place-items:center;flex:none;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--shell-muted)}
+.campus-shell .icon-btn svg{width:17px;height:17px}
+.campus-shell .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid rgba(255,255,255,.18);border-radius:999px;font-size:14px;font-weight:600}
+.campus-shell .btn--primary{background:var(--shell-cyan);border-color:transparent;color:#05070c}
+.campus-shell .navlinks a:hover,.campus-shell .navext a:hover,.campus-shell .mt-foot-col a:hover{color:var(--shell-cyan)}
+.campus-shell .icon-btn:hover,.campus-shell .btn:hover{border-color:var(--shell-cyan)}
+.campus-mobile{display:none}
+.campus-mobile summary{list-style:none;cursor:pointer;padding:9px 14px;border:1px solid rgba(255,255,255,.18);border-radius:999px;font-size:13px}
+.campus-mobile summary::-webkit-details-marker{display:none}
+.campus-mobile[open] summary{border-color:var(--shell-cyan);color:var(--shell-cyan)}
+.campus-mobile nav{position:absolute;top:calc(100% + 8px);right:0;display:grid;gap:3px;width:min(320px,calc(100vw - 40px));padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:16px;background:#0c1220;box-shadow:0 16px 40px #0008}
+.campus-mobile nav a{display:block;min-height:44px;padding:10px 14px;border-radius:8px;color:var(--shell-muted)}
+.campus-mobile nav a:hover{background:rgba(101,232,255,.08);color:var(--shell-cyan)}
+.campus-skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;border-radius:999px;background:#65e8ff;color:#05070c;font-weight:600;text-decoration:none}
+.campus-skip:focus{top:12px}
+.mt-foot.campus-shell{max-width:1560px;margin:80px auto 0;padding:0 24px 40px;color:var(--shell-dim);font-size:14px}
+.campus-shell .mt-foot-big{margin:0 0 56px;display:flex;flex-wrap:wrap;align-items:center;gap:0 clamp(14px,2vw,28px);font-size:clamp(40px,6.6vw,112px);font-weight:600;line-height:1.05;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22)}
+.campus-shell .mt-foot-big i{width:clamp(8px,1vw,14px);height:clamp(8px,1vw,14px);border-radius:50%;background:var(--shell-cyan);box-shadow:0 0 18px var(--shell-cyan)}
+.campus-shell .mt-foot-big em{-webkit-text-stroke:0;font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;color:var(--shell-cyan);letter-spacing:-.01em}
+.campus-shell .mt-foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:32px;padding-top:40px;border-top:1px solid var(--shell-line)}
+.campus-shell .mt-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--shell-ink)}
+.campus-shell .mt-brand b{color:var(--shell-cyan)}
+.campus-shell .mt-foot-about p{margin:14px 0 18px;max-width:42ch;line-height:1.6;color:var(--shell-muted)}
+.campus-shell .mt-foot-col{display:flex;flex-direction:column;gap:10px}
+.campus-shell .mt-foot-col a{color:var(--shell-muted);width:fit-content}
+.campus-shell .mt-foot-col a b{font:500 12px "Geist Mono",monospace;color:var(--shell-violet);margin-right:6px}
+.campus-shell .mt-foot-h{margin:0 0 4px;font:12px "Geist Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--shell-dim)}
+.campus-shell .mt-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--shell-line);font-size:13px}
+@media(min-width:1181px){.side,.flowcol{top:80px}}
+@media(max-width:1100px){.campus-shell .mt-foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.campus-shell .mt-foot-about{grid-column:1/-1}}
+@media(max-width:1080px){.campus-shell .navlinks{display:none}.campus-shell .navext{margin-left:auto}.campus-mobile{display:block}}
+@media(max-width:720px){
+  .campus-shell .wrap{width:calc(100% - 32px)}
+  .campus-shell .topbar-in{min-height:60px;gap:14px}
+  .campus-shell .navext{display:none}
+  .campus-shell .nav-actions{margin-left:auto}
+  .campus-shell .nav-actions .btn{display:none}
+  .campus-shell .mt-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mt-foot.campus-shell{padding:0 16px 32px}
+}
+@media(max-width:420px){.campus-shell .brand-txt small{display:none}.campus-shell .icon-btn{display:none}.campus-shell .mt-foot-base{flex-direction:column}}
+</style></head>
+<body data-lesson="agentes-v1"><!-- campus-header:start --><a class="campus-skip" href="#conteudo">Pular para a máquina</a><div class="campus-shell campus-header"><header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="/#topo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>
+      <span class="brand-txt"><small>Laboratório</small><b>Mirandas<span>Tech</span></b></span>
+    </a>
+    <nav class="navlinks" aria-label="Navegar pelo laboratório">
+      <a href="/#trilhas">Trilhas</a>
+      <a href="/maquinas/agentes/">Aula 3D</a>
+      <a href="/#manuais">Manuais</a>
+      <a href="/#plugin">Plugin</a>
+      <a href="/#aberto">Código aberto</a>
+    </nav>
+    <nav class="navext" aria-label="MirandasTech"><a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="/#manuais" aria-label="Buscar um manual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+      <a class="btn btn--primary btn--sm" href="https://plugin.mirandastech.com.br/">Instalar o plugin</a>
+    </div><details class="campus-mobile"><summary>Menu</summary><nav aria-label="Menu do laboratório">
+      <a href="/#trilhas">Trilhas</a>
+      <a href="/maquinas/agentes/">Aula 3D</a>
+      <a href="/#manuais">Manuais</a>
+      <a href="/#plugin">Plugin</a>
+      <a href="/#aberto">Código aberto</a>
+    <a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a></nav></details></div></header></div><!-- campus-header:end -->
+<main class="pg" id="conteudo">
+  <section class="experience" aria-label="Aula por dentro de um agente de IA">
+    <div class="stage">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <div class="scene-wrap" id="scene-wrap" aria-label="Máquina com seis camadas: pergunta, contexto, modelo, ferramentas, governança e resposta">
+        <div class="scene-fallback" id="scene-fallback">
+          <ol><li><a href="#etapa-resposta" data-step="5"><b>06</b>Resposta<span>↗</span></a></li><li><a href="#etapa-governanca" data-step="4"><b>05</b>Governança<span>↗</span></a></li><li><a href="#etapa-ferramentas" data-step="3"><b>04</b>Ferramentas<span>↗</span></a></li><li><a href="#etapa-modelo" data-step="2"><b>03</b>Modelo<span>↗</span></a></li><li><a href="#etapa-contexto" data-step="1"><b>02</b>Contexto<span>↗</span></a></li><li><a href="#etapa-pergunta" data-step="0"><b>01</b>Pergunta<span>↗</span></a></li></ol>
+        </div>
+        <div id="canvas-host" aria-hidden="true"></div>
+        <div class="scene-labels" id="scene-labels" hidden><button type="button" class="scene-label" data-layer="0">Pergunta</button><button type="button" class="scene-label" data-layer="1">Documentos</button><button type="button" class="scene-label" data-layer="2">Modelo</button><button type="button" class="scene-label" data-layer="3">Ferramentas</button><button type="button" class="scene-label" data-layer="4">Governança</button><button type="button" class="scene-label" data-layer="5">Resposta</button></div>
+        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Visão das seis camadas</span></span>
+      </div>
+
+      <div class="lesson-copy">
+        <a class="back-link" href="/#bancada">← A bancada do laboratório</a>
+        <div id="hero-copy">
+          <p class="eyebrow">AULA INTERATIVA · 01</p>
+          <h1>A pergunta<br>vira <em>ação.</em></h1>
+          <p class="hero-sub">Por dentro de um agente de IA.</p>
+          <p class="hero-desc">Siga uma pergunta. Explore as ferramentas.<br>Descubra quem autoriza a próxima ação.</p>
+          <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <span>↗</span></a><a class="secondary" href="#leitura">Ler a aula</a></div>
+          <div class="lesson-meta"><span>6 camadas</span><span>5 min de exploração</span><span>Sem cadastro</span></div>
+        </div>
+        <div id="step-copy" hidden>
+          <p class="eyebrow" id="step-tag"></p>
+          <h2 id="step-title"></h2>
+          <p class="step-body" id="step-body"></p>
+          <div class="step-control" id="context-control" hidden>
+            <label class="switch"><input type="checkbox" id="use-context" checked><span class="switch-track" aria-hidden="true"></span><span>Usar documentos de contexto</span></label>
+            <p class="control-note" id="context-note">Duas fichas didáticas disponíveis.</p>
+          </div>
+          <div class="step-control" id="tools-control" hidden>
+            <fieldset><legend>Qual operação solicitar?</legend><div class="action-options"><label><input type="radio" name="action" value="read" checked><span>↗ Consultar</span></label><label><input type="radio" name="action" value="send"><span>↗ Enviar resumo</span></label></div></fieldset>
+          </div>
+          <div class="step-control" id="permission-control" hidden>
+            <label class="switch"><input type="checkbox" id="allow-send"><span class="switch-track" aria-hidden="true"></span><span>Autorizar o envio do resumo</span></label>
+            <button class="text-button" type="button" id="try-send">Experimentar uma solicitação de envio ↗</button>
+          </div>
+          <div id="step-result" class="step-result" hidden><p id="mini-answer"></p><a href="#resultado">Ver resposta e registro completos ↓</a></div>
+          <div class="status-pill" id="live-outcome" role="status" hidden></div>
+          <p class="insight" id="step-insight"></p>
+          <div class="step-arrows"><button type="button" id="previous-step" aria-label="Etapa anterior">←</button><span id="step-count"></span><button type="button" id="next-step" aria-label="Próxima etapa">→</button></div>
+        </div>
+      </div>
+
+      <div class="scene-toolbar" id="scene-toolbar" hidden>
+        <button type="button" id="overview">Vista geral</button>
+        <button type="button" id="pause-motion" aria-pressed="false">Pausar movimento</button>
+        <button type="button" id="flat-view" aria-pressed="false">Visão 2D</button>
+      </div>
+      <div class="story-bottom">
+        <nav class="step-nav" aria-label="Etapas da aula"><ol><li><a href="#etapa-pergunta" data-step="0"><span class="step-dot"></span><b>01</b><span>Pergunta</span></a></li><li><a href="#etapa-contexto" data-step="1"><span class="step-dot"></span><b>02</b><span>Contexto</span></a></li><li><a href="#etapa-modelo" data-step="2"><span class="step-dot"></span><b>03</b><span>Modelo</span></a></li><li><a href="#etapa-ferramentas" data-step="3"><span class="step-dot"></span><b>04</b><span>Ferramentas</span></a></li><li><a href="#etapa-governanca" data-step="4"><span class="step-dot"></span><b>05</b><span>Governança</span></a></li><li><a href="#etapa-resposta" data-step="5"><span class="step-dot"></span><b>06</b><span>Resposta</span></a></li></ol></nav>
+        <a class="scroll-hint" href="#etapa-pergunta" data-start><span>Role para explorar</span><span>↓</span></a>
+      </div>
+      <div class="progress-rail" aria-hidden="true"><i id="story-progress"></i></div>
+    </div>
+    <div class="step-anchors" aria-hidden="true"><div id="etapa-pergunta"></div><div id="etapa-contexto"></div><div id="etapa-modelo"></div><div id="etapa-ferramentas"></div><div id="etapa-governanca"></div><div id="etapa-resposta"></div></div>
+  </section>
+
+  <section class="result-section content-wrap" id="resultado" aria-labelledby="result-title">
+    <div class="section-heading"><div><p class="eyebrow">DA PERGUNTA À ENTREGA</p><h2 id="result-title">O que a máquina <em>entregou.</em></h2></div><p>Compare as escolhas e acompanhe o registro de cada etapa.</p></div>
+    <p class="simulation-note">Simulação pedagógica local · respostas preparadas · nenhum envio real.</p>
+    <div id="simulation-ui" hidden>
+      <div class="experiment-controls">
+        <label><input type="checkbox" id="result-context" checked> Usar contexto</label>
+        <label>Operação <select id="result-action"><option value="read">Consultar</option><option value="send">Enviar resumo</option></select></label>
+        <label><input type="checkbox" id="result-permission"> Autorizar envio</label>
+        <button type="button" class="text-button" id="reset">Restaurar exemplo ↻</button>
+      </div>
+      <div class="result-grid">
+        <article class="answer-panel"><span class="panel-label">RESPOSTA DO EXEMPLO</span><p class="answer" id="answer-text"></p><p class="status-pill" id="result-outcome" role="status"></p><div id="sources"></div></article>
+        <article class="log-panel"><span class="panel-label">REGISTRO DA SIMULAÇÃO</span><ol id="audit-log"></ol></article>
+      </div>
+    </div>
+    <noscript><p>Ative o JavaScript para experimentar os controles. A aula completa está disponível em texto abaixo.</p></noscript>
+  </section>
+
+  <section class="reading-section content-wrap" id="leitura" aria-labelledby="reading-title">
+    <div class="section-heading"><div><p class="eyebrow">O CONCEITO, CAMADA POR CAMADA</p><h2 id="reading-title">Entender antes de <em>automatizar.</em></h2></div><p>Uma arquitetura simplificada. Agentes reais podem repetir etapas e nem todos usam recuperação de documentos.</p></div>
+    <div class="reading-grid"><article><span class="panel-label">01 / PERGUNTA</span><h3>Tudo começa com uma intenção.</h3><p>“Explique como um agente usa ferramentas e prepare um resumo.” A aplicação recebe a tarefa e define o que precisa entregar.</p><p class="reading-insight">Um pedido descreve um objetivo. Ele não concede, por si só, permissão para executar qualquer ação.</p></article><article><span class="panel-label">02 / CONTEXTO</span><h3>A resposta encontra suas fontes.</h3><p>Neste exemplo, duas fichas didáticas entram no contexto. O RAG recupera informação externa para apoiar a geração; ele não retreina o modelo.</p><p class="reading-insight">Desative o contexto e compare: uma resposta pode soar plausível sem apresentar uma fonte consultada.</p></article><article><span class="panel-label">03 / MODELO</span><h3>O modelo propõe o próximo passo.</h3><p>Um modelo de linguagem pode produzir texto ou propor uma chamada de ferramenta. Aqui, respostas preparadas permitem explorar esse fluxo sem depender de uma API.</p><p class="reading-insight">A animação representa uma arquitetura didática. Ela não mostra o raciocínio interno de um modelo.</p></article><article><span class="panel-label">04 / FERRAMENTAS</span><h3>Consultar é diferente de agir.</h3><p>Uma ferramenta conecta a aplicação a uma operação: consultar um documento ou enviar uma mensagem, por exemplo. Escolha a operação que será solicitada.</p><p class="reading-insight">MCP padroniza a troca de contexto e o acesso a capacidades. As regras de autorização continuam sendo responsabilidade da aplicação.</p></article><article><span class="panel-label">05 / GOVERNANÇA</span><h3>Poder fazer não é poder executar.</h3><p>A aplicação verifica a ação solicitada antes de executá-la. A consulta está permitida; o envio exige uma autorização explícita neste exemplo.</p><p class="reading-insight">Mude a permissão e veja o resultado. Uma solicitação do modelo não pode substituir a regra de autorização.</p></article><article><span class="panel-label">06 / RESPOSTA</span><h3>A entrega vem com um registro.</h3><p>O visitante recebe o resumo, as fichas usadas e o resultado da verificação de permissão. O registro torna visível o que aconteceu em cada etapa.</p><p class="reading-insight">Agentes reais podem repetir esse ciclo. Fontes, validação e registros ajudam na auditoria, mas não garantem uma resposta correta.</p></article></div>
+    <div class="sources-note"><p class="panel-label">PARA APROFUNDAR</p><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">RAG · Lewis et al. (2020) ↗</a><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">ReAct · Yao et al. (2022) ↗</a><a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" rel="noopener">Arquitetura do MCP ↗</a><p>As fichas da simulação são textos didáticos da MirandasTech; não são transcrições desses estudos.</p></div>
+    <a class="primary" href="https://blog.mirandastech.com.br/">Continuar no blog <span>↗</span></a>
+  </section>
+</main>
+<script src="../../assets/vendor/three-r128.min.js"></script>
+<!-- campus-footer:start --><footer class="mt-foot campus-shell">
+  <p class="mt-foot-big" aria-hidden="true"><span>Estudar</span><i></i><span>construir</span><i></i><em>publicar.</em></p>
+  <div class="mt-foot-grid">
+    <div class="mt-foot-about">
+      <a class="mt-brand" href="https://www.mirandastech.com.br/"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg><span>Mirandas<b>Tech</b></span></a>
+      <p>Tecnologia e inteligência artificial com fundamento. O blog guarda as notas; o site mostra o ciclo, a trilha e o radar.</p>
+      <a class="btn btn--sm" href="https://www.mirandastech.com.br/">Ir para o site <span aria-hidden="true">↗</span></a>
+    </div>
+    <nav class="mt-foot-col" aria-label="No site"><p class="mt-foot-h">No site</p><a href="https://www.mirandastech.com.br/#ciclo">O ciclo</a><a href="https://www.mirandastech.com.br/#trilha">A trilha</a><a href="https://www.mirandastech.com.br/#radar">Radar da semana</a><a href="https://www.mirandastech.com.br/agora">Agora</a></nav>
+    <nav class="mt-foot-col" aria-label="No blog"><p class="mt-foot-h">No blog</p><a href="https://blog.mirandastech.com.br/tag/radar/">Radar</a><a href="https://blog.mirandastech.com.br/tag/pesquisa-na-pratica/">Pesquisa na prática</a><a href="https://blog.mirandastech.com.br/#/portal/signup">Newsletter</a></nav>
+    <nav class="mt-foot-col" aria-label="Manuais"><p class="mt-foot-h">Manuais</p><a href="/#trilha-01"><b>01</b>Fundamentos</a><a href="/#trilha-02"><b>02</b>Busca e revisão</a><a href="/#trilha-03"><b>03</b>Dados e ferramentas</a><a href="/#trilha-04"><b>04</b>Escrita e entrega</a></nav>
+    <nav class="mt-foot-col" aria-label="Redes"><p class="mt-foot-h">Redes</p><a href="https://github.com/joaopaulomirandamatias" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/joaopaulomirandamatias/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  </div>
+  <div class="mt-foot-base"><span>© 2026 MirandasTech · conteúdo CC BY 4.0 · MATIAS, J. P. M.</span><span>Ciência, código e IA, explicados por dentro</span></div>
+</footer><!-- campus-footer:end --><script type="module">// Modelo pedagógico determinístico. Não chama modelos, APIs ou ferramentas reais.
+const STAGES = [
+  { id: 'pergunta', name: 'Pergunta', title: 'Tudo começa com uma intenção.', body: '“Explique como um agente usa ferramentas e prepare um resumo.” A aplicação recebe a tarefa e define o que precisa entregar.', insight: 'Um pedido descreve um objetivo. Ele não concede, por si só, permissão para executar qualquer ação.', tag: '01 / ENTRADA' },
+  { id: 'contexto', name: 'Contexto', title: 'A resposta encontra suas fontes.', body: 'Neste exemplo, duas fichas didáticas entram no contexto. O RAG recupera informação externa para apoiar a geração; ele não retreina o modelo.', insight: 'Desative o contexto e compare: uma resposta pode soar plausível sem apresentar uma fonte consultada.', tag: '02 / DOCUMENTOS' },
+  { id: 'modelo', name: 'Modelo', title: 'O modelo propõe o próximo passo.', body: 'Um modelo de linguagem pode produzir texto ou propor uma chamada de ferramenta. Aqui, respostas preparadas permitem explorar esse fluxo sem depender de uma API.', insight: 'A animação representa uma arquitetura didática. Ela não mostra o raciocínio interno de um modelo.', tag: '03 / GERAÇÃO' },
+  { id: 'ferramentas', name: 'Ferramentas', title: 'Consultar é diferente de agir.', body: 'Uma ferramenta conecta a aplicação a uma operação: consultar um documento ou enviar uma mensagem, por exemplo. Escolha a operação que será solicitada.', insight: 'MCP padroniza a troca de contexto e o acesso a capacidades. As regras de autorização continuam sendo responsabilidade da aplicação.', tag: '04 / CONEXÃO' },
+  { id: 'governanca', name: 'Governança', title: 'Poder fazer não é poder executar.', body: 'A aplicação verifica a ação solicitada antes de executá-la. A consulta está permitida; o envio exige uma autorização explícita neste exemplo.', insight: 'Mude a permissão e veja o resultado. Uma solicitação do modelo não pode substituir a regra de autorização.', tag: '05 / PERMISSÃO' },
+  { id: 'resposta', name: 'Resposta', title: 'A entrega vem com um registro.', body: 'O visitante recebe o resumo, as fichas usadas e o resultado da verificação de permissão. O registro torna visível o que aconteceu em cada etapa.', insight: 'Agentes reais podem repetir esse ciclo. Fontes, validação e registros ajudam na auditoria, mas não garantem uma resposta correta.', tag: '06 / ENTREGA' },
+];
+
+const DOCUMENTS = [
+  { id: '1', title: 'Ficha didática 01 · Ferramentas', text: 'Ferramentas expõem operações que a aplicação pode executar: consultar informação, calcular ou interagir com outro sistema.' },
+  { id: '2', title: 'Ficha didática 02 · Governança', text: 'A aplicação deve conferir a autorização da operação solicitada e registrar seu resultado. Permissão de consulta não implica permissão de envio.' },
+];
+
+function simulate({ context = true, action = 'read', allowSend = false } = {}) {
+  const hasContext = context === true;
+  const allowed = action === 'read' || (action === 'send' && allowSend === true);
+  const status = allowed ? 'allowed' : 'blocked';
+  const sources = hasContext ? DOCUMENTS.map(d => ({ ...d })) : [];
+  const answer = hasContext
+    ? 'Um agente pode solicitar ferramentas para consultar informação ou interagir com sistemas [1]. Antes da execução, a aplicação confere a permissão da operação e registra o resultado [2].'
+    : 'Um agente pode usar ferramentas para consultar informação ou realizar operações. Nesta demonstração, a resposta sem contexto é um exemplo preparado e não possui fontes consultadas.';
+  const outcome = action === 'read'
+    ? 'Consulta autorizada · simulação local.'
+    : action === 'send' && allowed
+      ? 'Envio autorizado na simulação. Nenhuma mensagem foi enviada.'
+      : action === 'send'
+        ? 'Envio bloqueado: falta permissão explícita.'
+        : 'Operação bloqueada: ação desconhecida.';
+  return {
+    status, answer, sources, outcome,
+    log: [
+      { stage: 'Pergunta', status: 'complete', detail: 'Tarefa recebida: explicar o uso de ferramentas.' },
+      { stage: 'Contexto', status: hasContext ? 'complete' : 'skipped', detail: hasContext ? 'Duas fichas didáticas disponibilizadas.' : 'Contexto desativado; nenhuma fonte consultada.' },
+      { stage: 'Modelo', status: 'complete', detail: 'Resumo preparado pela simulação, sem chamada a um LLM.' },
+      { stage: 'Ferramentas', status: 'complete', detail: action === 'read' ? 'Operação solicitada: consultar.' : action === 'send' ? 'Operação solicitada: enviar resumo.' : 'Operação desconhecida.' },
+      { stage: 'Governança', status, detail: outcome },
+      { stage: 'Resposta', status: 'complete', detail: 'Resumo e registro disponíveis; nenhum envio real.' },
+    ],
+  };
+}
+
+// Cena procedural, sem modelos externos, pós-processamento ou mapas de sombra.
+function createScene(host, labelRoot, { onSelect, reducedMotion = false, onFailure }) {
+  const T = window.THREE;
+  if (!T) return null;
+  let renderer;
+  try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' }); }
+  catch { return null; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.outputEncoding = T.sRGBEncoding;
+  renderer.toneMapping = T.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  host.appendChild(renderer.domElement);
+  const scene = new T.Scene();
+  const camera = new T.PerspectiveCamera(34, 1, .1, 100);
+  const root = new T.Group();
+  scene.add(root);
+  // A small studio environment gives metal surfaces a reflection without HDR downloads.
+  const envCanvas = document.createElement('canvas'); envCanvas.width = 512; envCanvas.height = 256;
+  const envContext = envCanvas.getContext('2d');
+  const gradient = envContext.createLinearGradient(0, 0, 0, 256);
+  gradient.addColorStop(0, '#7a98b7'); gradient.addColorStop(.48, '#1e3048'); gradient.addColorStop(.53, '#080e18'); gradient.addColorStop(1, '#142638');
+  envContext.fillStyle = gradient; envContext.fillRect(0, 0, 512, 256);
+  envContext.fillStyle = '#bfdbf4'; envContext.fillRect(80, 35, 25, 75);
+  envContext.fillStyle = '#637c96'; envContext.fillRect(300, 25, 45, 80);
+  const envTexture = new T.CanvasTexture(envCanvas); envTexture.mapping = T.EquirectangularReflectionMapping; envTexture.encoding = T.sRGBEncoding;
+  const pmrem = new T.PMREMGenerator(renderer); const environment = pmrem.fromEquirectangular(envTexture);
+  scene.environment = environment.texture; envTexture.dispose(); pmrem.dispose();
+  scene.add(new T.HemisphereLight(0xadcfff, 0x0a1425, .55));
+  const blueLight = new T.DirectionalLight(0xa3ceff, 1.15);
+  blueLight.position.set(-5, 7, 7); scene.add(blueLight);
+  const warm = new T.PointLight(0xff9870, .85, 22);
+  warm.position.set(4, 3, 3); scene.add(warm);
+  const rim = new T.DirectionalLight(0x4fc1b0, .45);
+  rim.position.set(2, 2, -6); scene.add(rim);
+  const colors = [0x6fa3dc, 0x6fa3dc, 0x91b5ec, 0x6fa3dc, 0xd2694a, 0x4fc1b0];
+  const baseMat = new T.MeshStandardMaterial({ color: 0x101b2b, metalness: .72, roughness: .28, envMapIntensity: .7 });
+  const darkMat = new T.MeshStandardMaterial({ color: 0x0d192b, metalness: .65, roughness: .25, envMapIntensity: .85 });
+  const glassMat = new T.MeshStandardMaterial({ color: 0x4d8abd, transparent: true, opacity: .43, metalness: .32, roughness: .2, side: T.DoubleSide, envMapIntensity: .6 });
+  const copperMat = new T.MeshStandardMaterial({ color: 0xc56f46, metalness: .7, roughness: .26, emissive: 0x3c160a, emissiveIntensity: .3, envMapIntensity: .8 });
+  const tealMat = new T.MeshStandardMaterial({ color: 0x4fc1b0, emissive: 0x246c62, emissiveIntensity: .45, metalness: .2, roughness: .35 });
+  for (const material of [baseMat, darkMat, glassMat, copperMat, tealMat]) material.color.convertSRGBToLinear();
+  const layers = [], edges = [], labels = [...labelRoot.querySelectorAll('[data-layer]')];
+  const glowMaterials = [];
+  function box(group, w, h, d, x, y, z, material = darkMat) {
+    const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), material);
+    mesh.position.set(x, y, z); group.add(mesh); return mesh;
+  }
+  function outline(mesh, color, opacity = .6) {
+    const material = new T.LineBasicMaterial({ color, transparent: true, opacity });
+    const line = new T.LineSegments(new T.EdgesGeometry(mesh.geometry), material);
+    mesh.add(line); return material;
+  }
+  function bar(group, x1, y1, z1, x2, y2, z2, color, opacity = .8) {
+    const geo = new T.BufferGeometry().setFromPoints([new T.Vector3(x1, y1, z1), new T.Vector3(x2, y2, z2)]);
+    group.add(new T.Line(geo, new T.LineBasicMaterial({ color, transparent: true, opacity })));
+  }
+  function documentCard(group, x, y, z, width = .78, height = .94, accent = 0x6fa3dc) {
+    const card = box(group, width, height, .035, x, y, z, glassMat);
+    outline(card, accent, .8);
+    for (let i = 0; i < 4; i++) {
+      box(group, width * (.75 - (i % 2) * .2), .025, .014, x - width * .03, y + height * (.24 - i * .15), z + .026,
+        new T.MeshBasicMaterial({ color: i === 3 ? accent : 0xa4c3e7, transparent: true, opacity: i === 3 ? .9 : .5 }));
+    }
+    return card;
+  }
+  for (let i = 0; i < 6; i++) {
+    const group = new T.Group();
+    group.userData.layer = i;
+    const shape = new T.Shape();
+    const w = 3.15, d = 1.85, r = .1;
+    shape.moveTo(-w/2 + r, -d/2); shape.lineTo(w/2-r, -d/2);
+    shape.quadraticCurveTo(w/2, -d/2, w/2, -d/2+r); shape.lineTo(w/2, d/2-r);
+    shape.quadraticCurveTo(w/2, d/2, w/2-r, d/2); shape.lineTo(-w/2+r, d/2);
+    shape.quadraticCurveTo(-w/2, d/2, -w/2, d/2-r); shape.lineTo(-w/2, -d/2+r);
+    shape.quadraticCurveTo(-w/2, -d/2, -w/2+r, -d/2);
+    const slabGeometry = new T.ExtrudeGeometry(shape, { depth: .09, bevelEnabled: true, bevelThickness: .025, bevelSize: .025, bevelSegments: 2, steps: 1, curveSegments: 5 });
+    slabGeometry.rotateX(-Math.PI / 2); slabGeometry.translate(0, -.045, 0);
+    const slab = new T.Mesh(slabGeometry, baseMat); group.add(slab);
+    edges.push(outline(slab, colors[i], .55));
+    const under = box(group, 2.96, .025, 1.66, 0, -.09, 0,
+      new T.MeshBasicMaterial({ color: colors[i], transparent: true, opacity: .09 }));
+    glowMaterials.push(under.material);
+    group.add(new T.PointLight(colors[i], .35, 3));
+    group.position.set((i - 2.5) * .12, (i - 2.5) * 1.43, 0);
+    root.add(group); layers.push(group);
+  }
+  // 01. Une question écrite sur une plaque de verre.
+  documentCard(layers[0], 0, .56, .22, 2.23, .72);
+  box(layers[0], .3, .3, .07, .87, .55, .3, copperMat);
+  bar(layers[0], .79, .49, .35, .95, .64, .35, 0xffdfca);
+  // 02. Fiches qui composent le contexte.
+  documentCard(layers[1], -.78, .64, .08, .7, .94);
+  documentCard(layers[1], -.04, .7, .2, .75, 1.05);
+  documentCard(layers[1], .76, .61, .1, .68, .9);
+  // 03. Circuit et noyau du modèle, pas un cerveau anthropomorphe.
+  const chip = box(layers[2], 1.08, .8, 1.02, 0, .5, 0, darkMat);
+  outline(chip, 0x7fa9d6, .8);
+  const core = new T.Mesh(new T.IcosahedronGeometry(.23, 0), new T.MeshStandardMaterial({ color: 0xf1bb91, emissive: 0xb45d2c, emissiveIntensity: .7, metalness: .5, roughness: .2 }));
+  core.position.set(0, 1.06, 0); layers[2].add(core);
+  for (let i = -3; i <= 3; i++) {
+    box(layers[2], .05, .04, 1.47, i * .21, .13, 0, copperMat);
+    box(layers[2], 1.55, .04, .05, 0, .13, i * .21, copperMat);
+  }
+  // 04. Trois connecteurs: lecture, code et données.
+  [-.85, 0, .85].forEach((x, i) => {
+    const socket = box(layers[3], .61, .68, .5, x, .43, .06, darkMat);
+    outline(socket, 0x83abd7, .6);
+    if (i === 0) {
+      const circle = new T.Mesh(new T.TorusGeometry(.12, .016, 8, 28), new T.MeshBasicMaterial({ color: 0xadd0ff }));
+      circle.position.set(x - .025, .47, .32); layers[3].add(circle);
+      bar(layers[3], x + .06, .37, .33, x + .17, .25, .33, 0xadd0ff);
+    } else if (i === 1) {
+      bar(layers[3], x - .04, .59, .32, x - .17, .45, .32, 0xadd0ff);
+      bar(layers[3], x - .17, .45, .32, x - .04, .31, .32, 0xadd0ff);
+      bar(layers[3], x + .04, .59, .32, x + .17, .45, .32, 0xadd0ff);
+      bar(layers[3], x + .17, .45, .32, x + .04, .31, .32, 0xadd0ff);
+    } else {
+      for (let k = 0; k < 3; k++) {
+        const ring = new T.Mesh(new T.TorusGeometry(.13, .013, 6, 22), new T.MeshBasicMaterial({ color: 0xadd0ff }));
+        ring.scale.y = .45; ring.position.set(x, .57 - k * .1, .32); layers[3].add(ring);
+      }
+    }
+  });
+  // 05. Le portique matérialise la vérification AVANT exécution.
+  box(layers[4], .23, 1.03, .27, -.57, .6, 0, copperMat);
+  box(layers[4], .23, 1.03, .27, .57, .6, 0, copperMat);
+  box(layers[4], 1.35, .22, .27, 0, 1.04, 0, copperMat);
+  const gateStatusMat = tealMat.clone();
+  const gateBadge = box(layers[4], .42, .5, .08, 0, .59, .19, gateStatusMat);
+  const blockedCross = new T.Group();
+  bar(blockedCross, -.11, -.11, 0, .11, .11, 0, 0xffdfd4);
+  bar(blockedCross, -.11, .11, 0, .11, -.11, 0, 0xffdfd4);
+  blockedCross.position.set(0, .59, .24); blockedCross.visible = false; layers[4].add(blockedCross);
+  const check = new T.Group();
+  bar(check, -.12, 0, 0, -.025, -.09, 0, 0xe0fff9);
+  bar(check, -.025, -.09, 0, .14, .12, 0, 0xe0fff9);
+  check.position.set(0, .59, .24); layers[4].add(check);
+  // 06. Réponse accompagnée de sources.
+  documentCard(layers[5], 0, .65, .07, 1.56, 1.05, 0x4fc1b0);
+  box(layers[5], .31, .04, .05, -.39, .22, .12, tealMat);
+  box(layers[5], .31, .04, .05, .04, .22, .12, tealMat);
+
+  const trajectory = new T.Group(); root.add(trajectory);
+  const particleMaterial = new T.MeshBasicMaterial({ color: 0x86c5f7, transparent: true, opacity: .85 });
+  const particles = new T.InstancedMesh(new T.SphereGeometry(.027, 5, 4), particleMaterial, 44);
+  trajectory.add(particles);
+  const dummy = new T.Object3D();
+  let stageIndex = -1, progress = 0, motion = !reducedMotion, visible = true, flat = false;
+  let dragAngle = -.17, frameId = 0, lastTime = 0, clock = 0, disposed = false, width = 1, height = 1;
+  let currentFocus = 0, targetFocus = 0;
+  const target = new T.Vector3();
+  const ray = new T.Raycaster(), pointer = new T.Vector2();
+  const labelPoint = new T.Vector3();
+  function invalidate() {
+    if (!frameId && !disposed && visible && !flat && !document.hidden) frameId = requestAnimationFrame(frame);
+  }
+  function frame(time) {
+    frameId = 0;
+    if (disposed || !visible || flat || document.hidden) return;
+    const dt = Math.min((time - lastTime) / 1000 || .016, .06); lastTime = time;
+    if (motion) clock += dt;
+    currentFocus += (targetFocus - currentFocus) * (reducedMotion ? 1 : .09);
+    root.rotation.y = dragAngle;
+    const spread = 1.43 + Math.sin(progress * Math.PI) * .12;
+    layers.forEach((g, i) => {
+      g.position.y = (i - 2.5) * spread;
+      g.position.x = (i - 2.5) * .12 + (i === stageIndex ? -.1 : 0);
+      edges[i].opacity = stageIndex === i ? .95 : .47;
+      glowMaterials[i].opacity = stageIndex === i ? .28 : .07;
+    });
+    const aspect = width / height;
+    const distance = (aspect < .9 ? 19.6 : aspect > 1.8 ? 17 : 16.3) * (stageIndex < 0 ? 1 : .88);
+    camera.position.set(distance * .47, 4.3 + currentFocus * .8, distance * .88);
+    target.set(0, currentFocus * .8, 0); camera.lookAt(target);
+    core.rotation.y = clock * .22;
+    for (let i = 0; i < 44; i++) {
+      const t = ((i / 44) + clock * .025) % 1;
+      const a = t * Math.PI * 7;
+      dummy.position.set(Math.sin(a) * .31 + (t - .5) * .6, -3.65 + t * 8.2, Math.cos(a) * .36 + .14);
+      dummy.updateMatrix(); particles.setMatrixAt(i, dummy.matrix);
+    }
+    particles.instanceMatrix.needsUpdate = true;
+    scene.updateMatrixWorld(); camera.updateMatrixWorld();
+    layers.forEach((g, i) => {
+      // Labels follow the actual projected world coordinates on every frame.
+      labelPoint.set(1.67, .18, -.1); g.localToWorld(labelPoint); labelPoint.project(camera);
+      const x = (labelPoint.x * .5 + .5) * width, y = (-labelPoint.y * .5 + .5) * height;
+      labels[i].style.left = `${Math.min(x, width - (width < 500 ? 78 : 105))}px`;
+      labels[i].style.top = `${y}px`;
+      labels[i].hidden = y < 40 || y > height - 25;
+    });
+    renderer.render(scene, camera);
+    if (motion || Math.abs(targetFocus - currentFocus) > .005) invalidate();
+  }
+  const resize = new ResizeObserver(() => {
+    width = host.clientWidth; height = host.clientHeight;
+    if (!width || !height) return;
+    camera.aspect = width / height; camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false); invalidate();
+  });
+  resize.observe(host);
+  const intersection = new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    if (visible) { lastTime = performance.now(); invalidate(); }
+    else { cancelAnimationFrame(frameId); frameId = 0; }
+  });
+  intersection.observe(host);
+  const visibility = () => { if (document.hidden) { cancelAnimationFrame(frameId); frameId = 0; } else { lastTime = performance.now(); invalidate(); } };
+  document.addEventListener('visibilitychange', visibility);
+  const canvas = renderer.domElement;
+  let down = null, moved = false;
+  const pointerDown = e => { down = { x: e.clientX, y: e.clientY, angle: dragAngle }; moved = false; };
+  const pointerMove = e => {
+    if (!down) return;
+    const dx = e.clientX - down.x, dy = e.clientY - down.y;
+    if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+      moved = true; dragAngle = Math.max(-.8, Math.min(.65, down.angle + dx * .004)); invalidate();
+    }
+  };
+  const pointerUp = e => {
+    if (!down) return;
+    const travel = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    down = null;
+    if (moved || travel > 7) return;
+    const rect = canvas.getBoundingClientRect();
+    pointer.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+    ray.setFromCamera(pointer, camera);
+    const hit = ray.intersectObjects(layers, true)[0];
+    if (!hit) return;
+    let object = hit.object;
+    while (object && object.userData.layer === undefined) object = object.parent;
+    if (object) onSelect(object.userData.layer);
+  };
+  const pointerCancel = () => { down = null; };
+  canvas.addEventListener('pointerdown', pointerDown);
+  canvas.addEventListener('pointermove', pointerMove);
+  canvas.addEventListener('pointerup', pointerUp);
+  canvas.addEventListener('pointercancel', pointerCancel);
+  canvas.addEventListener('pointerleave', pointerCancel);
+  const contextLost = e => { e.preventDefault(); cancelAnimationFrame(frameId); frameId = 0; onFailure(); };
+  canvas.addEventListener('webglcontextlost', contextLost);
+  invalidate();
+  return {
+    update(index, amount, result) {
+      stageIndex = index; progress = amount; targetFocus = index < 0 ? 0 : (index - 2.5) * 1.43;
+      const blocked = result.status === 'blocked';
+      gateStatusMat.color.setHex(blocked ? 0xd2694a : 0x4fc1b0).convertSRGBToLinear();
+      gateStatusMat.emissive.setHex(blocked ? 0x5c2714 : 0x246c62);
+      blockedCross.visible = blocked; check.visible = !blocked;
+      layers[1].children.forEach((child, i) => { if (i > 2) child.visible = result.sources.length > 0; });
+      invalidate();
+    },
+    setMotion(enabled) { motion = enabled; lastTime = performance.now(); invalidate(); },
+    setFlat(enabled) { flat = enabled; if (flat) { cancelAnimationFrame(frameId); frameId = 0; } else invalidate(); },
+    setReduced(enabled) { reducedMotion = enabled; motion = !enabled; invalidate(); },
+    dispose() {
+      disposed = true; cancelAnimationFrame(frameId); resize.disconnect(); intersection.disconnect();
+      document.removeEventListener('visibilitychange', visibility);
+      canvas.removeEventListener('pointerdown', pointerDown); canvas.removeEventListener('pointermove', pointerMove);
+      canvas.removeEventListener('pointerup', pointerUp); canvas.removeEventListener('pointercancel', pointerCancel);
+      canvas.removeEventListener('pointerleave', pointerCancel); canvas.removeEventListener('webglcontextlost', contextLost);
+      const geometries = new Set(), materials = new Set();
+      scene.traverse(o => { if (o.geometry) geometries.add(o.geometry); if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => materials.add(m)); });
+      geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); environment.dispose(); renderer.dispose(); canvas.remove();
+    },
+  };
+}
+
+
+
+const $ = id => document.getElementById(id);
+const experience = document.querySelector('.experience');
+const stage = document.querySelector('.stage');
+const media = matchMedia('(prefers-reduced-motion: reduce)');
+let currentStep = -1, progress = 0, sceneApi = null, isFlat = false, paused = media.matches;
+let state = { context: true, action: 'read', allowSend: false };
+let result = simulate(state);
+
+function make(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+function renderSimulation() {
+  result = simulate(state);
+  $('use-context').checked = $('result-context').checked = state.context;
+  $('allow-send').checked = $('result-permission').checked = state.allowSend;
+  $('result-action').value = state.action;
+  document.querySelectorAll('input[name=action]').forEach(input => { input.checked = input.value === state.action; });
+  $('context-note').textContent = state.context ? 'Duas fichas didáticas disponíveis.' : 'Sem documentos: a resposta não terá fontes consultadas.';
+  $('answer-text').textContent = $('mini-answer').textContent = result.answer;
+  for (const node of [$('live-outcome'), $('result-outcome')]) {
+    node.textContent = result.outcome; node.dataset.status = result.status;
+  }
+  $('sources').replaceChildren();
+  if (!result.sources.length) $('sources').append(make('p', 'Sem fontes consultadas neste modo.'));
+  for (const source of result.sources) {
+    const details = make('details'); details.append(make('summary', `[${source.id}] ${source.title}`), make('p', source.text));
+    $('sources').append(details);
+  }
+  $('audit-log').replaceChildren(...result.log.map(entry => {
+    const li = make('li'); li.dataset.status = entry.status;
+    li.append(make('strong', entry.stage), make('span', entry.detail)); return li;
+  }));
+  sceneApi?.update(currentStep, progress, result);
+}
+function renderStep(index) {
+  currentStep = index;
+  stage.classList.toggle('is-step', index >= 0);
+  $('hero-copy').hidden = index >= 0; $('step-copy').hidden = index < 0;
+  if (index >= 0) {
+    const step = STAGES[index];
+    $('step-tag').textContent = step.tag; $('step-title').textContent = step.title;
+    $('step-body').textContent = step.body; $('step-insight').textContent = step.insight;
+    $('step-count').textContent = `0${index + 1} / 06`;
+  }
+  $('context-control').hidden = index !== 1;
+  $('tools-control').hidden = index !== 3;
+  $('permission-control').hidden = index !== 4;
+  $('live-outcome').hidden = index !== 3 && index !== 4;
+  $('step-result').hidden = index !== 5;
+  $('previous-step').disabled = index < 0;
+  $('next-step').setAttribute('aria-label', index === 5 ? 'Ver resposta completa' : 'Próxima etapa');
+  document.querySelectorAll('[data-step], [data-layer]').forEach(node => {
+    const value = Number(node.dataset.step ?? node.dataset.layer);
+    if (value === index) node.setAttribute('aria-current', 'step'); else node.removeAttribute('aria-current');
+    node.dataset.complete = String(value < index);
+  });
+}
+function metrics() {
+  const top = experience.getBoundingClientRect().top + window.scrollY;
+  const header = document.querySelector('.campus-header')?.getBoundingClientRect().height || 65;
+  return { start: top - header, range: Math.max(1, experience.offsetHeight - stage.offsetHeight) };
+}
+function goTo(index, smooth = true) {
+  const { start, range } = metrics();
+  const target = index < 0 ? start : start + ((index + 1.35) / 7) * range;
+  history.replaceState(null, '', index < 0 ? location.pathname : `#etapa-${STAGES[index].id}`);
+  window.scrollTo({ top: Math.max(0, target), behavior: smooth && !media.matches ? 'smooth' : 'instant' });
+}
+function onScroll() {
+  const { start, range } = metrics();
+  progress = Math.max(0, Math.min(1, (window.scrollY - start) / range));
+  const index = Math.min(5, Math.floor(progress * 7 + .001) - 1);
+  if (index !== currentStep) renderStep(index);
+  $('story-progress').style.width = `${progress * 100}%`;
+  sceneApi?.update(currentStep, progress, result);
+}
+let scrollFrame = 0;
+const scheduleScroll = () => {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; onScroll(); });
+};
+function flatView(value, failed = false) {
+  isFlat = value;
+  $('canvas-host').hidden = value; $('scene-labels').hidden = value;
+  $('scene-fallback').hidden = !value;
+  $('flat-view').setAttribute('aria-pressed', String(value));
+  $('flat-view').textContent = value ? 'Visão 3D' : 'Visão 2D';
+  $('renderer-label').textContent = value ? 'Visão das seis camadas' : 'Arraste na horizontal para girar';
+  if (failed) {
+    $('flat-view').hidden = true; $('pause-motion').hidden = true;
+    $('renderer-label').textContent = 'Visão 2D · aula completa disponível';
+  }
+  sceneApi?.setFlat(value);
+}
+
+// Input handlers only update simulation state; they never submit or call a service.
+for (const id of ['use-context', 'result-context']) $(id).addEventListener('change', e => { state.context = e.target.checked; renderSimulation(); });
+for (const id of ['allow-send', 'result-permission']) $(id).addEventListener('change', e => { state.allowSend = e.target.checked; renderSimulation(); });
+document.querySelectorAll('input[name=action]').forEach(input => input.addEventListener('change', e => { state.action = e.target.value; renderSimulation(); }));
+$('result-action').addEventListener('change', e => { state.action = e.target.value; renderSimulation(); });
+$('try-send').addEventListener('click', () => { state.action = 'send'; renderSimulation(); });
+$('reset').addEventListener('click', () => { state = { context: true, action: 'read', allowSend: false }; renderSimulation(); });
+document.querySelectorAll('[data-step], [data-layer], [data-start]').forEach(link => link.addEventListener('click', e => {
+  e.preventDefault(); goTo(Number(link.dataset.step ?? link.dataset.layer ?? 0));
+}));
+document.querySelector('.step-nav').addEventListener('keydown', e => {
+  const links = [...document.querySelectorAll('.step-nav [data-step]')];
+  const index = links.indexOf(document.activeElement);
+  if (index < 0) return;
+  const target = e.key === 'ArrowRight' ? (index + 1) % 6 : e.key === 'ArrowLeft' ? (index + 5) % 6 : e.key === 'Home' ? 0 : e.key === 'End' ? 5 : null;
+  if (target !== null) { e.preventDefault(); links[target].focus({ preventScroll: true }); goTo(target); }
+});
+$('previous-step').addEventListener('click', () => goTo(currentStep - 1));
+$('next-step').addEventListener('click', () => {
+  if (currentStep < 5) goTo(currentStep + 1);
+  else $('resultado').scrollIntoView({ behavior: media.matches ? 'instant' : 'smooth' });
+});
+$('overview').addEventListener('click', () => goTo(-1));
+$('pause-motion').addEventListener('click', () => {
+  paused = !paused; sceneApi?.setMotion(!paused);
+  $('pause-motion').setAttribute('aria-pressed', String(paused));
+  $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+});
+$('flat-view').addEventListener('click', () => flatView(!isFlat));
+media.addEventListener('change', () => {
+  paused = media.matches; sceneApi?.setReduced(media.matches);
+  $('pause-motion').setAttribute('aria-pressed', String(paused));
+  $('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+});
+try {
+  sceneApi = createScene($('canvas-host'), $('scene-labels'), { onSelect: goTo, reducedMotion: media.matches, onFailure: () => flatView(true, true) });
+} catch (error) {
+  console.warn('Visão 3D indisponível; a aula continua em 2D.', error.message);
+}
+flatView(!sceneApi, !sceneApi);
+$('scene-toolbar').hidden = false; $('simulation-ui').hidden = false;
+document.body.classList.add('lesson-ready');
+$('pause-motion').setAttribute('aria-pressed', String(paused));
+$('pause-motion').textContent = paused ? 'Retomar movimento' : 'Pausar movimento';
+renderSimulation(); renderStep(-1); onScroll();
+window.addEventListener('scroll', scheduleScroll, { passive: true });
+window.addEventListener('resize', scheduleScroll, { passive: true });
+window.addEventListener('pagehide', e => { if (!e.persisted) sceneApi?.dispose(); });
+window.addEventListener('hashchange', () => {
+  const index = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
+  if (index >= 0) goTo(index, false);
+});
+const initialIndex = STAGES.findIndex(s => location.hash === `#etapa-${s.id}`);
+if (initialIndex >= 0) requestAnimationFrame(() => goTo(initialIndex, false));
+</script>
+</body>
+</html>

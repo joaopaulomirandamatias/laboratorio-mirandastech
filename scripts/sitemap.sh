@@ -27,6 +27,12 @@ cat > site/sitemap.xml <<XML
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://lab.mirandastech.com.br/maquinas/agentes/</loc>
+    <lastmod>$(data site/maquinas/agentes/index.html)</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
 XML
 echo "sitemap.xml regerado"

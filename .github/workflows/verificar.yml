@@ -5,6 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Modelos das bancadas
+        run: node --test maquinas/*/model.test.mjs
+      - name: Aula de IA reproduzível
+        run: |
+          node maquinas/agentes/build.mjs
+          git diff --exit-code -- site/maquinas/agentes/index.html site/assets/fonts/
       - name: Páginas íntegras
         run: |
           python3 - <<'PY'
@@ -41,6 +50,15 @@ jobs:
               assert u in torre, u
           # a torre monta as URLs em JS (sub + dominio), entao conta-se o dado, nao o literal
           assert len(re.findall(r"sub:'[a-z]+'", torre)) == 16, 'a torre perdeu modulos'
+
+          # Aula de IA: a cena tem alternativa textual e mantém a moldura do campus.
+          aula = integra('site/maquinas/agentes/index.html')
+          for esperado in ['data-lesson="agentes-v1"', 'id="scene-fallback"', 'id="leitura"', 'id="audit-log"', 'campus-header:start', 'campus-footer:start']:
+              assert esperado in aula, 'faltou ' + esperado
+          assert 'href="maquinas/agentes/"' in campus
+          assert 'assets/maq-agentes.webp' in campus
+          for a in re.findall(r'(?:src|href)="(\.\./\.\./assets/[^"]+)"', aula):
+              assert os.path.isfile(os.path.normpath(os.path.join('site/maquinas/agentes', a))), a
 
           # 3. sitemap: toda URL listada precisa existir como página de verdade
           import xml.etree.ElementTree as ET

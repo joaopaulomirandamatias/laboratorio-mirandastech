@@ -17,6 +17,16 @@ Campus digital dos **16 manuais MirandasTech de pesquisa científica**: uma pág
 
 O vídeo do topo é o átrio do campus em movimento; o título que vinha gravado no render foi removido por corte, e o clipe é concatenado com ele mesmo invertido para o laço não saltar. Todo texto da página é HTML sobre as imagens — nada de texto dentro do render, que é onde a geração por IA erra.
 
+## Aula interativa: por dentro de um agente de IA
+
+Em **[/maquinas/agentes/](https://lab.mirandastech.com.br/maquinas/agentes/)**, uma máquina Three.js em seis camadas acompanha pergunta, documentos, modelo, ferramentas, governança e resposta. A rolagem aproxima cada etapa; as camadas também podem ser selecionadas por clique ou teclado. O visitante compara contexto ligado/desligado e consulta/envio com e sem permissão.
+
+É uma simulação local com respostas preparadas e fichas didáticas identificadas. Não chama LLMs nem envia mensagens. O modelo é independente da cena; sem WebGL, há visão 2D, e a aula em texto funciona sem JavaScript. Animação respeita movimento reduzido, pode ser pausada e para fora da tela.
+
+Fontes editáveis: `maquinas/agentes/`. Regerar com `node maquinas/agentes/build.mjs`; testar os modelos com `node --test maquinas/*/model.test.mjs`. Three.js r128 e as fontes são servidos localmente; licença do Three.js em `site/assets/vendor/three-LICENSE.txt`. A moldura reutiliza `maquinas/prisma/shell.mjs`.
+
+Verificação de navegador com Playwright: `node maquinas/agentes/checks/browser.mjs`. O script inicia um servidor local temporário; aceita `CHROME_PATH`, `PLAYWRIGHT_MODULE`, `CHECK_OUTPUT` e `BASE_URL` para testar um navegador instalado ou a versão publicada. Playwright é apenas uma ferramenta de teste, não uma dependência do site. As capturas vão para `/tmp/mirandastech-agentes-checks` por padrão.
+
 ## A torre 3D
 
 Cada andar é uma trilha da pesquisa (Fundamentos, Busca e revisão, Dados e ferramentas, Escrita e entrega) e cada um dos quatro nós do andar é um manual, representado pelo **instrumento da etapa**: a balança do método, o chip do uso de IA, a bússola da orientação, a lupa da busca, o prisma da revisão sistemática, a rede de cocitação da bibliometria, o fichário do Zotero, o gráfico da análise de dados, a árvore de commits do Git, o cadeado aberto da ciência aberta, o envelope da submissão, o capelo da defesa. Todos são montados por primitivas em Three.js, sem modelo externo.
