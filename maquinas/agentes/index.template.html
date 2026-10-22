@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Por dentro de um agente de IA · MirandasTech</title>
+<meta name="description" content="Explore uma máquina 3D, acompanhe uma pergunta até a resposta e experimente contexto, ferramentas e permissões em uma aula interativa de IA.">
+<meta name="theme-color" content="#05080D">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A pergunta vira ação · MirandasTech">
+<meta property="og:description" content="Uma aula interativa por dentro de um agente de IA. Explore seis camadas e experimente o que muda com contexto e permissão.">
+<meta property="og:url" content="https://lab.mirandastech.com.br/maquinas/agentes/">
+<meta property="og:image" content="https://lab.mirandastech.com.br/assets/maq-agentes.webp">
+<link rel="canonical" href="https://lab.mirandastech.com.br/maquinas/agentes/">
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="preload" href="../../assets/fonts/Spectral-Regular.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="../../assets/agentes-terrain.webp" as="image">
+<link rel="preload" href="../../assets/agentes-machine.webp" as="image">
+<style>/* PAGE_CSS */</style>
+</head>
+<body data-lesson="agentes-v1">
+<main class="pg" id="conteudo">
+  <section class="experience" aria-label="Aula por dentro de um agente de IA">
+    <div class="stage">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <div class="scene-wrap" id="scene-wrap" aria-label="Máquina com seis camadas: pergunta, contexto, modelo, ferramentas, governança e resposta">
+        <div class="scene-fallback" id="scene-fallback">
+          <div class="machine-plate" id="machine-plate">
+            <video class="opening-film" id="opening-film" loop muted playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../../assets/agentes-motion.mp4" type="video/mp4"></video>
+            <div class="machine-camera" id="machine-camera"><div class="machine-tilt">
+              <div class="machine-art" role="img" aria-label="Máquina animada em seis plataformas de metal e vidro azul."><!-- ART_LAYERS --></div>
+              <!-- MOTION_EFFECTS -->
+              <div class="poster-labels"><!-- FALLBACK --></div>
+            </div></div>
+          </div>
+        </div>
+        <div id="canvas-host" aria-hidden="true"></div>
+        <div class="scene-labels" id="scene-labels" hidden><!-- SCENE_LABELS --></div>
+        <span class="scene-caption"><span class="live-dot"></span><span id="renderer-label">Cena animada · selecione uma camada</span></span>
+      </div>
+
+      <div class="lesson-copy">
+        <a class="back-link" href="/#bancada">← A bancada do laboratório</a>
+        <div id="hero-copy">
+          <p class="eyebrow">AULA INTERATIVA · 01</p>
+          <h1>A pergunta<br>vira <em>ação.</em></h1>
+          <p class="hero-sub">Explore o caminho de um agente de IA.</p>
+          <div class="hero-actions"><a class="primary" href="#etapa-pergunta" data-start>Começar a explorar <img src="../../assets/icons/arrow-right.svg" width="22" height="22" alt=""></a><a class="secondary" href="#leitura">Ver etapas <img src="../../assets/icons/list.svg" width="21" height="21" alt=""></a></div>
+          <button class="film-link" id="watch-film" type="button"><span aria-hidden="true">▷</span> Ampliar vídeo</button>
+          <div class="lesson-meta"><span>6 camadas</span><span>5 min de exploração</span><span>Sem cadastro</span></div>
+        </div>
+        <div id="step-copy" hidden>
+          <p class="eyebrow" id="step-tag"></p>
+          <h2 id="step-title"></h2>
+          <p class="step-body" id="step-body"></p>
+          <div class="step-control" id="context-control" hidden>
+            <label class="switch"><input type="checkbox" id="use-context" checked><span class="switch-track" aria-hidden="true"></span><span>Usar documentos de contexto</span></label>
+            <p class="control-note" id="context-note">Duas fichas didáticas disponíveis.</p>
+          </div>
+          <div class="step-control" id="tools-control" hidden>
+            <fieldset><legend>Qual operação solicitar?</legend><div class="action-options"><label><input type="radio" name="action" value="read" checked><span>↗ Consultar</span></label><label><input type="radio" name="action" value="send"><span>↗ Enviar resumo</span></label></div></fieldset>
+          </div>
+          <div class="step-control" id="permission-control" hidden>
+            <label class="switch"><input type="checkbox" id="allow-send"><span class="switch-track" aria-hidden="true"></span><span>Autorizar o envio do resumo</span></label>
+            <button class="text-button" type="button" id="try-send">Experimentar uma solicitação de envio ↗</button>
+          </div>
+          <div id="step-result" class="step-result" hidden><p id="mini-answer"></p><a href="#resultado">Ver resposta e registro completos ↓</a></div>
+          <div class="status-pill" id="live-outcome" role="status" hidden></div>
+          <p class="insight" id="step-insight"></p>
+          <div class="step-arrows"><button type="button" id="previous-step" aria-label="Etapa anterior">←</button><span id="step-count"></span><button type="button" id="next-step" aria-label="Próxima etapa">→</button></div>
+        </div>
+      </div>
+
+      <div class="scene-toolbar" id="scene-toolbar" hidden>
+        <button type="button" id="overview">Vista geral</button>
+        <button type="button" id="pause-motion" aria-pressed="false">Pausar movimento</button>
+        <button type="button" id="flat-view" aria-pressed="true">Modelo 3D</button>
+      </div>
+      <div class="story-bottom">
+        <nav class="step-nav" aria-label="Etapas da aula"><ol><!-- STEP_NAV --></ol></nav>
+        <a class="scroll-hint" href="#etapa-pergunta" data-start><img src="../../assets/icons/mouse.svg" width="23" height="31" alt=""><span>Role para explorar</span><span>↓</span></a>
+      </div>
+      <div class="progress-rail" aria-hidden="true"><i id="story-progress"></i></div>
+    </div>
+    <div class="step-anchors" aria-hidden="true"><!-- ANCHORS --></div>
+  </section>
+
+  <section class="result-section content-wrap" id="resultado" aria-labelledby="result-title">
+    <div class="section-heading"><div><p class="eyebrow">DA PERGUNTA À ENTREGA</p><h2 id="result-title">O que a máquina <em>entregou.</em></h2></div><p>Compare as escolhas e acompanhe o registro de cada etapa.</p></div>
+    <p class="simulation-note">Simulação pedagógica local · respostas preparadas · nenhum envio real.</p>
+    <div id="simulation-ui" hidden>
+      <div class="experiment-controls">
+        <label><input type="checkbox" id="result-context" checked> Usar contexto</label>
+        <label>Operação <select id="result-action"><option value="read">Consultar</option><option value="send">Enviar resumo</option></select></label>
+        <label><input type="checkbox" id="result-permission"> Autorizar envio</label>
+        <button type="button" class="text-button" id="reset">Restaurar exemplo ↻</button>
+      </div>
+      <div class="result-grid">
+        <article class="answer-panel"><span class="panel-label">RESPOSTA DO EXEMPLO</span><p class="answer" id="answer-text"></p><p class="status-pill" id="result-outcome" role="status"></p><div id="sources"></div></article>
+        <article class="log-panel"><span class="panel-label">REGISTRO DA SIMULAÇÃO</span><ol id="audit-log"></ol></article>
+      </div>
+    </div>
+    <noscript><p>Ative o JavaScript para experimentar os controles. A aula completa está disponível em texto abaixo.</p></noscript>
+  </section>
+
+  <section class="reading-section content-wrap" id="leitura" aria-labelledby="reading-title">
+    <div class="section-heading"><div><p class="eyebrow">O CONCEITO, CAMADA POR CAMADA</p><h2 id="reading-title">Entender antes de <em>automatizar.</em></h2></div><p>Uma arquitetura simplificada. Agentes reais podem repetir etapas e nem todos usam recuperação de documentos.</p></div>
+    <div class="reading-grid"><!-- READING --></div>
+    <div class="sources-note"><p class="panel-label">PARA APROFUNDAR</p><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">RAG · Lewis et al. (2020) ↗</a><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">ReAct · Yao et al. (2022) ↗</a><a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" rel="noopener">Arquitetura do MCP ↗</a><p>As fichas da simulação são textos didáticos da MirandasTech; não são transcrições desses estudos.</p></div>
+    <a class="primary" href="https://blog.mirandastech.com.br/">Continuar no blog <span>↗</span></a>
+  </section>
+</main>
+<dialog class="film-dialog" id="film-dialog" aria-labelledby="film-title">
+  <div class="film-dialog-head"><h2 id="film-title">A máquina em movimento</h2><button id="close-film" type="button" aria-label="Fechar vídeo">Fechar ×</button></div>
+  <video id="hero-film" controls loop muted playsinline preload="none" poster="../../assets/agentes-machine.webp"><source src="../../assets/agentes-motion.mp4" type="video/mp4"></video>
+  <p>Clipe visual de 5 segundos. Explore as etapas da aula para interagir com a máquina.</p>
+</dialog>
+<script src="../../assets/vendor/three-r128.min.js"></script>
+<script src="../../assets/vendor/three-r128-postprocessing.js"></script>
+<script type="module">/* LESSON_JS */</script>
+</body>
+</html>

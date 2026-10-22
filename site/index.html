@@ -214,7 +214,8 @@ footer{border-top:1px solid var(--rule-soft);padding:36px 0 56px;color:var(--dim
 
 /* ---------- a bancada: o método como máquina ---------- */
 /* cada máquina ocupa a mesma largura do conteúdo da página */
-.bancada{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.bancada{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:720px){.bancada{grid-template-columns:minmax(0,1fr)}}
 .bancada .man .cap{aspect-ratio:2/1;background:#080f1d}
 .bancada .man .cap img{object-fit:contain}
 .bancada .man .txt{padding:16px 18px 19px}
@@ -402,6 +403,7 @@ h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
     </a>
     <nav class="navlinks" aria-label="Nesta página">
       <a href="#trilhas">Trilhas</a>
+      <a href="/maquinas/agentes/">Aula 3D</a>
       <a href="#manuais">Manuais</a>
       <a href="#plugin">Plugin</a>
       <a href="#aberto">Código aberto</a>
@@ -697,12 +699,16 @@ h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-.04em}
           <span class="kicker">A bancada</span>
           <h2>Aperte os botões<br>e veja o <em>método</em> rodar</h2>
         </div>
-        <p class="lede">Uma etapa do ciclo montada como aparelho, para operar passo a passo. Os números vêm de uma revisão publicada, e o que é ilustrativo está marcado na própria figura.</p>
+        <p class="lede">Explore o método e a tecnologia em bancadas interativas. Na máquina PRISMA, os números vêm de uma revisão publicada; na aula de IA, o fluxo é uma simulação didática.</p>
       </div>
       <div class="bancada">
         <a class="man" style="--c:var(--t2)" href="maquinas/prisma/">
           <span class="cap"><img src="assets/maq-prisma.webp" alt="Triadora de registros em vista isométrica: cinco bases alimentam uma esteira, a peneira do ASReview separa os registros e 58 estudos chegam ao fim" loading="lazy" width="800" height="500" decoding="async"></span>
           <span class="txt"><b>2.2 · PRISMA 2020</b><span>Como 9 mil registros viram 58 estudos</span><small>Busque, deduplique e acompanhe o ASReview aprendendo até a regra de parada, com o fluxograma se preenchendo ao lado. Depois mexa na busca para ver o custo em horas de triagem.</small></span>
+        </a>
+        <a class="man" style="--c:var(--signal)" href="maquinas/agentes/">
+          <span class="cap"><img src="assets/maq-agentes.webp" alt="Máquina 3D de um agente de IA aberta em seis camadas: pergunta, documentos, modelo, ferramentas, governança e resposta" loading="lazy" width="1440" height="1000" decoding="async"></span>
+          <span class="txt"><b>IA · AULA INTERATIVA 01</b><span>A pergunta vira ação</span><small>Explore um agente de IA em seis camadas. Compare o uso de contexto, escolha uma ferramenta e descubra como uma regra de permissão autoriza ou bloqueia a ação.</small></span>
         </a>
       </div>
     </div>
